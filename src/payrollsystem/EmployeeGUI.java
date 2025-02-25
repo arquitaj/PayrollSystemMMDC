@@ -83,7 +83,8 @@ public class EmployeeGUI extends javax.swing.JFrame {
         txtSupervisor = new javax.swing.JTextField();
         tabbedRequest = new javax.swing.JPanel();
         panelTypeRequest = new javax.swing.JPanel();
-        comboTypeRequest = new javax.swing.JComboBox<>();
+        tabbedInsideRequest = new javax.swing.JTabbedPane();
+        jPanel8 = new javax.swing.JPanel();
         panelLeaveRequestDetails = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -106,7 +107,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
         btnSubmit = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         comboLeaveType = new javax.swing.JComboBox<>();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         lblRequestType = new javax.swing.JLabel();
+        comboTypeRequest = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EMPLOYEE PORTAL");
@@ -687,7 +692,20 @@ public class EmployeeGUI extends javax.swing.JFrame {
         panelTypeRequest.setBackground(new java.awt.Color(255, 255, 255));
         panelTypeRequest.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NEW REQUEST", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 0, 18), new java.awt.Color(255, 102, 0))); // NOI18N
 
-        comboTypeRequest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Leave Application", "Overtime Application" }));
+        tabbedInsideRequest.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 716, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 567, Short.MAX_VALUE)
+        );
+
+        tabbedInsideRequest.addTab("", jPanel8);
 
         panelLeaveRequestDetails.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -818,16 +836,16 @@ public class EmployeeGUI extends javax.swing.JFrame {
                         .addGap(222, 222, 222)
                         .addComponent(lblLeaveBalances, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelLeaveRequestDetailsLayout.createSequentialGroup()
-                        .addGap(74, 74, 74)
+                        .addGap(70, 70, 70)
                         .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
+                        .addGap(39, 39, 39)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         panelLeaveRequestDetailsLayout.setVerticalGroup(
             panelLeaveRequestDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLeaveRequestDetailsLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblLeaveBalances)
@@ -871,37 +889,71 @@ public class EmployeeGUI extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelLeaveRequestDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                    .addComponent(btnSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        tabbedInsideRequest.addTab("", panelLeaveRequestDetails);
+
+        jLabel1.setText("OVERTIME REQUEST HERE!!!!");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(262, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(303, 303, 303))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(136, 136, 136)
+                .addComponent(jLabel1)
+                .addContainerGap(415, Short.MAX_VALUE))
+        );
+
+        tabbedInsideRequest.addTab("", jPanel7);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblRequestType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblRequestType.setText("Request Type :");
+        jPanel2.add(lblRequestType, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 16, 108, -1));
+
+        comboTypeRequest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Leave Application", "Overtime Application" }));
+        comboTypeRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTypeRequestActionPerformed(evt);
+            }
+        });
+        jPanel2.add(comboTypeRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 12, 198, 31));
 
         javax.swing.GroupLayout panelTypeRequestLayout = new javax.swing.GroupLayout(panelTypeRequest);
         panelTypeRequest.setLayout(panelTypeRequestLayout);
         panelTypeRequestLayout.setHorizontalGroup(
             panelTypeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTypeRequestLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(panelLeaveRequestDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(panelTypeRequestLayout.createSequentialGroup()
-                .addGap(189, 189, 189)
-                .addComponent(lblRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(comboTypeRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(panelTypeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTypeRequestLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTypeRequestLayout.createSequentialGroup()
+                        .addComponent(tabbedInsideRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 718, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         panelTypeRequestLayout.setVerticalGroup(
             panelTypeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTypeRequestLayout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
-                .addGroup(panelTypeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboTypeRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRequestType))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelLeaveRequestDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(tabbedInsideRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(273, 273, 273))
         );
 
         javax.swing.GroupLayout tabbedRequestLayout = new javax.swing.GroupLayout(tabbedRequest);
@@ -917,8 +969,8 @@ public class EmployeeGUI extends javax.swing.JFrame {
             tabbedRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabbedRequestLayout.createSequentialGroup()
                 .addGap(76, 76, 76)
-                .addComponent(panelTypeRequest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addComponent(panelTypeRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("Request Port", tabbedRequest);
@@ -1020,6 +1072,18 @@ public class EmployeeGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    private void comboTypeRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTypeRequestActionPerformed
+        // TODO add your handling code here:
+        String selectedItem = comboTypeRequest.getSelectedItem().toString();
+        if(selectedItem.equals("")){
+            tabbedInsideRequest.setSelectedIndex(0);
+        }else if(selectedItem.equals("Leave Application")){
+            tabbedInsideRequest.setSelectedIndex(1);
+        }else{
+              tabbedInsideRequest.setSelectedIndex(2);
+        }
+    }//GEN-LAST:event_comboTypeRequestActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1040,15 +1104,19 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboTypeRequest;
     private com.toedter.calendar.JDateChooser dateFrom;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
@@ -1094,6 +1162,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel panelPersonalDetails3;
     private javax.swing.JPanel panelTypeRequest;
     private javax.swing.JPanel sideBarPanel;
+    private javax.swing.JTabbedPane tabbedInsideRequest;
     private javax.swing.JPanel tabbedPersonalDetails;
     private javax.swing.JPanel tabbedRequest;
     private javax.swing.JTextArea textAreaAddress;
