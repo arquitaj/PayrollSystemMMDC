@@ -684,7 +684,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
                     .addComponent(panelPersonalDetails2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelPersonalDetails3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelPersonalDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addContainerGap(267, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("Personal Details", tabbedPersonalDetails);
@@ -727,6 +727,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField1.setText("2");
         jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Number of Working Days Applied For", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 102))); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jSeparator2.setBackground(new java.awt.Color(255, 204, 153));
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
@@ -849,7 +854,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblLeaveBalances)
-                .addGap(18, 18, 18)
                 .addGroup(panelLeaveRequestDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLeaveRequestDetailsLayout.createSequentialGroup()
                         .addGroup(panelLeaveRequestDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -970,7 +974,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
             .addGroup(tabbedRequestLayout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addComponent(panelTypeRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("Request Port", tabbedRequest);
@@ -1021,27 +1025,26 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(0);
-        employee.setFilePath("CSVFiles//EmployeeDatabase.csv");
-        employee.retrivedDetails();
-        employee.userDetails();
-        txtFName.setText(employee.getFirstName());
-        txtLName.setText(employee.getLastName());
-        txtBDay.setText(employee.getBirthday());
-        txtPhoneNum.setText(employee.getPhoneNumber());
-        textAreaAddress.setText(employee.getAddress());
-        txtBasicSalary.setText(String.valueOf(employee.getBasicSalary()));
-        txtBiMonthlyRate.setText(String.valueOf(employee.getSemiBasicSalary()));
-        txtHourlyRate.setText(String.valueOf(employee.getHourlyRate()));
-        txtRiceSubsidy.setText(String.valueOf(employee.getRiceSubsidy()));
-        txtPhoneAllowance.setText(String.valueOf(employee.getRiceSubsidy()));
-        txtClothingAllowance.setText(String.valueOf(employee.getClothingAllowance()));
-        txtPhilNum.setText(employee.getPhilHealthNumber());
-        txtSSSNum.setText(employee.getPhilHealthNumber());
-        txtTINNum.setText(employee.getTinNumber());
-        txtPagIbigNum.setText(employee.getPagibigNumber());
-        txtPosition.setText(employee.getPosition());
-        txtStatus.setText(employee.getStatus());
-        txtSupervisor.setText(employee.getSupervisor());
+        employee.viewPersonalDetails();
+        txtID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        txtFName.setText(employee.accountDetails.getFirstName());
+        txtLName.setText(employee.accountDetails.getLastName());
+        txtBDay.setText(employee.accountDetails.getBirthday());
+        txtPhoneNum.setText(employee.accountDetails.getPhoneNumber());
+        textAreaAddress.setText(employee.accountDetails.getAddress());
+        txtBasicSalary.setText(String.valueOf(employee.accountDetails.getBasicSalary()));
+        txtBiMonthlyRate.setText(String.valueOf(employee.accountDetails.getSemiBasicSalary()));
+        txtHourlyRate.setText(String.valueOf(employee.accountDetails.getHourlyRate()));
+        txtRiceSubsidy.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
+        txtPhoneAllowance.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
+        txtClothingAllowance.setText(String.valueOf(employee.accountDetails.getClothingAllowance()));
+        txtPhilNum.setText(employee.accountDetails.getPhilHealthNumber());
+        txtSSSNum.setText(employee.accountDetails.getPhilHealthNumber());
+        txtTINNum.setText(employee.accountDetails.getTinNumber());
+        txtPagIbigNum.setText(employee.accountDetails.getPagibigNumber());
+        txtPosition.setText(employee.accountDetails.getPosition());
+        txtStatus.setText(employee.accountDetails.getStatus());
+        txtSupervisor.setText(employee.accountDetails.getSupervisor());
 
     }//GEN-LAST:event_btnPersonalDetailsActionPerformed
 
@@ -1058,6 +1061,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private void btnRequestPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestPortActionPerformed
         // TODO add your handling code here:.
         mainTabbed.setSelectedIndex(1);
+    
+        employee.viewPersonalDetails();
+    
+        comboTypeRequest.setSelectedIndex(0);
+        tabbedInsideRequest.setSelectedIndex(0);
     }//GEN-LAST:event_btnRequestPortActionPerformed
 
     private void btnDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTRActionPerformed
@@ -1066,23 +1074,83 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
+        if (comboLeaveType.getSelectedIndex() == 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a leave type");
+        return;
+    }
+    
+    if (dateFrom.getDate() == null || jDateChooser1.getDate() == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select from and to dates");
+        return;
+    }
+    
+    if (jTextArea1.getText().trim().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please provide a reason for your leave");
+        return;
+    }
+    
+    String leaveType = comboLeaveType.getSelectedItem().toString();
+    java.util.Date fromDate = dateFrom.getDate();
+    java.util.Date toDate = jDateChooser1.getDate();
+    int days;
+    try {
+        days = Integer.parseInt(jTextField1.getText().trim());
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please enter a valid number of days");
+        return;
+    }
+    String reason = jTextArea1.getText().trim();
+    
+    employee.fileLeaveRequest(leaveType, fromDate, toDate, days, reason);
+    
+    comboLeaveType.setSelectedIndex(0);
+    dateFrom.setDate(null);
+    jDateChooser1.setDate(null);
+    jTextField1.setText("2");
+    jTextArea1.setText("");
+    
+    comboTypeRequest.setSelectedIndex(0);
+    tabbedInsideRequest.setSelectedIndex(0);
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
+        comboLeaveType.setSelectedIndex(0);
+        dateFrom.setDate(null);
+        jDateChooser1.setDate(null);
+        jTextField1.setText("2");
+        jTextArea1.setText("");
+
+  
+        comboTypeRequest.setSelectedIndex(0);
+        tabbedInsideRequest.setSelectedIndex(0);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void comboTypeRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTypeRequestActionPerformed
         // TODO add your handling code here:
         String selectedItem = comboTypeRequest.getSelectedItem().toString();
-        if(selectedItem.equals("")){
+
+        if(selectedItem.equals("")) {
             tabbedInsideRequest.setSelectedIndex(0);
-        }else if(selectedItem.equals("Leave Application")){
+        } else if(selectedItem.equals("Leave Application")) {
             tabbedInsideRequest.setSelectedIndex(1);
-        }else{
-              tabbedInsideRequest.setSelectedIndex(2);
+
+            employee.populateRequestForm(lblID, lblMyName);
+
+       
+            lblVLBalance.setText("15.0");
+            lblSLBalance.setText("15.0");
+
+        } else {
+            tabbedInsideRequest.setSelectedIndex(2);
+
+         
         }
     }//GEN-LAST:event_comboTypeRequestActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

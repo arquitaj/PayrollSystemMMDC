@@ -13,6 +13,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class Employee extends AccountDetails {
@@ -20,9 +21,15 @@ public class Employee extends AccountDetails {
     AccountDetails accountDetails = new AccountDetails();
     AccountDetails attendance = new AccountDetails();
     protected int indexAttendance;
+    private String filePath;
     
     Employee(){
         super();
+    }
+    
+    Employee(int employeeID, String filePath) {
+        super();
+        this.filePath = filePath;
     }
     
     void viewPersonalDetails(){
@@ -35,6 +42,27 @@ public class Employee extends AccountDetails {
         viewPersonalDetails();
         attendance.setFilePath("CSVFiles//AttendanceDatabase.csv");
         attendance.retrivedDetails();
+    }
+    
+    public void viewPersonalDTR() {
+        
+        viewEmployeeAttendance();
+    }
+    
+    public void viewPersonalPayslip() {
+        
+    }
+    
+    public void viewPersonalLeaveLedger() {
+       
+        AccountDetails leaveLedger = new AccountDetails();
+        leaveLedger.setFilePath("CSVFiles//LeaveRequests.csv");
+        try {
+            leaveLedger.retrivedDetails();
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No leave records found.");
+        }
     }
     
     boolean validateAttendance(String date){
@@ -100,6 +128,76 @@ public class Employee extends AccountDetails {
         }
         attendance.getDataList().clear();
         attendance.printDetails();
+    }
+    
+    public void populateRequestForm(javax.swing.JLabel idLabel, javax.swing.JLabel nameLabel) {
+        viewPersonalDetails();
+        
+        idLabel.setText(String.valueOf(accountDetails.getEmployeeID()));
+        nameLabel.setText(accountDetails.getFirstName() + " " + accountDetails.getLastName());
+    }
+    
+    public void fileLeaveRequest(String leaveType, java.util.Date fromDate, java.util.Date toDate, int days, String reason) {
+    
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
+        String fromDateStr = dateFormat.format(fromDate);
+        String toDateStr = dateFormat.format(toDate);
+        
+        AccountDetails leaveDetails = new AccountDetails();
+        leaveDetails.setFilePath("CSVFiles//LeaveRequests.csv");
+        
+        try {
+            leaveDetails.retrivedDetails();
+        } catch (Exception e) {
+
+            ArrayList<String> headers = new ArrayList<>();
+            headers.add("Employee #");
+            headers.add("Last Name");
+            headers.add("First Name");
+            headers.add("Leave Type");
+            headers.add("From Date");
+            headers.add("To Date");
+            headers.add("Days");
+            headers.add("Reason");
+            headers.add("Status");
+            leaveDetails.getDataList().add(headers);
         }
-   
+        
+        ArrayList<String> leaveRequestRow = new ArrayList<>();
+        leaveRequestRow.add(String.valueOf(accountDetails.getEmployeeID()));
+        leaveRequestRow.add(accountDetails.getLastName());
+        leaveRequestRow.add(accountDetails.getFirstName());
+        leaveRequestRow.add(leaveType);
+        leaveRequestRow.add(fromDateStr);
+        leaveRequestRow.add(toDateStr);
+        leaveRequestRow.add(String.valueOf(days));
+        leaveRequestRow.add(reason);
+        leaveRequestRow.add("Pending");
+        
+        leaveDetails.getDataList().add(leaveRequestRow);
+        
+        leaveDetails.addDetailsCSV();
+        
+        javax.swing.JOptionPane.showMessageDialog(null, "Leave request submitted successfully!");
+    }
+    
+    public void fileOvertimeRequest() {
+        
+    }
+    
+    public void updateLeaveRequest() {
+    
+    }
+    
+    public void updateOvertimeRequest() {
+    
+    }
+    
+    public String getFilePath() {
+        return filePath;
+    }
+    
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 }

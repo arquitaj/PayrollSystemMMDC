@@ -1,0 +1,6 @@
+Employee #,Last Name,First Name,Leave Type,From Date,To Date,Days,Reason,Status,
+123,Garcia,Manuel III,Sick Leave,02/27/2025,02/27/2025,2,i have a fever,Pending,
+123,Garcia,Manuel III,Sick Leave,02/27/2025,02/27/2025,2,hehe fever,Pending,
+123,Garcia,Manuel III,Sick Leave,02/27/2025,02/27/2025,2,im sick,Pending,
+123,Garcia,Manuel III,Vacation Leave,02/27/2025,02/27/2025,2,hehe yacarob,Pending,
+123,Garcia,Manuel III,Sick Leave,02/27/2025,02/28/2025,1,achoo,Pending,
