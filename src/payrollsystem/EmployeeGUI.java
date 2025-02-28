@@ -17,6 +17,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     Employee employee = new Employee();
     ArrayList<String> data = new ArrayList<>(); //To hold as storage
+    SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
     
     public EmployeeGUI(){
         initComponents();
@@ -137,11 +138,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
         lblID1 = new javax.swing.JLabel();
         lblName1 = new javax.swing.JLabel();
         lblMyName2 = new javax.swing.JLabel();
-        dateFrom1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        dateFromOvertime = new com.toedter.calendar.JDateChooser();
+        dateToOvertime = new com.toedter.calendar.JDateChooser();
         lblMyName3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        txtReason1 = new javax.swing.JTextArea();
+        txtReasonOvertime = new javax.swing.JTextArea();
         btnSubmit1 = new javax.swing.JButton();
         btnCancel1 = new javax.swing.JButton();
         lblLeaveBalances1 = new javax.swing.JLabel();
@@ -971,15 +972,25 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         dateTo.setBackground(new java.awt.Color(255, 255, 255));
         dateTo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "To", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
+        dateTo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateToPropertyChange(evt);
+            }
+        });
 
         dateFrom.setBackground(new java.awt.Color(255, 255, 255));
         dateFrom.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "From", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51)))); // NOI18N
+        dateFrom.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateFromPropertyChange(evt);
+            }
+        });
 
         lblMyName1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblMyName1.setText("Inclusive Dates");
 
+        txtDaysNumber.setEditable(false);
         txtDaysNumber.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtDaysNumber.setText("2");
         txtDaysNumber.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Number of Working Days Applied For", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 102))); // NOI18N
         txtDaysNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1168,20 +1179,20 @@ public class EmployeeGUI extends javax.swing.JFrame {
         lblMyName2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblMyName2.setText("John Paul Arquita");
 
-        dateFrom1.setBackground(new java.awt.Color(255, 255, 255));
-        dateFrom1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "From", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51)))); // NOI18N
+        dateFromOvertime.setBackground(new java.awt.Color(255, 255, 255));
+        dateFromOvertime.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "From", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51)))); // NOI18N
 
-        jDateChooser2.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "To", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
+        dateToOvertime.setBackground(new java.awt.Color(255, 255, 255));
+        dateToOvertime.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "To", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
 
         lblMyName3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblMyName3.setText("Inclusive Dates*");
 
-        txtReason1.setColumns(20);
-        txtReason1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtReason1.setRows(5);
-        txtReason1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Reason", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
-        jScrollPane3.setViewportView(txtReason1);
+        txtReasonOvertime.setColumns(20);
+        txtReasonOvertime.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtReasonOvertime.setRows(5);
+        txtReasonOvertime.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Reason", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
+        jScrollPane3.setViewportView(txtReasonOvertime);
 
         btnSubmit1.setText("SUBMIT");
         btnSubmit1.addActionListener(new java.awt.event.ActionListener() {
@@ -1214,7 +1225,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
             panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
                 .addGap(429, 429, 429)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addComponent(dateToOvertime, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                 .addGap(75, 75, 75))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOvertimeRequestLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1244,7 +1255,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
                             .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(dateFrom1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dateFromOvertime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblMyName3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(0, 0, Short.MAX_VALUE)))
                     .addGap(73, 73, 73)))
@@ -1273,7 +1284,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
                     .addComponent(lblMyName2)
                     .addComponent(lblName1))
                 .addGap(62, 62, 62)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dateToOvertime, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(60, 60, 60)
@@ -1286,7 +1297,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
                     .addGap(168, 168, 168)
                     .addComponent(lblMyName3)
                     .addGap(9, 9, 9)
-                    .addComponent(dateFrom1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateFromOvertime, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(45, 45, 45)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(168, Short.MAX_VALUE)))
@@ -1357,17 +1368,18 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "DATE", "DAY", "LOGIN", "LOGOUT", "REMARKS"
+                "DATE", "LOGIN", "LOGOUT", "REMARKS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jTableAllRequest2.setColumnSelectionAllowed(true);
         jTableAllRequest2.setRowHeight(25);
         jTableAllRequest2.getTableHeader().setReorderingAllowed(false);
         tableDTR.setViewportView(jTableAllRequest2);
@@ -1377,7 +1389,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
             jTableAllRequest2.getColumnModel().getColumn(1).setResizable(false);
             jTableAllRequest2.getColumnModel().getColumn(2).setResizable(false);
             jTableAllRequest2.getColumnModel().getColumn(3).setResizable(false);
-            jTableAllRequest2.getColumnModel().getColumn(4).setResizable(false);
         }
 
         dateFrom2.setBackground(new java.awt.Color(255, 255, 255));
@@ -1870,15 +1881,19 @@ public class EmployeeGUI extends javax.swing.JFrame {
         if (comboLeaveType.getSelectedIndex() == 0 || dateFrom.getDate() == null || dateTo.getDate() == null || txtReason.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide all the necessary details for filing of Leave Request!");
             return;
+        }else if(txtDaysNumber.getText().equals("0")){
+            JOptionPane.showMessageDialog(null, "Error date of leave!");
+            return;
         }
-        SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
+        
         data.add(String.valueOf(employee.getEmployeeID()));
         data.add(comboLeaveType.getSelectedItem().toString());
         data.add(dateFormat.format(dateFrom.getDate()));
         data.add(dateFormat.format(dateTo.getDate()));
+        data.add(txtDaysNumber.getText());
         data.add(txtReason.getText());
         
-        if(employee.fileLeaveRequest(data, dateFrom.getDate(), dateTo.getDate())){
+        if(employee.fileLeaveRequest(data)){
             txtDaysNumber.setText(null);
             comboLeaveType.setSelectedIndex(0);
             dateFrom.setDate(null);
@@ -1915,17 +1930,32 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         } else {
             tabbedInsideRequest.setSelectedIndex(2);
-
-         
         }
     }//GEN-LAST:event_comboTypeRequestActionPerformed
 
     private void txtDaysNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDaysNumberActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtDaysNumberActionPerformed
 
     private void btnSubmit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmit1ActionPerformed
         // TODO add your handling code here:
+        if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
+            if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
+               data.add(String.valueOf(employee.getEmployeeID()));
+               data.add(dateFormat.format(dateFromOvertime.getDate()));
+               data.add(dateFormat.format(dateToOvertime.getDate()));
+               data.add(txtReasonOvertime.getText());
+               if(employee.fileOvertimeRequest(data)){
+                   dateFromOvertime.setDate(null);
+                   dateToOvertime.setDate(null);
+                   txtReasonOvertime.setText(null);
+                   employee.setNumberOfDaysLeave();
+               }
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Provide all the neccessary details for overtime!!");
+        }
     }//GEN-LAST:event_btnSubmit1ActionPerformed
 
     private void btnCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel1ActionPerformed
@@ -1954,6 +1984,32 @@ public class EmployeeGUI extends javax.swing.JFrame {
         mainTabbed.setSelectedIndex(5);
     }//GEN-LAST:event_btnLeaveLedger1ActionPerformed
 
+    private void dateToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateToPropertyChange
+        // TODO add your handling code here:
+        if(dateFrom.getDate() != null && dateTo.getDate() != null){
+            if(employee.countNumberOfDays(dateFrom.getDate(), dateTo.getDate())){
+                txtDaysNumber.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
+            }else{
+                employee.setNumberOfDaysLeave();
+                txtDaysNumber.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+            }
+        }
+    }//GEN-LAST:event_dateToPropertyChange
+
+    private void dateFromPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateFromPropertyChange
+        // TODO add your handling code here:
+        if(dateTo.getDate() != null && dateFrom.getDate() != null){
+            if(employee.countNumberOfDays(dateFrom.getDate(), dateTo.getDate())){
+                txtDaysNumber.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
+            }else{
+                employee.setNumberOfDaysLeave();  
+                txtDaysNumber.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+            }
+        }
+    }//GEN-LAST:event_dateFromPropertyChange
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1981,11 +2037,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboLeaveType;
     private javax.swing.JComboBox<String> comboTypeRequest;
     private com.toedter.calendar.JDateChooser dateFrom;
-    private com.toedter.calendar.JDateChooser dateFrom1;
     private com.toedter.calendar.JDateChooser dateFrom2;
     private com.toedter.calendar.JDateChooser dateFrom3;
+    private com.toedter.calendar.JDateChooser dateFromOvertime;
     private com.toedter.calendar.JDateChooser dateTo;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser dateToOvertime;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JLabel jLabel1;
@@ -2120,7 +2176,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtPhoneNum;
     private javax.swing.JTextField txtPosition;
     private javax.swing.JTextArea txtReason;
-    private javax.swing.JTextArea txtReason1;
+    private javax.swing.JTextArea txtReasonOvertime;
     private javax.swing.JTextField txtRiceSubsidy;
     private javax.swing.JTextField txtSSSNum;
     private javax.swing.JTextField txtStatus;

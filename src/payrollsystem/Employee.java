@@ -23,10 +23,12 @@ public class Employee extends AccountDetails {
     AccountDetails accountDetails = new AccountDetails();
     AccountDetails attendance = new AccountDetails();
     AccountDetails leave = new AccountDetails();
+    AccountDetails overtime = new AccountDetails();
     protected int indexAttendance;
     private String filePath;
     private String dateToday, timeNow;
     private String leaveDays;
+    private int numberOfDaysLeave = 0;
     
     Employee(){
         super();
@@ -53,6 +55,12 @@ public class Employee extends AccountDetails {
         leave.setFilePath("CSVFiles//LeaveRequests.csv");
         leave.retrivedDetails();
     }
+    
+     void viewPersonalOvertime(){
+        overtime.setFilePath("CSVFiles//OvertimeRequest.csv");
+        overtime.retrivedDetails();
+    }
+     
     // To format the Local Time and Date Now
     void localDateTimeNow(){
         LocalDate dateNow = LocalDate.now();
@@ -138,44 +146,52 @@ public class Employee extends AccountDetails {
         attendance.printDetails();
     }
     
-    //To file new leave request
-    boolean fileLeaveRequest(ArrayList<String> data, Date dateFrom, Date dateTo){
-        localDateTimeNow();
-        viewPersonalLeaveLedger();
-        
-        int count = 0;
+    boolean countNumberOfDays(Date dateFrom, Date dateTo){ // New method to count the days for leave
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         startDate.setTime(dateFrom);
         endDate.setTime(dateTo);
         while(!startDate.after(endDate)){
             if (startDate.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-                count++;
+                this.numberOfDaysLeave++; //To count the days of leave
             }
             // Move to the next day
             startDate.add(Calendar.DATE, 1);
         }
-        if(count == 0){
+        if(getNumberOfDaysLeave() == 0){
             JOptionPane.showMessageDialog(null, "Invalid date applied!");
-            data.clear(); //To empty or clear data in array list
-            leave.getDataList().clear(); //To clear all data list
             return false;
-        }else{
-            this.leaveDays = String.valueOf(count);
-            data.add(1, getDateToday()); //To insert date filed in index 1 of the arraylist data 
-            data.add(5, getLeaveDays()); //To add number of days on leave excluding Sunday
-            data.add("Pending");
-            leave.getDataList().add(data);
-            leave.addDetailsCSV(); //To add all data in the LeaveRequest CSV  
         }
-       data.clear(); //To empty or clear data in array list
-       leave.getDataList().clear(); //To empty or clear all data list
-       return true;
+        return true;
+    }
+    //To file new leave request
+    boolean fileLeaveRequest(ArrayList<String> data){
+        localDateTimeNow();
+        viewPersonalLeaveLedger();
+       
+        data.add(1, getDateToday()); //To insert date filed in index 1 of the arraylist data 
+        data.add("Pending");
+        leave.getDataList().add(data);
+        leave.addDetailsCSV(); //To add all data in the LeaveRequest CSV  
+        
+        data.clear(); //To empty or clear data in array list
+        leave.getDataList().clear(); //To empty or clear all data list
+        return true;
     }
 
     
-    public void fileOvertimeRequest() {
+    boolean fileOvertimeRequest(ArrayList<String> data) {
+        localDateTimeNow();
+        viewPersonalOvertime();
         
+        data.add(1, getDateToday());
+        data.add("Pending");
+        overtime.getDataList().add(data);
+        overtime.addDetailsCSV();
+       
+        data.clear();
+        overtime.getDataList().clear();
+        return true;
     }
     
     public void updateLeaveRequest() {
@@ -202,5 +218,11 @@ public class Employee extends AccountDetails {
     }
     String getLeaveDays(){
         return leaveDays;
+    }
+    int getNumberOfDaysLeave(){
+        return numberOfDaysLeave;
+    }
+    void setNumberOfDaysLeave(){
+        this.numberOfDaysLeave = 0;
     }
 }

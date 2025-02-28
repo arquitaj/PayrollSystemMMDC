@@ -1,4 +1,3 @@
 Employee #,Date Filed,Leave Type,From Date,To Date,Number of Days,Reason,Status,
-123,02/28/2025,Vacation Leave,02/03/2025,02/04/2025,2,2 Days,Pending,
-123,02/28/2025,Sick Leave,02/04/2025,02/05/2025,2,2 Days,Pending,
-123,02/28/2025,Sick Leave,02/04/2025,02/07/2025,4,4 Days,Pending,
+123,02/28/2025,Vacation Leave,02/03/2025,02/06/2025,4,Want to take the rest.,Approved,
+123,02/28/2025,Sick Leave,02/10/2025,02/12/2025,3,I am not feeling well,Pending,

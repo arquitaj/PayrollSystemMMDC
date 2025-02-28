@@ -1675,6 +1675,9 @@
                                   </Border>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="dateToPropertyChange"/>
+                              </Events>
                             </Component>
                             <Component class="com.toedter.calendar.JDateChooser" name="dateFrom">
                               <Properties>
@@ -1693,6 +1696,9 @@
                                   </Border>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="dateFromPropertyChange"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="lblMyName1">
                               <Properties>
@@ -1704,10 +1710,10 @@
                             </Component>
                             <Component class="javax.swing.JTextField" name="txtDaysNumber">
                               <Properties>
+                                <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
-                                <Property name="text" type="java.lang.String" value="2"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                                     <TitledBorder title="Number of Working Days Applied For">
@@ -1880,7 +1886,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="429" max="-2" attributes="0"/>
-                                      <Component id="jDateChooser2" pref="216" max="32767" attributes="0"/>
+                                      <Component id="dateToOvertime" pref="216" max="32767" attributes="0"/>
                                       <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
@@ -1918,7 +1924,7 @@
                                               <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
                                               <Group type="102" alignment="1" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="dateFrom1" alignment="1" min="-2" pref="237" max="-2" attributes="0"/>
+                                                      <Component id="dateFromOvertime" alignment="1" min="-2" pref="237" max="-2" attributes="0"/>
                                                       <Component id="lblMyName3" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -1959,7 +1965,7 @@
                                           <Component id="lblName1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                                      <Component id="jDateChooser2" min="-2" pref="54" max="-2" attributes="0"/>
+                                      <Component id="dateToOvertime" min="-2" pref="54" max="-2" attributes="0"/>
                                       <EmptySpace pref="156" max="32767" attributes="0"/>
                                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
@@ -1974,7 +1980,7 @@
                                           <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
                                           <Component id="lblMyName3" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                          <Component id="dateFrom1" min="-2" pref="54" max="-2" attributes="0"/>
+                                          <Component id="dateFromOvertime" min="-2" pref="54" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                                           <Component id="jScrollPane3" min="-2" pref="103" max="-2" attributes="0"/>
                                           <EmptySpace pref="168" max="32767" attributes="0"/>
@@ -2030,7 +2036,7 @@
                                 <Property name="text" type="java.lang.String" value="John Paul Arquita"/>
                               </Properties>
                             </Component>
-                            <Component class="com.toedter.calendar.JDateChooser" name="dateFrom1">
+                            <Component class="com.toedter.calendar.JDateChooser" name="dateFromOvertime">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -2048,7 +2054,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+                            <Component class="com.toedter.calendar.JDateChooser" name="dateToOvertime">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -2077,7 +2083,7 @@
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JTextArea" name="txtReason1">
+                                <Component class="javax.swing.JTextArea" name="txtReasonOvertime">
                                   <Properties>
                                     <Property name="columns" type="int" value="20"/>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -2293,9 +2299,8 @@
                               <Font name="Segoe UI" size="14" style="0"/>
                             </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="5" rowCount="0">
+                              <Table columnCount="4" rowCount="0">
                                 <Column editable="false" title="DATE" type="java.lang.Object"/>
-                                <Column editable="false" title="DAY" type="java.lang.Object"/>
                                 <Column editable="false" title="LOGIN" type="java.lang.Object"/>
                                 <Column editable="false" title="LOGOUT" type="java.lang.Object"/>
                                 <Column editable="false" title="REMARKS" type="java.lang.Object"/>
@@ -2323,13 +2328,9 @@
                                   <Editor/>
                                   <Renderer/>
                                 </Column>
-                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                                  <Title/>
-                                  <Editor/>
-                                  <Renderer/>
-                                </Column>
                               </TableColumnModel>
                             </Property>
+                            <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                             <Property name="rowHeight" type="int" value="25"/>
                             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
