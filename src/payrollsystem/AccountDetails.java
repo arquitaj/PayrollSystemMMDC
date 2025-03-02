@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -21,7 +22,8 @@ import javax.swing.JOptionPane;
 public class AccountDetails {
     private ArrayList<ArrayList<String>> dataList = new ArrayList<>();
     private String filePath;
-    private int employeeID = 123;
+    private String employeeID = "123";
+    private String employeeCompleteName;
     private String firstName, lastName, birthday, address, phoneNumber, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor;
     private double basicSalary, riceSubsidy, phoneAllowance, clothingAllowance, semiBasicSalary, hourlyRate;
     private Object name = "John";
@@ -74,14 +76,13 @@ public class AccountDetails {
                 for(int i=0; i<getDataList().size(); i++){
                     for(int j=0; j<getDataList().get(i).size(); j++){
                         writer.write(getDataList().get(i).get(j)+",");
-//                        if(j<this.dataList.get(i).size()-1)
-//                            writer.newLine();
                     }
                     if(i<getDataList().size()-1)
                         writer.newLine();
                 }
                 writer.close();
                 JOptionPane.showMessageDialog(null, "Successfuly Added");
+                getDataList().clear();
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -95,13 +96,30 @@ public class AccountDetails {
     public ArrayList<ArrayList<String>> getDataList() {
         return dataList;
     }
-
+    
+//    void getEmployeeNames(){  
+//        System.out.println("I am being access and size is : "+getDataList().size());
+//       ArrayList <String> names = new ArrayList<>();      
+//        for(int i=1; i<getDataList().size(); i++){
+//            System.out.print("Last Name : "+ getDataList().get(i).get(1));
+//            System.out.print("Last Name : "+ getDataList().get(i).get(2));
+//            names.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
+//        }
+//        Collections.sort(names);
+//        getDataList().add(names);
+//        System.out.println("Data are : "+getDataList());
+//     }
+////        }
+       
+    String getEmployeeCompleteName(){
+        return getLastName()+" "+getFirstName();
+    }
     public String getFilePath() {
         return filePath;
     }
 
     public int getEmployeeID() {
-        return employeeID;
+        return Integer.parseInt(employeeID);
     }
 
     public String getFirstName() {
@@ -179,4 +197,7 @@ public class AccountDetails {
     public void setFilePath(String path){
         this.filePath = path;
     }
+   void setEmployeeID(String employeeID){
+       this.employeeID = employeeID;
+   }
 }

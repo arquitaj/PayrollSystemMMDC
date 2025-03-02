@@ -24,11 +24,14 @@ public class Employee extends AccountDetails {
     AccountDetails attendance = new AccountDetails();
     AccountDetails leave = new AccountDetails();
     AccountDetails overtime = new AccountDetails();
+    AccountDetails balance = new AccountDetails();
+    
     protected int indexAttendance;
     private String filePath;
     private String dateToday, timeNow;
     private String leaveDays;
     private int numberOfDaysLeave = 0;
+    private String balanceVL, balanceSL;
     
     Employee(){
         super();
@@ -44,6 +47,7 @@ public class Employee extends AccountDetails {
         accountDetails.retrivedDetails();
         accountDetails.userDetails();
     }
+    
     //To view all personal attendance
     void viewEmployeeAttendance(){
         viewPersonalDetails();
@@ -51,15 +55,32 @@ public class Employee extends AccountDetails {
         attendance.retrivedDetails();
     }
     
+    //To view all Personal Leave Ledger
     void viewPersonalLeaveLedger(){
         leave.setFilePath("CSVFiles//LeaveRequests.csv");
         leave.retrivedDetails();
     }
     
+    //To view
      void viewPersonalOvertime(){
         overtime.setFilePath("CSVFiles//OvertimeRequest.csv");
         overtime.retrivedDetails();
     }
+     
+     void leaveBalances(){
+        balance.setFilePath("CSVFiles//LeaveBalances.csv");
+        balance.retrivedDetails();
+     }
+     
+     void leaveBalancesInformation(){
+         leaveBalances();
+         for(int i=1; i<balance.getDataList().size(); i++){
+             if(balance.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID())){
+                 this.balanceVL = balance.getDataList().get(i).get(1);
+                 this.balanceSL = balance.getDataList().get(i).get(2);
+             }
+         }
+     }
      
     // To format the Local Time and Date Now
     void localDateTimeNow(){
@@ -70,32 +91,14 @@ public class Employee extends AccountDetails {
         LocalTime time = LocalTime.now();
         this.timeNow = time.getHour()+":"+time.getMinute();
     }
-//    public void viewPersonalDTR() {  
-//        viewEmployeeAttendance();
-//    }
-    
-    public void viewPersonalPayslip() {
-        
-    }
-    
-//    public void viewPersonalLeaveLedger() {
-//        AccountDetails leaveLedger = new AccountDetails();
-//        leaveLedger.setFilePath("CSVFiles//LeaveRequests.csv");
-//        try {
-//            leaveLedger.retrivedDetails();
-//        
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "No leave records found.");
-//        }
-//    }
+  
     
     //To Validate Attendance first before adding it in CSV
     boolean validateAttendance(String date){
         for (int i=1; i<attendance.getDataList().size(); i++){
             if(Integer.parseInt(attendance.getDataList().get(i).get(0)) == accountDetails.getEmployeeID() && 
-                    attendance.getDataList().get(i).get(1).equals(accountDetails.getLastName()) &&
-                    attendance.getDataList().get(i).get(2).equals(accountDetails.getFirstName()) &&
-                    attendance.getDataList().get(i).get(3).equals(date)) {
+                    attendance.getDataList().get(i).get(1).equals(accountDetails.getLastName()+" "+accountDetails.getFirstName()) &&
+                    attendance.getDataList().get(i).get(2).equals(date)) {
                 
                 this.indexAttendance = i;
                 return true;
@@ -106,14 +109,13 @@ public class Employee extends AccountDetails {
     
     //To record the login or time in of the employeee
     void userLogin(){
-        boolean isLogin = false;
         viewEmployeeAttendance(); //calling the method
         localDateTimeNow(); // To format the date
 
         if(validateAttendance(getDateToday())){
             JOptionPane.showMessageDialog(null, "You already made your time-in!!");
         }else{
-            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getLastName(), accountDetails.getFirstName(), getDateToday() , getTimeNow()};
+            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getEmployeeCompleteName(), getDateToday() , getTimeNow(),"","No", "No"};
             ArrayList<String> data = new ArrayList<>();
             data.addAll(Arrays.asList(newAttendance));
             attendance.getDataList().add(data);
@@ -128,15 +130,15 @@ public class Employee extends AccountDetails {
         viewEmployeeAttendance(); //Calling the method    
         localDateTimeNow();
         if(validateAttendance(getDateToday())){
-            if(attendance.getDataList().get(indexAttendance).size() == 5){
+            if(attendance.getDataList().get(indexAttendance).size() == 6){
                 attendance.getDataList().get(indexAttendance).add(5, getTimeNow());
                 attendance.addDetailsCSV();
             }else if (attendance.getDataList().get(indexAttendance).size() > 5 || attendance.getDataList().get(indexAttendance).get(4).equals("")){
-                attendance.getDataList().get(indexAttendance).set(5, getTimeNow());
+                attendance.getDataList().get(indexAttendance).set(4, getTimeNow());
                 attendance.addDetailsCSV();
             }
         }else{
-            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getLastName(), accountDetails.getFirstName(), getDateToday(), "",getTimeNow()};
+            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getEmployeeCompleteName(), getDateToday(), "",getTimeNow(),"No", "No"};
             ArrayList<String> data = new ArrayList<>();
             data.addAll(Arrays.asList(newAttendance));
             attendance.getDataList().add(data);
@@ -168,8 +170,8 @@ public class Employee extends AccountDetails {
     boolean fileLeaveRequest(ArrayList<String> data){
         localDateTimeNow();
         viewPersonalLeaveLedger();
-       
-        data.add(1, getDateToday()); //To insert date filed in index 1 of the arraylist data 
+        
+        data.add(2, getDateToday()); //To insert date filed in index 1 of the arraylist data 
         data.add("Pending");
         leave.getDataList().add(data);
         leave.addDetailsCSV(); //To add all data in the LeaveRequest CSV  
@@ -184,7 +186,8 @@ public class Employee extends AccountDetails {
         localDateTimeNow();
         viewPersonalOvertime();
         
-        data.add(1, getDateToday());
+        data.add(2, getDateToday());
+        data.add(3, "Overtime");
         data.add("Pending");
         overtime.getDataList().add(data);
         overtime.addDetailsCSV();
@@ -222,7 +225,17 @@ public class Employee extends AccountDetails {
     int getNumberOfDaysLeave(){
         return numberOfDaysLeave;
     }
+
+    String getBalanceVL() {
+        return balanceVL;
+    }
+
+    String getBalanceSL() {
+        return balanceSL;
+    }
+    
     void setNumberOfDaysLeave(){
         this.numberOfDaysLeave = 0;
     }
+    
 }
