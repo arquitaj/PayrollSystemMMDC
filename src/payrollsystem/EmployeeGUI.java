@@ -313,25 +313,25 @@ public class EmployeeGUI extends javax.swing.JFrame {
                                 .addComponent(jLabel6))
                             .addGroup(sideBarPanelLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(btnRequestPort, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(sideBarPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLeaveLedger1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLeaveLedger, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnRequestPort, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(sideBarPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnLeaveLedger1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnLeaveLedger, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(sideBarPanelLayout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(jLabel5)
-                            .addGap(36, 36, 36)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createSequentialGroup()
+                        .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(sideBarPanelLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel5)))
+                        .addGap(36, 36, 36))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createSequentialGroup()
                         .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNameSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1529,17 +1529,18 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "PERIOD", "PARTICULARS", "EARNED VL", "DEDUCTION VL", "BALANCE VL", "EARNED SL", "DEDUCTION SL", "BALANCE SL"
+                "FROM", "TO", "TYPE OF LEAVE", "DEDUCTED VL", "BALANCE (VL)", "DEDUCTED SL", "BALANCE (SL)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jTableAllRequest3.setColumnSelectionAllowed(true);
         jTableAllRequest3.setRowHeight(25);
         jTableAllRequest3.getTableHeader().setReorderingAllowed(false);
         tableDTR1.setViewportView(jTableAllRequest3);
@@ -1552,7 +1553,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
             jTableAllRequest3.getColumnModel().getColumn(4).setResizable(false);
             jTableAllRequest3.getColumnModel().getColumn(5).setResizable(false);
             jTableAllRequest3.getColumnModel().getColumn(6).setResizable(false);
-            jTableAllRequest3.getColumnModel().getColumn(7).setResizable(false);
         }
 
         jSeparator9.setBackground(new java.awt.Color(255, 204, 153));

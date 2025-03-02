@@ -1,4 +1,4 @@
 Employee #,Complete Name, Date Filed,Leave Type,From Date,To Date,Number of Days,Reason,Status,
-123,Garcia Manuel III,03/02/2025,Vacation Leave,03/03/2025,03/06/2025,4,First Leave,Pending,
-123,Garcia Manuel III,03/02/2025,Vacation Leave,03/10/2025,03/12/2025,3,Second Leave,Pending,
+123,Garcia Manuel III,03/02/2025,Vacation Leave,03/03/2025,03/06/2025,4,First Leave,Approved,
+123,Garcia Manuel III,03/02/2025,Vacation Leave,03/10/2025,03/12/2025,3,Second Leave,Disapproved,
 123,Garcia Manuel III,03/02/2025,Sick Leave,03/18/2025,03/20/2025,3,Third Leave,Pending,
