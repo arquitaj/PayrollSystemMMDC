@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +23,10 @@ import javax.swing.JOptionPane;
  */
 public class AccountDetails {
     private ArrayList<ArrayList<String>> dataList = new ArrayList<>();
+    private ArrayList<ArrayList<String>> newData = new ArrayList<>();
+    private ArrayList <String> fullName = new ArrayList<>();
+    private ArrayList<ArrayList<String>> idAndNames = new ArrayList<>();
+    
     private String filePath;
     private String employeeID = "123";
     private String employeeCompleteName;
@@ -88,6 +94,21 @@ public class AccountDetails {
             }
     }
     
+    void getEmployeeNames(){   
+        setFilePath("CSVFiles//EmployeeDatabase.csv");
+        retrivedDetails();
+        for(int i=1; i<getDataList().size(); i++){
+            ArrayList <String> names = new ArrayList<>();
+            names.add(getDataList().get(i).get(0));
+            names.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
+            getIdAndNames().add(names);
+            fullName.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
+        }
+           
+        Collections.sort(fullName);
+        getNewData().add(fullName); 
+    }
+    
     void printDetails(){
         for(ArrayList <String> data : getDataList())
             System.out.println(data);
@@ -96,21 +117,15 @@ public class AccountDetails {
     public ArrayList<ArrayList<String>> getDataList() {
         return dataList;
     }
+   
     
-//    void getEmployeeNames(){  
-//        System.out.println("I am being access and size is : "+getDataList().size());
-//       ArrayList <String> names = new ArrayList<>();      
-//        for(int i=1; i<getDataList().size(); i++){
-//            System.out.print("Last Name : "+ getDataList().get(i).get(1));
-//            System.out.print("Last Name : "+ getDataList().get(i).get(2));
-//            names.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
-//        }
-//        Collections.sort(names);
-//        getDataList().add(names);
-//        System.out.println("Data are : "+getDataList());
-//     }
-////        }
-       
+    ArrayList<ArrayList<String>> getIdAndNames(){
+       return this.idAndNames;
+   }
+   
+    ArrayList<ArrayList<String>> getNewData(){
+       return this.newData;
+   }   
     String getEmployeeCompleteName(){
         return getLastName()+" "+getFirstName();
     }
@@ -199,5 +214,8 @@ public class AccountDetails {
     }
    void setEmployeeID(String employeeID){
        this.employeeID = employeeID;
+   }
+   void setEmptyDataList(){
+       getDataList().clear();
    }
 }

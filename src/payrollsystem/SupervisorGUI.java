@@ -1872,11 +1872,11 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NAME", "DATE FILED", "TYPE OF REQUEST", "PERIOD FROM", "PERIOD TO", "REASON", "STATUS"
+                "ID", "NAME", "DATE FILED", "TYPE OF REQUEST", "PERIOD FROM", "PERIOD TO", "NUMBER OF DAYS", "REASON", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1897,6 +1897,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
             jTableAllRequest1.getColumnModel().getColumn(5).setResizable(false);
             jTableAllRequest1.getColumnModel().getColumn(6).setResizable(false);
             jTableAllRequest1.getColumnModel().getColumn(7).setResizable(false);
+            jTableAllRequest1.getColumnModel().getColumn(8).setResizable(false);
         }
 
         jSeparator16.setBackground(new java.awt.Color(255, 204, 153));
@@ -1981,9 +1982,9 @@ public class SupervisorGUI extends javax.swing.JFrame {
         tabbedEmployeeRequestLayout.setHorizontalGroup(
             tabbedEmployeeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabbedEmployeeRequestLayout.createSequentialGroup()
-                .addGap(175, 175, 175)
+                .addGap(166, 166, 166)
                 .addComponent(panelTypeRequest1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
         tabbedEmployeeRequestLayout.setVerticalGroup(
             tabbedEmployeeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2214,6 +2215,9 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
         comboTypeRequest.setSelectedIndex(0);
         tabbedInsideRequest.setSelectedIndex(0);
+        
+        // Display all requests in the table
+        supervisor.displayAllRequests(jTableAllRequest);
     }//GEN-LAST:event_btnRequestPortActionPerformed
 
     private void btnDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTRActionPerformed
@@ -2271,6 +2275,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
         if(selectedItem.equals("All Request")) {
             tabbedInsideRequest.setSelectedIndex(0);
+            supervisor.displayAllRequests(jTableAllRequest);
         } else if(selectedItem.equals("Leave Application")) {
             tabbedInsideRequest.setSelectedIndex(1);
 
@@ -2395,14 +2400,13 @@ public class SupervisorGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(6);
         supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
-        supervisor.setData();
     }//GEN-LAST:event_btnLeaveLedger2ActionPerformed
 
     private void btnLeaveLedger3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger3ActionPerformed
         // TODO add your handling code here:
           mainTabbed.setSelectedIndex(7);
           supervisor.getEmployeeNames();
-          for (ArrayList<String> row : supervisor.getData()) {
+          for (ArrayList<String> row : supervisor.getNewData()) {
             for (String item : row) {
                 comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
             }
@@ -2413,32 +2417,38 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void comboTypeRequest1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTypeRequest1ActionPerformed
         // TODO add your handling code here:
         supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
-        supervisor.setData();
+        supervisor.getNewData().clear();
+        supervisor.getDataList().clear();
     }//GEN-LAST:event_comboTypeRequest1ActionPerformed
 
     private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
         // TODO add your handling code here:
         int row = jTableAllRequest1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)jTableAllRequest1.getModel();
+        for(int i=0; i<9; i++){
+            supervisor.list.add(model.getValueAt(row, i).toString());
+        }
+
         if(jTableAllRequest1.getSelectedRow() != -1){
-            supervisor.approvedEmployeeRequest(model.getValueAt(row, 0).toString(), model.getValueAt(row, 1).toString(), model.getValueAt(row, 2).toString(), 
-                    model.getValueAt(row, 3).toString(),model.getValueAt(row, 4).toString(), model.getValueAt(row, 5).toString(), model.getValueAt(row, 7).toString(), btnUpdate1.getText());
-             supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
-             supervisor.setData();
+            supervisor.approvedEmployeeRequest(btnUpdate1.getText());
+            supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
         }else{
             JOptionPane.showMessageDialog(null, "Select Request First!");
         }
+        supervisor.getDataList().clear();
     }//GEN-LAST:event_btnUpdate1ActionPerformed
 
     private void btnCancel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel3ActionPerformed
         // TODO add your handling code here:
         int row = jTableAllRequest1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)jTableAllRequest1.getModel();
+        for(int i=0; i<9; i++){
+            supervisor.list.add(model.getValueAt(row, i).toString());
+        }
+
         if(jTableAllRequest1.getSelectedRow() != -1){
-            supervisor.approvedEmployeeRequest(model.getValueAt(row, 0).toString(), model.getValueAt(row, 1).toString(), model.getValueAt(row, 2).toString(), 
-                    model.getValueAt(row, 3).toString(),model.getValueAt(row, 4).toString(), model.getValueAt(row, 5).toString(), model.getValueAt(row, 7).toString(), btnCancel3.getText());
-             supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
-             supervisor.setData();
+            supervisor.approvedEmployeeRequest(btnCancel3.getText());
+            supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
         }else{
             JOptionPane.showMessageDialog(null, "Select Request First!");
         }

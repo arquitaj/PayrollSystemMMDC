@@ -9,13 +9,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class Employee extends AccountDetails {
@@ -74,10 +78,15 @@ public class Employee extends AccountDetails {
      
      void leaveBalancesInformation(){
          leaveBalances();
+         System.out.println("ID : "+accountDetails.getEmployeeID());
+          System.out.println("Data : "+balance.getDataList());
          for(int i=1; i<balance.getDataList().size(); i++){
-             if(balance.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID())){
+              System.out.println(1);
+             if(balance.getDataList().get(i).get(0).equals(String.valueOf(accountDetails.getEmployeeID()))){
                  this.balanceVL = balance.getDataList().get(i).get(1);
                  this.balanceSL = balance.getDataList().get(i).get(2);
+                 System.out.println("VL : "+balance.getDataList().get(i).get(1));
+                System.out.println("SL : "+balance.getDataList().get(i).get(2));
              }
          }
      }
@@ -115,7 +124,7 @@ public class Employee extends AccountDetails {
         if(validateAttendance(getDateToday())){
             JOptionPane.showMessageDialog(null, "You already made your time-in!!");
         }else{
-            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getEmployeeCompleteName(), getDateToday() , getTimeNow(),"","No", "No"};
+            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getEmployeeCompleteName(), getDateToday() , getTimeNow(),"","No", "No"," "};
             ArrayList<String> data = new ArrayList<>();
             data.addAll(Arrays.asList(newAttendance));
             attendance.getDataList().add(data);
@@ -131,14 +140,16 @@ public class Employee extends AccountDetails {
         localDateTimeNow();
         if(validateAttendance(getDateToday())){
             if(attendance.getDataList().get(indexAttendance).size() == 6){
+        
                 attendance.getDataList().get(indexAttendance).add(5, getTimeNow());
                 attendance.addDetailsCSV();
             }else if (attendance.getDataList().get(indexAttendance).size() > 5 || attendance.getDataList().get(indexAttendance).get(4).equals("")){
+                System.out.println("I am inside");
                 attendance.getDataList().get(indexAttendance).set(4, getTimeNow());
                 attendance.addDetailsCSV();
             }
         }else{
-            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getEmployeeCompleteName(), getDateToday(), "",getTimeNow(),"No", "No"};
+            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getEmployeeCompleteName(), getDateToday(), "",getTimeNow(),"No", "No",""};
             ArrayList<String> data = new ArrayList<>();
             data.addAll(Arrays.asList(newAttendance));
             attendance.getDataList().add(data);
@@ -197,6 +208,102 @@ public class Employee extends AccountDetails {
         return true;
     }
     
+    public void displayAllRequests(javax.swing.JTable requestTable) {
+    // Initialize collections to store both types of requests
+    ArrayList<ArrayList<String>> allRequests = new ArrayList<>();
+    
+    // Load leave requests
+    AccountDetails leaveRequests = new AccountDetails();
+    leaveRequests.setFilePath("CSVFiles//LeaveRequests.csv");
+    leaveRequests.retrivedDetails();
+    
+    // Filter leave requests for the current employee
+        for (int i = 1; i < leaveRequests.getDataList().size(); i++) {
+            if (leaveRequests.getDataList().get(i).get(0).equals(String.valueOf(this.accountDetails.getEmployeeID()))) {
+                ArrayList<String> requestData = new ArrayList<>();
+                requestData.add(leaveRequests.getDataList().get(i).get(2)); // Date Filed
+                requestData.add(leaveRequests.getDataList().get(i).get(3)); // Type of Request (Leave Type)
+                requestData.add(leaveRequests.getDataList().get(i).get(4)); // Period From
+                requestData.add(leaveRequests.getDataList().get(i).get(5)); // Period To
+                requestData.add(leaveRequests.getDataList().get(i).get(8)); // Status
+                allRequests.add(requestData);
+            }
+        }
+
+        // Load overtime requests
+        AccountDetails overtimeRequests = new AccountDetails();
+        overtimeRequests.setFilePath("CSVFiles//OvertimeRequest.csv");
+        overtimeRequests.retrivedDetails();
+
+        // Filter overtime requests for the current employee
+        for (int i = 1; i < overtimeRequests.getDataList().size(); i++) {
+            if (overtimeRequests.getDataList().get(i).get(0).equals(String.valueOf(this.accountDetails.getEmployeeID()))) {
+                ArrayList<String> requestData = new ArrayList<>();
+                requestData.add(overtimeRequests.getDataList().get(i).get(2)); // Date Filed
+                requestData.add("Overtime Request"); // Type of Request
+                requestData.add(overtimeRequests.getDataList().get(i).get(4)); // Period From
+                requestData.add(overtimeRequests.getDataList().get(i).get(5)); // Period To
+                requestData.add(overtimeRequests.getDataList().get(i).get(8)); // Status
+                allRequests.add(requestData);
+            }
+        }
+
+        // Sort all requests by date filed (newest first)
+        Collections.sort(allRequests, new Comparator<ArrayList<String>>() {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+            @Override
+            public int compare(ArrayList<String> request1, ArrayList<String> request2) {
+                try {
+                    // Compare dates in reverse order (newest first)
+                    Date date1 = dateFormat.parse(request1.get(0));
+                    Date date2 = dateFormat.parse(request2.get(0));
+                    return date2.compareTo(date1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return 0;
+                }
+            }
+        });
+
+        // Clear existing table data
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) requestTable.getModel();
+        model.setRowCount(0);
+
+        // Populate table with sorted requests
+        for (ArrayList<String> request : allRequests) {
+            model.addRow(new Object[] {
+                request.get(0),  // Date Filed
+                request.get(1),  // Type of Request
+                request.get(2),  // Period From
+                request.get(3),  // Period To
+                request.get(4)   // Status
+            });
+        }
+
+        // Clear collections after use
+        leaveRequests.getDataList().clear();
+        overtimeRequests.getDataList().clear();   
+    }
+    
+    void viewPersonalDTR(Date dateFrom, Date dateTo){
+         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+ 
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        startDate.setTime(dateFrom);
+        endDate.setTime(dateTo);
+        while(!startDate.after(endDate)){
+            Date currentDate = startDate.getTime();
+            if (startDate.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+                String formattedDate = formatter.format(currentDate);
+                System.out.println(formattedDate); //To count the days of leave
+            }
+            // Move to the next day
+            startDate.add(Calendar.DATE, 1);
+        }
+    }
+        
     public void updateLeaveRequest() {
     
     }

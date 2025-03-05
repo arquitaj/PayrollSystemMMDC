@@ -1901,11 +1901,6 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="429" max="-2" attributes="0"/>
-                                      <Component id="dateToOvertime" pref="216" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="lblLeaveBalances1" min="-2" pref="174" max="-2" attributes="0"/>
@@ -1915,39 +1910,48 @@
                                       <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
-                                              <Component id="btnSubmit1" min="-2" pref="85" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                              <Component id="btnCancel1" min="-2" pref="85" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace min="-2" pref="354" max="-2" attributes="0"/>
+                                                      <Component id="dateToOvertime" pref="216" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="lblEmpID2" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                                  <Component id="lblName1" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="btnSubmit1" min="-2" pref="85" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                                                      <Component id="btnCancel1" min="-2" pref="85" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="lblEmpID2" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                                          <Component id="lblName1" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="lblID1" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                                          <Component id="lblMyName2" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                  <Component id="jLabel1" alignment="0" min="-2" pref="435" max="-2" attributes="0"/>
+                                                  <Component id="txtDaysNumber1" alignment="0" min="-2" pref="239" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="lblID1" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                                  <Component id="lblMyName2" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
-                                              </Group>
+                                              <EmptySpace max="32767" attributes="0"/>
                                           </Group>
-                                          <Component id="jLabel1" alignment="0" min="-2" pref="435" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="dateFromOvertime" alignment="1" min="-2" pref="237" max="-2" attributes="0"/>
-                                                      <Component id="lblMyName3" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                              </Group>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="dateFromOvertime" alignment="1" min="-2" pref="237" max="-2" attributes="0"/>
+                                              <Component id="lblMyName3" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                                          <EmptySpace pref="409" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
@@ -1983,9 +1987,13 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                                       <Component id="dateToOvertime" min="-2" pref="54" max="-2" attributes="0"/>
-                                      <EmptySpace pref="156" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                      <Component id="txtDaysNumber1" pref="47" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jScrollPane3" min="-2" pref="80" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="btnSubmit1" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                                           <Component id="btnCancel1" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
@@ -1998,9 +2006,7 @@
                                           <Component id="lblMyName3" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                                           <Component id="dateFromOvertime" min="-2" pref="54" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                                          <Component id="jScrollPane3" min="-2" pref="103" max="-2" attributes="0"/>
-                                          <EmptySpace pref="168" max="32767" attributes="0"/>
+                                          <EmptySpace pref="316" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
@@ -2012,9 +2018,9 @@
                                   </Group>
                                   <Group type="103" rootIndex="3" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="451" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="461" max="-2" attributes="0"/>
                                           <Component id="jSeparator5" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="113" max="32767" attributes="0"/>
+                                          <EmptySpace pref="103" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -2070,6 +2076,9 @@
                                   </Border>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="dateFromOvertimePropertyChange"/>
+                              </Events>
                             </Component>
                             <Component class="com.toedter.calendar.JDateChooser" name="dateToOvertime">
                               <Properties>
@@ -2084,6 +2093,9 @@
                                   </Border>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="dateToOvertimePropertyChange"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="lblMyName3">
                               <Properties>
@@ -2166,6 +2178,24 @@
                                 </Property>
                                 <Property name="text" type="java.lang.String" value="*Please be informed that the overtime period is from 5:01pm to 9:00pm only."/>
                               </Properties>
+                            </Component>
+                            <Component class="javax.swing.JTextField" name="txtDaysNumber1">
+                              <Properties>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="0"/>
+                                </Property>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                    <TitledBorder title="Number of Working Days Applied For">
+                                      <Color PropertyName="color" blue="66" green="99" red="ff" type="rgb"/>
+                                    </TitledBorder>
+                                  </Border>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDaysNumber1ActionPerformed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -2256,7 +2286,9 @@
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="dateFrom2" min="-2" pref="237" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                                              <Component id="jDateChooser3" min="-2" pref="222" max="-2" attributes="0"/>
+                                              <Component id="dateTo2" min="-2" pref="222" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="btnGenerate" min="-2" pref="89" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
@@ -2285,11 +2317,19 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jSeparator8" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="dateFrom2" alignment="1" min="-2" pref="54" max="-2" attributes="0"/>
-                                  <Component id="jDateChooser3" alignment="1" min="-2" pref="54" max="-2" attributes="0"/>
-                                  <Component id="lblPeriod" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="dateFrom2" alignment="1" min="-2" pref="54" max="-2" attributes="0"/>
+                                          <Component id="dateTo2" alignment="1" min="-2" pref="54" max="-2" attributes="0"/>
+                                          <Component id="lblPeriod" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="btnGenerate" min="-2" pref="45" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="tableDTR" min="-2" max="-2" attributes="0"/>
@@ -2316,15 +2356,21 @@
                               <Font name="Segoe UI" size="14" style="0"/>
                             </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="4" rowCount="0">
+                              <Table columnCount="5" rowCount="0">
                                 <Column editable="false" title="DATE" type="java.lang.Object"/>
                                 <Column editable="false" title="LOGIN" type="java.lang.Object"/>
                                 <Column editable="false" title="LOGOUT" type="java.lang.Object"/>
+                                <Column editable="false" title="SUBMITTED TO SUPERVISOR" type="java.lang.Object"/>
                                 <Column editable="false" title="REMARKS" type="java.lang.Object"/>
                               </Table>
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                               <TableColumnModel selectionModel="1">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
                                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                                   <Title/>
                                   <Editor/>
@@ -2373,8 +2419,11 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="dateFrom2PropertyChange"/>
+                      </Events>
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser3">
+                    <Component class="com.toedter.calendar.JDateChooser" name="dateTo2">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -2387,6 +2436,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="dateTo2PropertyChange"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblPeriod">
                       <Properties>
@@ -2452,6 +2504,14 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="10001"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnGenerate">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Generate"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenerateActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

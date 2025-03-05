@@ -152,12 +152,13 @@ public class EmployeeGUI extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
+        txtDaysNumber1 = new javax.swing.JTextField();
         tabbedDTR = new javax.swing.JPanel();
         panelDTR = new javax.swing.JPanel();
         tableDTR = new javax.swing.JScrollPane();
         jTableAllRequest2 = new javax.swing.JTable();
         dateFrom2 = new com.toedter.calendar.JDateChooser();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        dateTo2 = new com.toedter.calendar.JDateChooser();
         lblPeriod = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
         btnSubmitToSepervisor = new javax.swing.JButton();
@@ -166,6 +167,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         lblMyName4 = new javax.swing.JLabel();
         lblEmpID3 = new javax.swing.JLabel();
         lblID2 = new javax.swing.JLabel();
+        btnGenerate = new javax.swing.JButton();
         tabbedLeaveLedger = new javax.swing.JPanel();
         panelLeaveLedger = new javax.swing.JPanel();
         tableDTR1 = new javax.swing.JScrollPane();
@@ -1193,9 +1195,19 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         dateFromOvertime.setBackground(new java.awt.Color(255, 255, 255));
         dateFromOvertime.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "From", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51)))); // NOI18N
+        dateFromOvertime.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateFromOvertimePropertyChange(evt);
+            }
+        });
 
         dateToOvertime.setBackground(new java.awt.Color(255, 255, 255));
         dateToOvertime.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "To", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
+        dateToOvertime.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateToOvertimePropertyChange(evt);
+            }
+        });
 
         lblMyName3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblMyName3.setText("Inclusive Dates*");
@@ -1231,14 +1243,19 @@ public class EmployeeGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jLabel1.setText("*Please be informed that the overtime period is from 5:01pm to 9:00pm only.");
 
+        txtDaysNumber1.setEditable(false);
+        txtDaysNumber1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtDaysNumber1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Number of Working Days Applied For", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 102))); // NOI18N
+        txtDaysNumber1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDaysNumber1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelOvertimeRequestLayout = new javax.swing.GroupLayout(panelOvertimeRequest);
         panelOvertimeRequest.setLayout(panelOvertimeRequestLayout);
         panelOvertimeRequestLayout.setHorizontalGroup(
             panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
-                .addGap(429, 429, 429)
-                .addComponent(dateToOvertime, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                .addGap(75, 75, 75))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOvertimeRequestLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblLeaveBalances1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1247,30 +1264,36 @@ public class EmployeeGUI extends javax.swing.JFrame {
                 .addGap(75, 75, 75)
                 .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
-                        .addComponent(btnSubmit1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(btnCancel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
+                                .addGap(354, 354, 354)
+                                .addComponent(dateToOvertime, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)))
+                        .addGap(75, 75, 75))
                     .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
                         .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblEmpID2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblName1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblID1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMyName2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
+                                .addComponent(btnSubmit1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(btnCancel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
+                                .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblEmpID2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblName1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblID1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblMyName2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDaysNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
                     .addGap(74, 74, 74)
-                    .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
-                            .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(dateFromOvertime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblMyName3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(0, 0, Short.MAX_VALUE)))
-                    .addGap(73, 73, 73)))
+                    .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(dateFromOvertime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMyName3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(409, Short.MAX_VALUE)))
             .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
                     .addGap(2, 2, 2)
@@ -1297,9 +1320,13 @@ public class EmployeeGUI extends javax.swing.JFrame {
                     .addComponent(lblName1))
                 .addGap(62, 62, 62)
                 .addComponent(dateToOvertime, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addComponent(txtDaysNumber1, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addGap(60, 60, 60)
+                .addGap(48, 48, 48)
                 .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSubmit1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1310,9 +1337,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
                     .addComponent(lblMyName3)
                     .addGap(9, 9, 9)
                     .addComponent(dateFromOvertime, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(45, 45, 45)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(168, Short.MAX_VALUE)))
+                    .addContainerGap(316, Short.MAX_VALUE)))
             .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
                     .addGap(151, 151, 151)
@@ -1320,9 +1345,9 @@ public class EmployeeGUI extends javax.swing.JFrame {
                     .addContainerGap(413, Short.MAX_VALUE)))
             .addGroup(panelOvertimeRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelOvertimeRequestLayout.createSequentialGroup()
-                    .addGap(451, 451, 451)
+                    .addGap(461, 461, 461)
                     .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(113, Short.MAX_VALUE)))
+                    .addContainerGap(103, Short.MAX_VALUE)))
         );
 
         tabbedInsideRequest.addTab("", panelOvertimeRequest);
@@ -1380,11 +1405,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "DATE", "LOGIN", "LOGOUT", "REMARKS"
+                "DATE", "LOGIN", "LOGOUT", "SUBMITTED TO SUPERVISOR", "REMARKS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1401,13 +1426,24 @@ public class EmployeeGUI extends javax.swing.JFrame {
             jTableAllRequest2.getColumnModel().getColumn(1).setResizable(false);
             jTableAllRequest2.getColumnModel().getColumn(2).setResizable(false);
             jTableAllRequest2.getColumnModel().getColumn(3).setResizable(false);
+            jTableAllRequest2.getColumnModel().getColumn(4).setResizable(false);
         }
 
         dateFrom2.setBackground(new java.awt.Color(255, 255, 255));
         dateFrom2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "From", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51)))); // NOI18N
+        dateFrom2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateFrom2PropertyChange(evt);
+            }
+        });
 
-        jDateChooser3.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "To", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
+        dateTo2.setBackground(new java.awt.Color(255, 255, 255));
+        dateTo2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "To", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
+        dateTo2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateTo2PropertyChange(evt);
+            }
+        });
 
         lblPeriod.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblPeriod.setText("Period :");
@@ -1435,6 +1471,13 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         lblID2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblID2.setText("10001");
+
+        btnGenerate.setText("Generate");
+        btnGenerate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelDTRLayout = new javax.swing.GroupLayout(panelDTR);
         panelDTR.setLayout(panelDTRLayout);
@@ -1467,7 +1510,9 @@ public class EmployeeGUI extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(dateFrom2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(55, 55, 55)
-                                .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dateTo2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDTRLayout.createSequentialGroup()
                                 .addComponent(tableDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1487,11 +1532,16 @@ public class EmployeeGUI extends javax.swing.JFrame {
                     .addComponent(lblName2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateFrom2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPeriod, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(panelDTRLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dateFrom2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateTo2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPeriod, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(panelDTRLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(tableDTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1877,10 +1927,16 @@ public class EmployeeGUI extends javax.swing.JFrame {
         // TODO add your handling code here:.
         mainTabbed.setSelectedIndex(2);
     
+        // Load employee data
         employee.viewPersonalDetails();
-    
+
+        // Set the combo box to "All Request" (index 0) and display the "All Request" panel
         comboTypeRequest.setSelectedIndex(0);
         tabbedInsideRequest.setSelectedIndex(0);
+
+        // Display all requests in the table
+        employee.displayAllRequests(jTableAllRequest);
+        
     }//GEN-LAST:event_btnRequestPortActionPerformed
 
     private void btnDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTRActionPerformed
@@ -1932,9 +1988,10 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         if(selectedItem.equals("All Request")) {
             tabbedInsideRequest.setSelectedIndex(0);
+            employee.displayAllRequests(jTableAllRequest);
         } else if(selectedItem.equals("Leave Application")) {
             tabbedInsideRequest.setSelectedIndex(1);
-            
+
             employee.leaveBalancesInformation();
             lblID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
             lblMyName.setText(employee.accountDetails.getEmployeeCompleteName());
@@ -1959,10 +2016,12 @@ public class EmployeeGUI extends javax.swing.JFrame {
                data.add(employee.accountDetails.getEmployeeCompleteName());
                data.add(dateFormat.format(dateFromOvertime.getDate()));
                data.add(dateFormat.format(dateToOvertime.getDate()));
+               data.add(txtDaysNumber1.getText());
                data.add(txtReasonOvertime.getText());
                if(employee.fileOvertimeRequest(data)){
                    dateFromOvertime.setDate(null);
                    dateToOvertime.setDate(null);
+                   txtDaysNumber1.setText(null);
                    txtReasonOvertime.setText(null);
                    employee.setNumberOfDaysLeave();
                }
@@ -2024,6 +2083,74 @@ public class EmployeeGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_dateFromPropertyChange
 
+    private void txtDaysNumber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDaysNumber1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDaysNumber1ActionPerformed
+
+    private void dateFromOvertimePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateFromOvertimePropertyChange
+        // TODO add your handling code here:
+        if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null){
+            if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
+                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
+            }else{
+                employee.setNumberOfDaysLeave();  
+                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+            }
+        }
+    }//GEN-LAST:event_dateFromOvertimePropertyChange
+
+    private void dateToOvertimePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateToOvertimePropertyChange
+        // TODO add your handling code here:
+        if(dateFromOvertime.getDate() != null && dateToOvertime.getDate() != null){
+            if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
+                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
+            }else{
+                employee.setNumberOfDaysLeave();
+                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+            }
+        }
+    }//GEN-LAST:event_dateToOvertimePropertyChange
+
+    private void dateFrom2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateFrom2PropertyChange
+        // TODO add your handling code here:
+//         if(dateTo2.getDate() != null && dateFrom2.getDate() != null){
+////            if(employee.countNumberOfDays(dateFrom2.getDate().toString(), dateTo2.getDate().toString())){
+//                System.out.println("1 If : "+employee.getNumberOfDaysLeave());
+////                employee.getNumberOfDaysLeave();
+////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+////                employee.setNumberOfDaysLeave();
+////            }else{
+////                employee.setNumberOfDaysLeave();  
+////                System.out.println("2 Else : "+employee.getNumberOfDaysLeave());
+//////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+////            }
+//        }
+    }//GEN-LAST:event_dateFrom2PropertyChange
+
+    private void dateTo2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateTo2PropertyChange
+        // TODO add your handling code here:
+//         if(dateFrom2.getDate() != null && dateTo2.getDate() != null){
+//            if(employee.countNumberOfDays(dateFrom2.getDate(), dateTo2.getDate())){
+//                System.out.println("3 If : "+employee.getNumberOfDaysLeave());
+////                employee.getNumberOfDaysLeave();
+////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+////                employee.setNumberOfDaysLeave();
+//            }else{
+//                employee.setNumberOfDaysLeave(); 
+//                System.out.println("4 If : "+employee.getNumberOfDaysLeave());
+////                employee.setNumberOfDaysLeave();
+////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+//            }
+//        }
+    }//GEN-LAST:event_dateTo2PropertyChange
+
+    private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateActionPerformed
+        // TODO add your handling code here:
+        employee.viewPersonalDTR(dateFrom2.getDate(), dateTo2.getDate());
+    }//GEN-LAST:event_btnGenerateActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -2037,6 +2164,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel1;
     private javax.swing.JButton btnCancel2;
     private javax.swing.JButton btnDTR;
+    private javax.swing.JButton btnGenerate;
     private javax.swing.JButton btnLeaveLedger;
     private javax.swing.JButton btnLeaveLedger1;
     private javax.swing.JButton btnLogin;
@@ -2055,8 +2183,8 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateFrom3;
     private com.toedter.calendar.JDateChooser dateFromOvertime;
     private com.toedter.calendar.JDateChooser dateTo;
+    private com.toedter.calendar.JDateChooser dateTo2;
     private com.toedter.calendar.JDateChooser dateToOvertime;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -2181,6 +2309,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtBiMonthlyRate;
     private javax.swing.JTextField txtClothingAllowance;
     private javax.swing.JTextField txtDaysNumber;
+    private javax.swing.JTextField txtDaysNumber1;
     private javax.swing.JTextField txtFName;
     private javax.swing.JTextField txtHourlyRate;
     private javax.swing.JTextField txtID;
