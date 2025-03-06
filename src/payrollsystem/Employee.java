@@ -303,6 +303,193 @@ public class Employee extends AccountDetails {
             startDate.add(Calendar.DATE, 1);
         }
     }
+    
+    public boolean displayAttendanceRecords(javax.swing.JTable attendanceTable, Date fromDate, Date toDate) {
+        
+        viewPersonalDetails();
+
+        // Load attendance data from CSV
+        AccountDetails attendance = new AccountDetails();
+        attendance.setFilePath("CSVFiles//AttendanceDatabase.csv");
+        attendance.retrivedDetails();
+
+        // Create date formatter for comparison
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+        // Clear the table model
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) attendanceTable.getModel();
+        model.setRowCount(0);
+
+        boolean recordsFound = false;
+
+        try {
+            // If no date range specified, set default to current pay period (1-15 or 16-end) ACHK NABOBO AKO DITO
+            if (fromDate == null && toDate == null) {
+                Calendar today = Calendar.getInstance();
+                int currentDay = today.get(Calendar.DAY_OF_MONTH);
+
+                Calendar startCal = Calendar.getInstance();
+                Calendar endCal = Calendar.getInstance();
+
+                if (currentDay <= 15) {
+                    // First half of the month (1-15)
+                    startCal.set(Calendar.DAY_OF_MONTH, 1);
+                    endCal.set(Calendar.DAY_OF_MONTH, 15);
+                } else {
+                    // Second half of the month (16-end)
+                    startCal.set(Calendar.DAY_OF_MONTH, 16);
+                    endCal.set(Calendar.DAY_OF_MONTH, endCal.getActualMaximum(Calendar.DAY_OF_MONTH));
+                }
+
+                fromDate = startCal.getTime();
+                toDate = endCal.getTime();
+            }
+
+            // Filter attendance records based on employee ID and date range
+            for (int i = 1; i < attendance.getDataList().size(); i++) {
+                ArrayList<String> record = attendance.getDataList().get(i);
+
+                // Check if this record belongs to the current employee
+                if (String.valueOf(this.accountDetails.getEmployeeID()).equals(record.get(0))) {
+
+                    // Parse the record date and check if it's within the date range
+                    String recordDateStr = record.get(2);
+                    Date recordDate = dateFormat.parse(recordDateStr);
+
+                    // If date is within range
+                    if ((fromDate == null && toDate == null) || 
+                        (fromDate == null && recordDate.compareTo(toDate) <= 0) ||
+                        (toDate == null && recordDate.compareTo(fromDate) >= 0) ||
+                        (recordDate.compareTo(fromDate) >= 0 && recordDate.compareTo(toDate) <= 0)) {
+
+                        // Add row to table
+                        String login = record.size() > 3 ? record.get(3) : "";
+                        String logout = record.size() > 4 ? record.get(4) : "";
+                        String submitted = record.size() > 5 ? record.get(5) : "No";
+                        String remarks = record.size() > 7 ? record.get(7) : "";
+
+                        model.addRow(new Object[] {
+                            recordDateStr,  // Date
+                            login,          // Login
+                            logout,         // Logout
+                            submitted,      // Submitted to supervisor
+                            remarks         // Remarks
+                        });
+
+                        recordsFound = true;
+                    }
+                }
+            }
+
+            // Sort the table by date (ascending)
+            if (recordsFound && attendanceTable.getRowCount() > 0) {
+                javax.swing.table.TableRowSorter<javax.swing.table.TableModel> sorter = 
+                    new javax.swing.table.TableRowSorter<>(attendanceTable.getModel());
+                attendanceTable.setRowSorter(sorter);
+
+                // Sort by date column (index 0)
+                java.util.List<javax.swing.RowSorter.SortKey> sortKeys = new ArrayList<>();
+                sortKeys.add(new javax.swing.RowSorter.SortKey(0, javax.swing.SortOrder.ASCENDING));
+                sorter.setSortKeys(sortKeys);
+                sorter.sort();
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error displaying attendance records: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            // Clear collection after use
+            attendance.getDataList().clear();
+    }
+    
+    return recordsFound;
+
+}
+    public boolean displayLeaveLedger(javax.swing.JTable leaveTable) {
+    //load personal details to ensure we have the employee ID
+    viewPersonalDetails();
+    
+    // Load leave request data
+    AccountDetails leaveRequests = new AccountDetails();
+    leaveRequests.setFilePath("CSVFiles//LeaveRequests.csv");
+    leaveRequests.retrivedDetails();
+    
+    // Clear the table model
+    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) leaveTable.getModel();
+    model.setRowCount(0);
+    
+    boolean recordsFound = false;
+    
+    try {
+        // Filter leave request records for the current employee
+        for (int i = 1; i < leaveRequests.getDataList().size(); i++) {
+            ArrayList<String> record = leaveRequests.getDataList().get(i);
+            
+            // Check if this record belongs to the current employee and is approved
+            if (String.valueOf(this.accountDetails.getEmployeeID()).equals(record.get(0)) && 
+                record.get(8).equalsIgnoreCase("Approved")) {
+                
+                // Get data from the record
+                String dateField = record.get(2);   // Date Filed
+                String leaveType = record.get(3);   // Type of Leave
+                String fromDate = record.get(4);    // Period From
+                String toDate = record.get(5);      // Period To
+                String numDays = record.get(6);     // Number of Days
+                String reason = record.get(7);      // Reason
+                String status = record.get(8);      // Status
+                
+                // Add row to table with the correct columns
+                model.addRow(new Object[] {
+                    dateField,     // DATE FILED
+                    leaveType,     // TYPE OF LEAVE
+                    fromDate,      // FROM
+                    toDate,        // TO
+                    numDays,       // NUMBER OF DAYS
+                    reason,        // REASON
+                    status         // STATUS
+                });
+                
+                recordsFound = true;
+            }
+        }
+        
+        // Sort the table by date (descending - newest first)
+        if (recordsFound && leaveTable.getRowCount() > 0) {
+            javax.swing.table.TableRowSorter<javax.swing.table.TableModel> sorter = 
+                new javax.swing.table.TableRowSorter<>(leaveTable.getModel());
+            leaveTable.setRowSorter(sorter);
+            
+            // Sort by date filed column (index 0)
+            java.util.List<javax.swing.RowSorter.SortKey> sortKeys = new ArrayList<>();
+            sortKeys.add(new javax.swing.RowSorter.SortKey(0, javax.swing.SortOrder.DESCENDING));
+            sorter.setSortKeys(sortKeys);
+            sorter.sort();
+        }
+        
+    } catch (Exception e) {
+        System.out.println("Error displaying leave ledger: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    } finally {
+        // Clear collection after use
+        leaveRequests.getDataList().clear();
+    }
+    
+    return recordsFound;
+}
+
+    public void updateLeaveBalanceLabels(javax.swing.JLabel lblVL, javax.swing.JLabel lblSL) {
+        // Load personal details to ensure we have the employee ID
+        viewPersonalDetails();
+    
+        // Load leave balances
+        leaveBalancesInformation();
+
+        // Update the labels with current balances
+        lblVL.setText(getBalanceVL());
+        lblSL.setText(getBalanceSL());
+}
         
     public void updateLeaveRequest() {
     

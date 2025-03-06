@@ -2288,7 +2288,7 @@
                                               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                                               <Component id="dateTo2" min="-2" pref="222" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="btnGenerate" min="-2" pref="89" max="-2" attributes="0"/>
+                                              <Component id="btnClear" min="-2" pref="89" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
@@ -2328,7 +2328,7 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                      <Component id="btnGenerate" min="-2" pref="45" max="-2" attributes="0"/>
+                                      <Component id="btnClear" min="-2" pref="45" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -2505,12 +2505,12 @@
                         <Property name="text" type="java.lang.String" value="10001"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnGenerate">
+                    <Component class="javax.swing.JButton" name="btnClear">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Generate"/>
+                        <Property name="text" type="java.lang.String" value="Clear"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenerateActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -2664,13 +2664,13 @@
                             </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="7" rowCount="0">
+                                <Column editable="false" title="DATE FILED" type="java.lang.Object"/>
+                                <Column editable="false" title="TYPE OF LEAVE" type="java.lang.Object"/>
                                 <Column editable="false" title="FROM" type="java.lang.Object"/>
                                 <Column editable="false" title="TO" type="java.lang.Object"/>
-                                <Column editable="false" title="TYPE OF LEAVE" type="java.lang.Object"/>
-                                <Column editable="false" title="DEDUCTED VL" type="java.lang.Object"/>
-                                <Column editable="false" title="BALANCE (VL)" type="java.lang.Object"/>
-                                <Column editable="false" title="DEDUCTED SL" type="java.lang.Object"/>
-                                <Column editable="false" title="BALANCE (SL)" type="java.lang.Object"/>
+                                <Column editable="false" title="NUMBER OF DAYS" type="java.lang.Object"/>
+                                <Column editable="false" title="REASON" type="java.lang.Object"/>
+                                <Column editable="false" title="STATUS" type="java.lang.Object"/>
                               </Table>
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

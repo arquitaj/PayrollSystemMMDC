@@ -7,6 +7,7 @@ package payrollsystem;
 import java.awt.BorderLayout;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -167,7 +168,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         lblMyName4 = new javax.swing.JLabel();
         lblEmpID3 = new javax.swing.JLabel();
         lblID2 = new javax.swing.JLabel();
-        btnGenerate = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         tabbedLeaveLedger = new javax.swing.JPanel();
         panelLeaveLedger = new javax.swing.JPanel();
         tableDTR1 = new javax.swing.JScrollPane();
@@ -1472,10 +1473,10 @@ public class EmployeeGUI extends javax.swing.JFrame {
         lblID2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblID2.setText("10001");
 
-        btnGenerate.setText("Generate");
-        btnGenerate.addActionListener(new java.awt.event.ActionListener() {
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGenerateActionPerformed(evt);
+                btnClearActionPerformed(evt);
             }
         });
 
@@ -1512,7 +1513,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
                                 .addGap(55, 55, 55)
                                 .addComponent(dateTo2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDTRLayout.createSequentialGroup()
                                 .addComponent(tableDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1541,7 +1542,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
                             .addComponent(lblPeriod, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(panelDTRLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(tableDTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1579,7 +1580,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "FROM", "TO", "TYPE OF LEAVE", "DEDUCTED VL", "BALANCE (VL)", "DEDUCTED SL", "BALANCE (SL)"
+                "DATE FILED", "TYPE OF LEAVE", "FROM", "TO", "NUMBER OF DAYS", "REASON", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1942,6 +1943,36 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private void btnDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTRActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(3);
+    
+        // Set employee details in the DTR panel
+        employee.viewPersonalDetails();
+        lblID2.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        lblMyName4.setText(employee.accountDetails.getEmployeeCompleteName());
+
+        // Get current date
+        Calendar today = Calendar.getInstance();
+        int currentDay = today.get(Calendar.DAY_OF_MONTH);
+
+        // Set up date range based on current period (1-15 or 16-end of month)
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+
+        if (currentDay <= 15) {
+            // First half of the month (1-15)
+            startCal.set(Calendar.DAY_OF_MONTH, 1);
+            endCal.set(Calendar.DAY_OF_MONTH, 15);
+        } else {
+            // Second half of the month (16-end)
+            startCal.set(Calendar.DAY_OF_MONTH, 16);
+            endCal.set(Calendar.DAY_OF_MONTH, endCal.getActualMaximum(Calendar.DAY_OF_MONTH));
+    }
+    
+        // Set the date fields to show the current period
+        dateFrom2.setDate(startCal.getTime());
+        dateTo2.setDate(endCal.getTime());
+
+        // Load and display the attendance records for the current period
+        employee.displayAttendanceRecords(jTableAllRequest2, startCal.getTime(), endCal.getTime());
     }//GEN-LAST:event_btnDTRActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
@@ -2049,7 +2080,27 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     private void btnLeaveLedgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedgerActionPerformed
         // TODO add your handling code here:
+        // Switch to the Leave Ledger tab
         mainTabbed.setSelectedIndex(4);
+
+        // Set employee details in the Leave Ledger panel
+        employee.viewPersonalDetails();
+        lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
+
+        // Update leave balance labels
+        employee.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
+
+        // Load and display leave history
+        boolean recordsFound = employee.displayLeaveLedger(jTableAllRequest3);
+
+        if (!recordsFound) {
+            // If no records found, show an informational message
+            JOptionPane.showMessageDialog(this, 
+                                        "No approved leave requests found in your history.", 
+                                        "No Leave History", 
+                                        JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnLeaveLedgerActionPerformed
 
     private void btnLeaveLedger1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger1ActionPerformed
@@ -2127,6 +2178,13 @@ public class EmployeeGUI extends javax.swing.JFrame {
 //////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
 ////            }
 //        }
+
+            if ("date".equals(evt.getPropertyName()) && dateFrom2.getDate() != null && dateTo2.getDate() != null) {
+            // If the date is valid, refresh the table with the new date range
+                if (!dateTo2.getDate().before(dateFrom2.getDate())) {
+                    employee.displayAttendanceRecords(jTableAllRequest2, dateFrom2.getDate(), dateTo2.getDate());
+            }
+        }
     }//GEN-LAST:event_dateFrom2PropertyChange
 
     private void dateTo2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateTo2PropertyChange
@@ -2144,12 +2202,44 @@ public class EmployeeGUI extends javax.swing.JFrame {
 ////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
 //            }
 //        }
+            if ("date".equals(evt.getPropertyName()) && dateFrom2.getDate() != null && dateTo2.getDate() != null) {
+                // If the date is valid, refresh the table with the new date range
+                if (!dateTo2.getDate().before(dateFrom2.getDate())) {
+                    employee.displayAttendanceRecords(jTableAllRequest2, dateFrom2.getDate(), dateTo2.getDate());
+            }
+        }
     }//GEN-LAST:event_dateTo2PropertyChange
 
-    private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateActionPerformed
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
-        employee.viewPersonalDTR(dateFrom2.getDate(), dateTo2.getDate());
-    }//GEN-LAST:event_btnGenerateActionPerformed
+        Calendar today = Calendar.getInstance();
+        int currentDay = today.get(Calendar.DAY_OF_MONTH);
+
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+
+        if (currentDay <= 15) {
+            // First half of the month (1-15)
+            startCal.set(Calendar.DAY_OF_MONTH, 1);
+            endCal.set(Calendar.DAY_OF_MONTH, 15);
+        } else {
+            // Second half of the month (16-end)
+            startCal.set(Calendar.DAY_OF_MONTH, 16);
+            endCal.set(Calendar.DAY_OF_MONTH, endCal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        }
+
+        // Set the date choosers to the default period
+        dateFrom2.setDate(startCal.getTime());
+        dateTo2.setDate(endCal.getTime());
+
+        // Call the method to display attendance records for the default period
+        boolean recordsFound = employee.displayAttendanceRecords(jTableAllRequest2, startCal.getTime(),endCal.getTime());
+
+        if (!recordsFound) {
+            JOptionPane.showMessageDialog(this, "No attendance records found for the current pay period.", 
+                                         "No Records", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnClearActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -2163,8 +2253,8 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCancel1;
     private javax.swing.JButton btnCancel2;
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDTR;
-    private javax.swing.JButton btnGenerate;
     private javax.swing.JButton btnLeaveLedger;
     private javax.swing.JButton btnLeaveLedger1;
     private javax.swing.JButton btnLogin;
