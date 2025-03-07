@@ -1444,11 +1444,11 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "DATE", "LOGIN", "LOGOUT", "REMARKS"
+                "DATE", "LOGIN", "LOGOUT", "SUBMITTED TO SUPPERVISOR", "REMARKS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1459,6 +1459,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         jTableAllRequest2.setRowHeight(25);
         jTableAllRequest2.getTableHeader().setReorderingAllowed(false);
         tableDTR.setViewportView(jTableAllRequest2);
+        jTableAllRequest2.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         dateFrom2.setBackground(new java.awt.Color(255, 255, 255));
         dateFrom2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "From", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51)))); // NOI18N
@@ -2486,6 +2487,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
             }
            }
+          supervisor.getNewData().clear();
           supervisor.setData();
     }//GEN-LAST:event_btnLeaveLedger3ActionPerformed
 
@@ -2531,7 +2533,9 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
         // TODO add your handling code here:
-        supervisor.TableDTR(jTableDTR, comboEmployeeName.getSelectedItem().toString());
+        supervisor.setSelectedName(comboEmployeeName.getSelectedItem().toString());
+//        supervisor.displayDataTable(jTableDTR, "EMPLOYEE DTR");
+        supervisor.getDataForTable();
         supervisor.setData();
     }//GEN-LAST:event_comboEmployeeNameActionPerformed
 

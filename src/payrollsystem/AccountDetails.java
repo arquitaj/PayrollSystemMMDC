@@ -22,9 +22,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Paul
  */
 public class AccountDetails {
+    private ArrayList<ArrayList<String>> tableData = new ArrayList<>();
     private ArrayList<ArrayList<String>> dataList = new ArrayList<>();
     private ArrayList<ArrayList<String>> newData = new ArrayList<>();
-    private ArrayList <String> fullName = new ArrayList<>();
     private ArrayList<ArrayList<String>> idAndNames = new ArrayList<>();
     
     private String filePath;
@@ -32,7 +32,9 @@ public class AccountDetails {
     private String employeeCompleteName;
     private String firstName, lastName, birthday, address, phoneNumber, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor;
     private double basicSalary, riceSubsidy, phoneAllowance, clothingAllowance, semiBasicSalary, hourlyRate;
-    private Object name = "John";
+
+    int tableSize;
+    
     AccountDetails(){
         
     }
@@ -94,21 +96,59 @@ public class AccountDetails {
             }
     }
     
-    void getEmployeeNames(){   
-        setFilePath("CSVFiles//EmployeeDatabase.csv");
-        retrivedDetails();
-        for(int i=1; i<getDataList().size(); i++){
-            ArrayList <String> names = new ArrayList<>();
-            names.add(getDataList().get(i).get(0));
-            names.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
-            getIdAndNames().add(names);
-            fullName.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
-        }
-           
-        Collections.sort(fullName);
-        getNewData().add(fullName); 
-    }
+
     
+//    String getID(){
+//       String id = "";
+//       for(ArrayList<String> idName : idAndNames){
+//           if(idName.get(1).equals(selectedName)){
+//               id = idName.get(0);
+//           }
+//       }
+//       return id;
+//    }
+//    void arrayDataInTable(){
+//        for(ArrayList<String> data : getDataList()){
+//            if(data.get(5).equals("Yes"))
+//        }
+//    }
+    
+    DefaultTableModel displayDataTable(JTable jTableDTR, String command){
+    DefaultTableModel model = (DefaultTableModel) jTableDTR.getModel();
+        
+//       System.out.println("Name : "+ getSelectedName());
+       
+       
+       switch(command){
+           case "EMPLOYEE DTR":
+               getDataList().clear();
+               setFilePath("CSVFiles//AttendanceDatabase.csv");
+               retrivedDetails();
+               
+               this.tableSize = 6;
+               break;
+           default:
+               break;
+       }
+       
+       
+
+       
+
+        model.setRowCount(0);
+           Object rowData[] = new Object [this.tableSize];
+
+           for(int row=0; row<getNewData().size(); row++){
+               for(int i=0; i<rowData.length; i++){
+                  rowData[i] = getNewData().get(row).get(i); 
+               }
+               model.addRow(rowData);
+           }
+           getNewData().clear();
+   
+      return model;
+      
+    }
     void printDetails(){
         for(ArrayList <String> data : getDataList())
             System.out.println(data);
@@ -208,7 +248,7 @@ public class AccountDetails {
     public String getBirthday() {
         return birthday;
     }
-    
+
     public void setFilePath(String path){
         this.filePath = path;
     }
@@ -218,4 +258,8 @@ public class AccountDetails {
    void setEmptyDataList(){
        getDataList().clear();
    }
+   void setTableData(ArrayList<ArrayList<String>> newData){
+       this.tableData = newData;
+   }
+
 }

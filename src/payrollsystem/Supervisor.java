@@ -23,8 +23,10 @@ public class Supervisor extends Employee{
     
     Employee employee = new Employee();
     private ArrayList<ArrayList<String>> data = new ArrayList<>();
-//    private ArrayList<ArrayList<String>> idAndNames = new ArrayList<>();
+    private ArrayList<ArrayList<String>> idAndNames = new ArrayList<>();
     ArrayList<String> list = new ArrayList<>();
+    private String selectedName;
+    private ArrayList <String> fullName = new ArrayList<>();
     
     Supervisor(){
         super();
@@ -36,37 +38,37 @@ public class Supervisor extends Employee{
     }
     
      void employeeRequest(){
-       retrivedDetails();
-       for(int i=1; i<getDataList().size(); i++){
-          if(getDataList().get(i).get(8).equals("Pending")){
-            getNewData().add(getDataList().get(i));
+       employee.retrivedDetails();
+       for(int i=1; i<employee.getDataList().size(); i++){
+          if(employee.getDataList().get(i).get(8).equals("Pending")){
+            getNewData().add(employee.getDataList().get(i));
           }
        }
        
    } 
    DefaultTableModel TableData(JTable jTableEmployeeRequest, String selectedItem){
       DefaultTableModel model = (DefaultTableModel) jTableEmployeeRequest.getModel();
-        
+        employee.getDataList().clear();
         int tableSize = 0;
         switch (selectedItem) {
             case "Leave Request" -> {
-                setFilePath("CSVFiles//LeaveRequests.csv");
+                employee.setFilePath("CSVFiles//LeaveRequests.csv");
                 employeeRequest();
-                getDataList().clear();
+                employee.getDataList().clear();
                 tableSize = 9;
             }
             case "Overtime Request" -> {
-                setFilePath("CSVFiles//OvertimeRequest.csv");
+                employee.setFilePath("CSVFiles//OvertimeRequest.csv");
                 employeeRequest();
                 tableSize = 9;  
             }
             case "All Request" -> {
-                setFilePath("CSVFiles//LeaveRequests.csv");
+                employee.setFilePath("CSVFiles//LeaveRequests.csv");
                 employeeRequest();
                 getDataList().clear();
-                setFilePath("CSVFiles//OvertimeRequest.csv");
+                employee.setFilePath("CSVFiles//OvertimeRequest.csv");
                 employeeRequest();
-                getDataList().clear();
+                employee.getDataList().clear();
                 tableSize = 9;
             }
             default -> {
@@ -88,9 +90,10 @@ public class Supervisor extends Employee{
             return model;
    } 
    
-      DefaultTableModel TableDTR(JTable jTableDTR, String selectedName){
-      DefaultTableModel model = (DefaultTableModel) jTableDTR.getModel();
+//      DefaultTableModel TableDTR(JTable jTableDTR, String selectedName){
+//      DefaultTableModel model = (DefaultTableModel) jTableDTR.getModel();
      
+//      System.out.println("I am access1 :"+selectedName);
 //      if(selectedName.equals("")){
 //          model.setRowCount(0);
 //         return model;
@@ -123,9 +126,51 @@ public class Supervisor extends Employee{
 //                  }         
 //                return model;
 //      }
-            return model;
-   }    
+//            return model;
+//   }    
  
+    void getEmployeeNames(){  
+        getDataList().clear();
+        getNewData().clear();
+        fullName.clear();
+        setFilePath("CSVFiles//EmployeeDatabase.csv");
+        retrivedDetails();
+        for(int i=1; i<getDataList().size(); i++){
+            ArrayList <String> names = new ArrayList<>();
+            names.add(getDataList().get(i).get(0));
+            names.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
+            getIdAndNames().add(names);
+            fullName.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
+        }
+           
+        Collections.sort(fullName);
+        getNewData().add(fullName); 
+    }
+       
+
+    void getDataForTable(){
+        employee.getDataList().clear();
+        String id = "";
+        for(ArrayList<String> idName : getIdAndNames()){
+           if(idName.get(1).equals(getSelectedName())){
+               id = idName.get(0);
+           }
+        }
+        
+        System.out.println("ID : "+id);
+        employee.setFilePath("CSVFiles//AttendanceDatabase.csv");
+        employee.retrivedDetails();
+        System.out.println("Data are: "+employee.getDataList());
+        int count = 0;
+        for(int i=0; i<employee.getDataList().size(); i++){
+            if(!employee.getDataList().get(i).get(0).equals(id)){
+                System.out.println("Data : "+employee.getDataList().get(i));
+                employee.getDataList().remove(i);
+            }
+        }
+        System.out.println("Data Left: "+employee.getDataList());
+
+    }
       
     void updateEmployeeRequestRecord(String command){
         employee.retrivedDetails();
@@ -282,7 +327,14 @@ public class Supervisor extends Employee{
    void setData(){
        this.data.clear();
    }
+
    void printData(){
        System.out.print("The data is: "+getData());
+   }
+   void setSelectedName(String selectedName){
+       this.selectedName = selectedName;
+   }
+   String getSelectedName(){
+       return this.selectedName;
    }
 }
