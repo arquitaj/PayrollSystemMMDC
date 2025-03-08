@@ -27,6 +27,7 @@ public class AccountDetails {
     private ArrayList<ArrayList<String>> newData = new ArrayList<>();
     private ArrayList<ArrayList<String>> idAndNames = new ArrayList<>();
     
+    
     private String filePath;
     private String employeeID = "123";
     private String employeeCompleteName;
@@ -95,65 +96,21 @@ public class AccountDetails {
                 e.printStackTrace();
             }
     }
-    
-
-    
-//    String getID(){
-//       String id = "";
-//       for(ArrayList<String> idName : idAndNames){
-//           if(idName.get(1).equals(selectedName)){
-//               id = idName.get(0);
-//           }
-//       }
-//       return id;
-//    }
-//    void arrayDataInTable(){
-//        for(ArrayList<String> data : getDataList()){
-//            if(data.get(5).equals("Yes"))
-//        }
-//    }
-    
-    DefaultTableModel displayDataTable(JTable jTableDTR, String command){
-    DefaultTableModel model = (DefaultTableModel) jTableDTR.getModel();
-        
-//       System.out.println("Name : "+ getSelectedName());
-       
-       
-       switch(command){
-           case "EMPLOYEE DTR":
-               getDataList().clear();
-               setFilePath("CSVFiles//AttendanceDatabase.csv");
-               retrivedDetails();
-               
-               this.tableSize = 6;
-               break;
-           default:
-               break;
-       }
-       
-       
-
-       
-
+           
+    DefaultTableModel displayDataTable(JTable jTable){
+    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
            Object rowData[] = new Object [this.tableSize];
-
-           for(int row=0; row<getNewData().size(); row++){
+           for(int row=0; row<getTableData().size(); row++){
                for(int i=0; i<rowData.length; i++){
-                  rowData[i] = getNewData().get(row).get(i); 
+                  rowData[i] = getTableData().get(row).get(i); 
                }
                model.addRow(rowData);
            }
            getNewData().clear();
-   
-      return model;
-      
+        return model;
     }
-    void printDetails(){
-        for(ArrayList <String> data : getDataList())
-            System.out.println(data);
-    }
-
+    
     public ArrayList<ArrayList<String>> getDataList() {
         return dataList;
     }
@@ -248,7 +205,12 @@ public class AccountDetails {
     public String getBirthday() {
         return birthday;
     }
-
+    int getTableSize(){
+        return this.tableSize;
+    }
+    ArrayList<ArrayList<String>> getTableData(){
+        return this.tableData;
+    }
     public void setFilePath(String path){
         this.filePath = path;
     }
@@ -258,8 +220,13 @@ public class AccountDetails {
    void setEmptyDataList(){
        getDataList().clear();
    }
+   void setTableData(){
+       getTableData().clear();
+   }
    void setTableData(ArrayList<ArrayList<String>> newData){
        this.tableData = newData;
    }
-
+   void setTableSize(int tableSize){
+       this.tableSize = tableSize;
+   }
 }

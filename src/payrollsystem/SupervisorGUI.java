@@ -6,6 +6,7 @@ package payrollsystem;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -228,7 +229,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         jTableDTR = new javax.swing.JTable();
         jSeparator17 = new javax.swing.JSeparator();
-        btnUpdate2 = new javax.swing.JButton();
+        btnForwardToPayroll = new javax.swing.JButton();
         lblEmpID6 = new javax.swing.JLabel();
         lblID5 = new javax.swing.JLabel();
         lblName6 = new javax.swing.JLabel();
@@ -2031,7 +2032,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         lblRequestType2.setText("Employee Name:");
         jPanel11.add(lblRequestType2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 108, -1));
 
-        comboEmployeeName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        comboEmployeeName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { null }));
         comboEmployeeName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboEmployeeNameActionPerformed(evt);
@@ -2064,11 +2065,10 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableDTR.setColumnSelectionAllowed(true);
         jTableDTR.setRowHeight(25);
         jTableDTR.getTableHeader().setReorderingAllowed(false);
         jScrollPane6.setViewportView(jTableDTR);
-        jTableDTR.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTableDTR.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (jTableDTR.getColumnModel().getColumnCount() > 0) {
             jTableDTR.getColumnModel().getColumn(0).setResizable(false);
             jTableDTR.getColumnModel().getColumn(1).setResizable(false);
@@ -2080,10 +2080,10 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
         jSeparator17.setBackground(new java.awt.Color(255, 204, 153));
 
-        btnUpdate2.setText("FORWARD TO PAYROLL STAFF");
-        btnUpdate2.addActionListener(new java.awt.event.ActionListener() {
+        btnForwardToPayroll.setText("FORWARD TO PAYROLL STAFF");
+        btnForwardToPayroll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate2ActionPerformed(evt);
+                btnForwardToPayrollActionPerformed(evt);
             }
         });
 
@@ -2109,7 +2109,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(panelAllRequest2Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(btnUpdate2)
+                .addComponent(btnForwardToPayroll)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAllRequest2Layout.createSequentialGroup()
                 .addContainerGap(36, Short.MAX_VALUE)
@@ -2146,7 +2146,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnUpdate2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnForwardToPayroll, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
@@ -2482,6 +2482,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
           mainTabbed.setSelectedIndex(7);
           supervisor.getEmployeeNames();
+          System.out.println("Names : "+supervisor.getNewData());
           for (ArrayList<String> row : supervisor.getNewData()) {
             for (String item : row) {
                 comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
@@ -2534,14 +2535,38 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
         // TODO add your handling code here:
         supervisor.setSelectedName(comboEmployeeName.getSelectedItem().toString());
-//        supervisor.displayDataTable(jTableDTR, "EMPLOYEE DTR");
-        supervisor.getDataForTable();
-        supervisor.setData();
+        supervisor.setTableData(supervisor.getDataForDTRTable());
+        supervisor.setTableSize(6);
+        supervisor.displayDataTable(jTableDTR);
+        supervisor.setTableData();
+//        supervisor.setData();
     }//GEN-LAST:event_comboEmployeeNameActionPerformed
 
-    private void btnUpdate2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate2ActionPerformed
+    private void btnForwardToPayrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForwardToPayrollActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdate2ActionPerformed
+        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+        int[] row = jTableDTR.getSelectedRows();
+        DefaultTableModel model = (DefaultTableModel)jTableDTR.getModel();
+        for(int r : row){
+            ArrayList <String> rowData = new ArrayList<>();
+            rowData.add(model.getValueAt(r, 0).toString());
+            rowData.add(model.getValueAt(r, 1).toString());
+            rowData.add(model.getValueAt(r, 2).toString());
+            rowData.add(model.getValueAt(r, 3).toString()); 
+            rowData.add(model.getValueAt(r, 4).toString());
+            tempData.add(rowData);
+        }
+        if(jTableDTR.getSelectedRow() != -1){
+            supervisor.forwardDTR(tempData);
+            supervisor.setTableData(supervisor.getDataForDTRTable());
+            supervisor.setTableSize(6);
+            supervisor.displayDataTable(jTableDTR);
+            supervisor.setTableData();
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Select DTR First!");
+        }
+    }//GEN-LAST:event_btnForwardToPayrollActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
@@ -2636,6 +2661,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel3;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDTR;
+    private javax.swing.JButton btnForwardToPayroll;
     private javax.swing.JButton btnLeaveLedger;
     private javax.swing.JButton btnLeaveLedger1;
     private javax.swing.JButton btnLeaveLedger2;
@@ -2650,7 +2676,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnSubmitToSepervisor;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUpdate1;
-    private javax.swing.JButton btnUpdate2;
     private javax.swing.JComboBox<String> comboEmployeeName;
     private javax.swing.JComboBox<String> comboLeaveType;
     private javax.swing.JComboBox<String> comboTypeRequest;

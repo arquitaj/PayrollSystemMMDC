@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class PayrollStaffGUI extends javax.swing.JFrame {
 
-    Employee payrollStaff = new Employee();
+    PayrollStaff payrollStaff = new PayrollStaff();
     ArrayList<String> data = new ArrayList<>(); //To hold as storage
     SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
     
@@ -203,9 +203,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         tabbedInsideRequest1 = new javax.swing.JTabbedPane();
         panelAllRequest1 = new javax.swing.JPanel();
-        lblAllRequest1 = new javax.swing.JLabel();
+        lblPayrollPeriod = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTableAllRequest1 = new javax.swing.JTable();
+        jTablePayroll = new javax.swing.JTable();
         jSeparator16 = new javax.swing.JSeparator();
         btnUpdate1 = new javax.swing.JButton();
         btnCancel3 = new javax.swing.JButton();
@@ -224,7 +224,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         panelAllRequest2 = new javax.swing.JPanel();
         lblAllRequest2 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTableAllRequest4 = new javax.swing.JTable();
+        jTableDTR = new javax.swing.JTable();
         jSeparator17 = new javax.swing.JSeparator();
         btnUpdate2 = new javax.swing.JButton();
 
@@ -1846,45 +1846,32 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
         panelAllRequest1.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblAllRequest1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblAllRequest1.setText("Payroll from March 1-15, 2025");
+        lblPayrollPeriod.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblPayrollPeriod.setText("Payroll from March 1-15, 2025");
 
-        jTableAllRequest1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTableAllRequest1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTableAllRequest1.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePayroll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTablePayroll.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTablePayroll.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "NAME", "POSITION", "DEPARTMENT", "GROSS INCOME", "BENEFITS", "SSS CONT.", "PHILHEALTH CONT.", "PAGIBIG CONT.", "TAX CONT.", "NET PAY"
+                "ID", "NAME", "PAYROLL PERIOD", "POSITION", "GROSS INCOME", "BENEFITS", "OVERTIME", "LATE/UNDERTIME", "SSS CONT.", "PHILHEALTH CONT.", "PAGIBIG CONT.", "TAX CONT.", "NET PAY", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableAllRequest1.setColumnSelectionAllowed(true);
-        jTableAllRequest1.setRowHeight(25);
-        jTableAllRequest1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane5.setViewportView(jTableAllRequest1);
-        jTableAllRequest1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        if (jTableAllRequest1.getColumnModel().getColumnCount() > 0) {
-            jTableAllRequest1.getColumnModel().getColumn(0).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(1).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(2).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(3).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(4).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(5).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(6).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(7).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(8).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(9).setResizable(false);
-            jTableAllRequest1.getColumnModel().getColumn(10).setResizable(false);
-        }
+        jTablePayroll.setColumnSelectionAllowed(true);
+        jTablePayroll.setRowHeight(25);
+        jTablePayroll.getTableHeader().setReorderingAllowed(false);
+        jScrollPane5.setViewportView(jTablePayroll);
+        jTablePayroll.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         jSeparator16.setBackground(new java.awt.Color(255, 204, 153));
 
@@ -1911,6 +1898,11 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         lblTo.setText("To :");
 
         jButton1.setText("Generate Report");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelAllRequest1Layout = new javax.swing.GroupLayout(panelAllRequest1);
         panelAllRequest1.setLayout(panelAllRequest1Layout);
@@ -1918,59 +1910,50 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
             panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAllRequest1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSeparator16)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAllRequest1Layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAllRequest1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 1291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))
-                    .addGroup(panelAllRequest1Layout.createSequentialGroup()
+                        .addComponent(lblFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(lblTo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelAllRequest1Layout.createSequentialGroup()
-                                .addComponent(lblAllRequest3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(lblTo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1))
+                            .addComponent(lblAllRequest3)
                             .addGroup(panelAllRequest1Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addComponent(btnUpdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(38, 38, 38)
                                 .addComponent(btnCancel3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAllRequest1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblAllRequest1)
-                .addGap(524, 524, 524))
+                        .addGap(0, 643, Short.MAX_VALUE))
+                    .addComponent(jSeparator16)
+                    .addComponent(jScrollPane5))
+                .addContainerGap())
+            .addGroup(panelAllRequest1Layout.createSequentialGroup()
+                .addGap(586, 586, 586)
+                .addComponent(lblPayrollPeriod)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAllRequest1Layout.setVerticalGroup(
             panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAllRequest1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
                 .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAllRequest1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(lblAllRequest3))
-                    .addGroup(panelAllRequest1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblTo)
-                            .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblFrom)
-                                    .addComponent(jButton1))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(lblAllRequest1)
+                    .addComponent(lblAllRequest3)
+                    .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTo)
+                        .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblFrom)
+                                .addComponent(jButton1)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(lblPayrollPeriod)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -2008,9 +1991,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         tabbedPayrollLayout.setHorizontalGroup(
             tabbedPayrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabbedPayrollLayout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(32, 32, 32)
                 .addComponent(panelTypeRequest1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         tabbedPayrollLayout.setVerticalGroup(
             tabbedPayrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2046,9 +2029,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         lblAllRequest2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblAllRequest2.setText("ALL REQUEST");
 
-        jTableAllRequest4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTableAllRequest4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTableAllRequest4.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDTR.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTableDTR.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableDTR.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -2064,10 +2047,10 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableAllRequest4.setColumnSelectionAllowed(true);
-        jTableAllRequest4.setRowHeight(25);
-        jTableAllRequest4.getTableHeader().setReorderingAllowed(false);
-        jScrollPane6.setViewportView(jTableAllRequest4);
+        jTableDTR.setColumnSelectionAllowed(true);
+        jTableDTR.setRowHeight(25);
+        jTableDTR.getTableHeader().setReorderingAllowed(false);
+        jScrollPane6.setViewportView(jTableDTR);
 
         jSeparator17.setBackground(new java.awt.Color(255, 204, 153));
 
@@ -2240,14 +2223,14 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     private void btnLeaveLedger3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger3ActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(7);
-//        payrollStaff.getEmployeeNames();
-//        comboEmployeeName.addItem("");
-//        StringBuilder sb = new StringBuilder();
-//        for (ArrayList<String> row : payrollStaff.getData()) {
-//            for (String item : row) {
-//                comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
-//            }
-//        }
+        comboEmployeeName.addItem("");
+        payrollStaff.getEmployeeNames();
+          for (ArrayList<String> row : payrollStaff.getNewData()) {
+            for (String item : row) {
+                comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
+            }
+           }
+          payrollStaff.getNewData().clear();
     }//GEN-LAST:event_btnLeaveLedger3ActionPerformed
 
     private void txtBasicSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBasicSalaryActionPerformed
@@ -2426,11 +2409,25 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
         // TODO add your handling code here:
+                payrollStaff.setSelectedName(comboEmployeeName.getSelectedItem().toString());
+        payrollStaff.setTableData(payrollStaff.getDataForDTRTable());
+        payrollStaff.setTableSize(6);
+        payrollStaff.displayDataTable(jTableDTR);
+        payrollStaff.setTableData();
     }//GEN-LAST:event_comboEmployeeNameActionPerformed
 
     private void btnUpdate2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnUpdate2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String payrollRange = payrollStaff.computePayroll();
+        payrollStaff.setTableData(payrollStaff.getDataForPayrollTable());
+        payrollStaff.setTableSize(14);
+        payrollStaff.displayDataTable(jTablePayroll);
+        lblPayrollPeriod.setText("Payroll from "+payrollRange);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2543,13 +2540,12 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTable jTableAllRequest;
-    private javax.swing.JTable jTableAllRequest1;
     private javax.swing.JTable jTableAllRequest2;
     private javax.swing.JTable jTableAllRequest3;
-    private javax.swing.JTable jTableAllRequest4;
+    private javax.swing.JTable jTableDTR;
+    private javax.swing.JTable jTablePayroll;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblAllRequest;
-    private javax.swing.JLabel lblAllRequest1;
     private javax.swing.JLabel lblAllRequest2;
     private javax.swing.JLabel lblAllRequest3;
     private javax.swing.JLabel lblBDay;
@@ -2591,6 +2587,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblName5;
     private javax.swing.JLabel lblNameSidebar;
     private javax.swing.JLabel lblPagIbigNum;
+    private javax.swing.JLabel lblPayrollPeriod;
     private javax.swing.JLabel lblPeriod;
     private javax.swing.JLabel lblPhilNum;
     private javax.swing.JLabel lblPhoneAllowances;

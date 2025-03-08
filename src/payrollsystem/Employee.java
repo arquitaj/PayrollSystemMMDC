@@ -131,7 +131,6 @@ public class Employee extends AccountDetails {
             attendance.addDetailsCSV();
         }
        attendance.getDataList().clear();
-       attendance.printDetails();
     }
     
     //To record the logout or time out of the employee
@@ -156,7 +155,6 @@ public class Employee extends AccountDetails {
             attendance.addDetailsCSV(); 
         }
         attendance.getDataList().clear();
-        attendance.printDetails();
     }
     
     boolean countNumberOfDays(Date dateFrom, Date dateTo){ // New method to count the days for leave

@@ -90,45 +90,6 @@ public class Supervisor extends Employee{
             return model;
    } 
    
-//      DefaultTableModel TableDTR(JTable jTableDTR, String selectedName){
-//      DefaultTableModel model = (DefaultTableModel) jTableDTR.getModel();
-     
-//      System.out.println("I am access1 :"+selectedName);
-//      if(selectedName.equals("")){
-//          model.setRowCount(0);
-//         return model;
-//       }else{
-//          String id = "";
-//           for(int i=0; i<getIdAndNames().size(); i++){
-//               if(getIdAndNames().get(i).get(1).equals(selectedName)){
-//                   id = getIdAndNames().get(i).get(0);
-//                   break;
-//               }
-//           }
-//           System.out.print("The id is : "+id);
-//           setEmployeeRequest("CSVFiles//AttendanceDatabase.csv");
-//           for(int i=0; i<employee.getDataList().size(); i++){
-//               if(employee.getDataList().get(i).get(0).equals(id) && employee.getDataList().get(i).get(5).equals("Yes") && employee.getDataList().get(i).get(6).equals("No")){
-//                   getData().add(employee.getDataList().get(i));
-//               }
-//           }
-//           employee.getDataList().clear();
-//           model.setRowCount(0);
-//           Object rowData[] = new Object [6];
-//           for(int row=0; row<getData().size(); row++){
-//                  rowData[0] = getData().get(row).get(0);
-//                  rowData[1] = selectedName;
-//                  rowData[2] = getData().get(row).get(2);
-//                  rowData[3] = getData().get(row).get(3);
-//                  rowData[4] = getData().get(row).get(4);
-//                  rowData[5] = "";
-//                  model.addRow(rowData);
-//                  }         
-//                return model;
-//      }
-//            return model;
-//   }    
- 
     void getEmployeeNames(){  
         getDataList().clear();
         getNewData().clear();
@@ -148,7 +109,7 @@ public class Supervisor extends Employee{
     }
        
 
-    void getDataForTable(){
+    ArrayList<ArrayList<String>> getDataForDTRTable(){
         employee.getDataList().clear();
         String id = "";
         for(ArrayList<String> idName : getIdAndNames()){
@@ -156,20 +117,16 @@ public class Supervisor extends Employee{
                id = idName.get(0);
            }
         }
-        
-        System.out.println("ID : "+id);
         employee.setFilePath("CSVFiles//AttendanceDatabase.csv");
         employee.retrivedDetails();
-        System.out.println("Data are: "+employee.getDataList());
-        int count = 0;
-        for(int i=0; i<employee.getDataList().size(); i++){
-            if(!employee.getDataList().get(i).get(0).equals(id)){
-                System.out.println("Data : "+employee.getDataList().get(i));
-                employee.getDataList().remove(i);
+        for(int i=1; i<employee.getDataList().size(); i++){
+            if(employee.getDataList().get(i).get(0).equals(id) && employee.getDataList().get(i).get(5).equals("Yes") && employee.getDataList().get(i).get(6).equals("No")){
+                employee.getDataList().get(i).remove(5);
+                employee.getDataList().get(i).remove(5);
+                data.add(employee.getDataList().get(i));
             }
         }
-        System.out.println("Data Left: "+employee.getDataList());
-
+        return data;
     }
       
     void updateEmployeeRequestRecord(String command){
@@ -242,6 +199,22 @@ public class Supervisor extends Employee{
         employee.getDataList().clear();
     }
     
+    void forwardDTR(ArrayList<ArrayList <String>> tempData){
+        employee.getDataList().clear();
+        employee.setFilePath("CSVFiles//AttendanceDatabase.csv");
+        employee.retrivedDetails();
+        for(int i=0; i<tempData.size(); i++){
+            for(int j=0; j<employee.getDataList().size(); j++){
+                if(tempData.get(i).get(0).equals(employee.getDataList().get(j).get(0)) && tempData.get(i).get(1).equals(employee.getDataList().get(j).get(1)) &&
+                        tempData.get(i).get(2).equals(employee.getDataList().get(j).get(2)) && tempData.get(i).get(3).equals(employee.getDataList().get(j).get(3)) &&
+                        tempData.get(i).get(4).equals(employee.getDataList().get(j).get(4))){
+                    employee.getDataList().get(j).set(6, "Yes");
+                    break;
+                }
+            }
+        }
+        employee.addDetailsCSV();
+    }
     
     void approvedEmployeeRequest(String command){
         switch (list.get(3)){
@@ -303,24 +276,7 @@ public class Supervisor extends Employee{
         }
     }
     
-//    void getEmployeeNames(){   
-//        setEmployeeRequest("CSVFiles//EmployeeDatabase.csv");
-//        ArrayList <String> fullName = new ArrayList<>();
-//        for(int i=1; i<employee.getDataList().size(); i++){
-//            ArrayList <String> names = new ArrayList<>();
-//            names.add(employee.getDataList().get(i).get(0));
-//            names.add(employee.getDataList().get(i).get(1) + ", "+employee.getDataList().get(i).get(2));
-//            getIdAndNames().add(names);
-//            fullName.add(employee.getDataList().get(i).get(1) + ", "+employee.getDataList().get(i).get(2));
-//        }
-//           
-//        Collections.sort(fullName);
-//        getData().add(fullName); 
-//    }
 
-//   ArrayList<ArrayList<String>> getIdAndNames(){
-//       return this.idAndNames;
-//   }
    ArrayList<ArrayList<String>> getData(){
        return this.data;
    }
