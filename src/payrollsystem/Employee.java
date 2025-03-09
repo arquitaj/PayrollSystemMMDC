@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ public class Employee extends AccountDetails {
     AccountDetails leave = new AccountDetails();
     AccountDetails overtime = new AccountDetails();
     AccountDetails balance = new AccountDetails();
+    AccountDetails payroll = new AccountDetails();
     
     protected int indexAttendance;
     private String filePath;
@@ -488,7 +490,28 @@ public class Employee extends AccountDetails {
         lblVL.setText(getBalanceVL());
         lblSL.setText(getBalanceSL());
 }
-        
+    ArrayList<ArrayList<String>> viewPersonalPayslip(Date dateFrom, Date dateTo, String id){
+        //                String startFormatted = new SimpleDateFormat("MMM d").format(jDateFrom.getDate());
+        String fromFormatted = new SimpleDateFormat("MM/dd/yyyy").format(dateFrom);
+        String toFormatted = new SimpleDateFormat("MM/dd/yyyy").format(dateTo);
+        String datePeriod = fromFormatted + " to " + toFormatted;
+        System.out.println("Date period : "+datePeriod);
+        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+        int date = dateFrom.compareTo(dateTo);
+        if(date > 0){
+            JOptionPane.showMessageDialog(null, "Invalid Payroll Period");
+        }else{
+            payroll.setFilePath("CSVFiles//Payroll.csv");
+            payroll.retrivedDetails();
+            for(int i=0; i<payroll.getDataList().size(); i++){
+                if(payroll.getDataList().get(i).get(0).equals(id) && payroll.getDataList().get(i).get(2).equals(datePeriod) && payroll.getDataList().get(i).get(13).equals("Approved")){
+                    tempData.add(payroll.getDataList().get(i));
+                    break;
+                }
+            }
+        }
+        return tempData;
+    }    
     public void updateLeaveRequest() {
     
     }

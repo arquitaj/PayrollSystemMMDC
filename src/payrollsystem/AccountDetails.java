@@ -29,7 +29,7 @@ public class AccountDetails {
     
     
     private String filePath;
-    private String employeeID = "123";
+    private String employeeID = "10001";
     private String employeeCompleteName;
     private String firstName, lastName, birthday, address, phoneNumber, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor;
     private double basicSalary, riceSubsidy, phoneAllowance, clothingAllowance, semiBasicSalary, hourlyRate;

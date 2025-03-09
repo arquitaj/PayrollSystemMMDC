@@ -11,3 +11,4 @@ Employee #,Complete Name, Date Filed,Leave Type,From Date,To Date,Number of Days
 123,Garcia Manuel III,03/04/2025,Vacation Leave,03/08/2025,03/10/2025,2,Sunday is life,Pending,
 123,Garcia Manuel III,03/05/2025,Vacation Leave,03/06/2025,03/07/2025,2,Another leave,Approved,
 123,Garcia Manuel III,03/06/2025,Vacation Leave,03/07/2025,03/08/2025,2,eheh,Approved,
+10001,Garcia Manuel III,03/10/2025,Vacation Leave,03/07/2025,2,Just want to rest,Pending,

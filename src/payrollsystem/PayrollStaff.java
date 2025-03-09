@@ -274,7 +274,7 @@ public class PayrollStaff extends Employee implements Payroll{
                 
                 boolean isFound = false;
                 for(int b=0; b<employee.getDataList().size(); b++){
-                    if(employee.getDataList().get(b).equals(list)){
+                    if(employee.getDataList().get(b).get(0).equals(list.get(0)) && employee.getDataList().get(b).get(1).equals(list.get(1)) && employee.getDataList().get(b).get(2).equals(list.get(2))){
                         isFound = true;
                         break;
                     }else{
@@ -337,12 +337,61 @@ public class PayrollStaff extends Employee implements Payroll{
         return data;
     }
       
-        ArrayList<ArrayList<String>> getDataForPayrollTable(){
+    ArrayList<ArrayList<String>> getDataForPayrollTable(){
         employee.getDataList().clear();
         employee.setFilePath("CSVFiles//Payroll.csv");
         employee.retrivedDetails();
-        employee.getDataList().remove(0);
+        for(int i=0; i<employee.getDataList().size(); i++){
+            if(!employee.getDataList().get(i).get(13).equals("Pending")){
+                employee.getDataList().remove(i);
+            }
+        }
         return employee.getDataList();
+    }
+    
+    ArrayList<ArrayList<String>> getApprovedDataForPayrollTable(Date jDateFrom, Date jDateTo){
+        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+        employee.getDataList().clear();
+        employee.setFilePath("CSVFiles//Payroll.csv");
+        int date = jDateFrom.compareTo(jDateTo);
+        if(date > 0){
+            JOptionPane.showMessageDialog(null, "Invalid Payroll Period");
+        }else{
+             String dateFrom = new SimpleDateFormat("MM/dd/yyyy").format(jDateFrom);
+             String dateTo = new SimpleDateFormat("MM/dd/yyyy").format(jDateTo);
+             String payrollPeriod = dateFrom+" to "+dateTo;
+            employee.retrivedDetails();
+            System.out.println("Payroll period: "+employee.getDataList().get(1).get(2));
+            System.out.println("AName: "+employee.getDataList().get(1).get(1));
+            System.out.println("Status: "+employee.getDataList().get(1).get(13)); 
+            System.out.println("Data : "+employee.getDataList());
+            for(int i=0; i<employee.getDataList().size(); i++){
+                if(employee.getDataList().get(i).get(2).equals(payrollPeriod) && employee.getDataList().get(i).get(13).equals("Approved")){
+                    tempData.add(employee.getDataList().get(i));
+                }
+            }
+        }
+        if(tempData.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No File Found!");
+        }
+        return tempData;
+    }
+    
+    void releasedPayroll(ArrayList<ArrayList<String>> tempData){
+        employee.getDataList().clear();
+        employee.setFilePath("CSVFiles//Payroll.csv");
+        employee.retrivedDetails();
+        for(int i=0; i<tempData.size(); i++){
+            for(int j=0; j<employee.getDataList().size(); j++){
+                if(tempData.get(i).get(0).equals(employee.getDataList().get(j).get(0)) && tempData.get(i).get(1).equals(employee.getDataList().get(j).get(1)) &&
+                        tempData.get(i).get(2).equals(employee.getDataList().get(j).get(2)) && tempData.get(i).get(3).equals(employee.getDataList().get(j).get(13))){
+                    employee.getDataList().get(j).set(13, "Approved");
+                    break;
+                }
+            }
+        }
+        System.out.println("Data :"+employee.getDataList());
+        employee.addDetailsCSV();
     }
         
    void setSelectedName(String selectedName){

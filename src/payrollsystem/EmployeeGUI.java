@@ -186,17 +186,40 @@ public class EmployeeGUI extends javax.swing.JFrame {
         lblLeaveBalances2 = new javax.swing.JLabel();
         tabbedPayslip = new javax.swing.JPanel();
         panelPayslip = new javax.swing.JPanel();
-        jSeparator10 = new javax.swing.JSeparator();
         jSeparator12 = new javax.swing.JSeparator();
         lblMyName6 = new javax.swing.JLabel();
         lblName4 = new javax.swing.JLabel();
         lblEmpID5 = new javax.swing.JLabel();
         lblID4 = new javax.swing.JLabel();
-        lblMyName7 = new javax.swing.JLabel();
         dateFrom3 = new com.toedter.calendar.JDateChooser();
-        jDateChooser4 = new com.toedter.calendar.JDateChooser();
-        jPanel7 = new javax.swing.JPanel();
+        dateTo3 = new com.toedter.calendar.JDateChooser();
         btnReport = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        lblName6 = new javax.swing.JLabel();
+        lblName7 = new javax.swing.JLabel();
+        lblName8 = new javax.swing.JLabel();
+        lblName9 = new javax.swing.JLabel();
+        lblName10 = new javax.swing.JLabel();
+        lblName11 = new javax.swing.JLabel();
+        lblName12 = new javax.swing.JLabel();
+        lblName13 = new javax.swing.JLabel();
+        lblName14 = new javax.swing.JLabel();
+        lblName15 = new javax.swing.JLabel();
+        lblName16 = new javax.swing.JLabel();
+        lblName19 = new javax.swing.JLabel();
+        lblName21 = new javax.swing.JLabel();
+        jSeparator19 = new javax.swing.JSeparator();
+        lblGross = new javax.swing.JLabel();
+        lblBenefits = new javax.swing.JLabel();
+        lblOvertime = new javax.swing.JLabel();
+        lblUndertime = new javax.swing.JLabel();
+        lblSSS = new javax.swing.JLabel();
+        lblPhilHealth = new javax.swing.JLabel();
+        lblPagIbig = new javax.swing.JLabel();
+        lblTax = new javax.swing.JLabel();
+        lblNetPay = new javax.swing.JLabel();
+        lblPayrollPeriod = new javax.swing.JLabel();
+        lblPositon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EMPLOYEE PORTAL");
@@ -289,7 +312,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         jSeparator14.setForeground(new java.awt.Color(255, 255, 255));
 
         lblIDSidebar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblIDSidebar.setText("0001");
+        lblIDSidebar.setText("10001");
 
         javax.swing.GroupLayout sideBarPanelLayout = new javax.swing.GroupLayout(sideBarPanel);
         sideBarPanel.setLayout(sideBarPanelLayout);
@@ -1729,13 +1752,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
         panelPayslip.setBackground(new java.awt.Color(255, 255, 255));
         panelPayslip.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "YOUR PERSONAL PAYSLIP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 0, 18), new java.awt.Color(255, 102, 0))); // NOI18N
 
-        jSeparator10.setBackground(new java.awt.Color(255, 204, 153));
-
         jSeparator12.setBackground(new java.awt.Color(255, 204, 153));
         jSeparator12.setForeground(new java.awt.Color(255, 255, 255));
 
-        lblMyName6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblMyName6.setText("John Paul Arquita");
+        lblMyName6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblMyName6.setText("N/A");
 
         lblName4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblName4.setText("Name :");
@@ -1743,67 +1764,192 @@ public class EmployeeGUI extends javax.swing.JFrame {
         lblEmpID5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblEmpID5.setText("Employee ID:");
 
-        lblID4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblID4.setText("10001");
-
-        lblMyName7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblMyName7.setText("Period:");
+        lblID4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblID4.setText("N/A");
 
         dateFrom3.setBackground(new java.awt.Color(255, 255, 255));
         dateFrom3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "From", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51)))); // NOI18N
 
-        jDateChooser4.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "To", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
+        dateTo3.setBackground(new java.awt.Color(255, 255, 255));
+        dateTo3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "To", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
 
-        jPanel7.setBackground(new java.awt.Color(255, 204, 204));
+        btnReport.setText("Generate");
+        btnReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 859, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 377, Short.MAX_VALUE)
-        );
+        lblName6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName6.setText("Payroll Period : ");
 
-        btnReport.setText("GENERATE REPORT");
+        lblName7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName7.setText("Position :");
+
+        lblName8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName8.setText("Gross Income : ");
+
+        lblName9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName9.setText("Add :");
+
+        lblName10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName10.setText("Overtime");
+
+        lblName11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName11.setText("Undertime");
+
+        lblName12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName12.setText("SSS");
+
+        lblName13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName13.setText("PhilHealth");
+
+        lblName14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName14.setText("PagIbig");
+
+        lblName15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName15.setText("Tax");
+
+        lblName16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName16.setText("Benefits/Allowances");
+
+        lblName19.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblName19.setText("Less :");
+
+        lblName21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblName21.setText("Net Pay");
+
+        lblGross.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblGross.setText("0.00");
+
+        lblBenefits.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblBenefits.setText("0.00");
+
+        lblOvertime.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblOvertime.setText("0.00");
+
+        lblUndertime.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblUndertime.setText("0.00");
+
+        lblSSS.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblSSS.setText("0.00");
+
+        lblPhilHealth.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPhilHealth.setText("0.00");
+
+        lblPagIbig.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPagIbig.setText("0.00");
+
+        lblTax.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblTax.setText("0.00");
+
+        lblNetPay.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblNetPay.setText("0.00");
+
+        lblPayrollPeriod.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPayrollPeriod.setText("N/A");
+
+        lblPositon.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPositon.setText("N/A");
 
         javax.swing.GroupLayout panelPayslipLayout = new javax.swing.GroupLayout(panelPayslip);
         panelPayslip.setLayout(panelPayslipLayout);
         panelPayslipLayout.setHorizontalGroup(
             panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator10)
-            .addGroup(panelPayslipLayout.createSequentialGroup()
-                .addComponent(jSeparator12)
-                .addGap(6, 6, 6))
+            .addComponent(jSeparator12)
             .addGroup(panelPayslipLayout.createSequentialGroup()
                 .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelPayslipLayout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblEmpID5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblName4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMyName7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(165, 165, 165)
+                        .addComponent(jLabel7))
+                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                        .addGap(290, 290, 290)
+                        .addComponent(dateFrom3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(dateTo3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnReport))
+                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                        .addGap(66, 66, 66)
                         .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblID4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMyName6, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateFrom3, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                            .addComponent(jDateChooser4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(panelPayslipLayout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelPayslipLayout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(104, Short.MAX_VALUE))
+                            .addGroup(panelPayslipLayout.createSequentialGroup()
+                                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lblName8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblName6))
+                                    .addComponent(lblName7, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblPositon, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblPayrollPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(panelPayslipLayout.createSequentialGroup()
+                                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblEmpID5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblName4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addComponent(lblMyName6, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblID4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(panelPayslipLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                                        .addComponent(lblName9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblName10, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblName16, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                                        .addComponent(lblName19, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(22, 22, 22)
+                                        .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblName11, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblName12, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblName13, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblName14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblName15, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblName21, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(panelPayslipLayout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                                                        .addGap(90, 90, 90)
+                                                        .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                            .addComponent(lblUndertime, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblSSS, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblPhilHealth, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblPagIbig, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblTax, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblOvertime, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblBenefits, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(lblGross, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                                                        .addGap(91, 91, 91)
+                                                        .addComponent(lblNetPay, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(24, 24, 24))
+                                            .addGroup(panelPayslipLayout.createSequentialGroup()
+                                                .addGap(62, 62, 62)
+                                                .addComponent(jSeparator19, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 33, Short.MAX_VALUE)))))))))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
         panelPayslipLayout.setVerticalGroup(
             panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPayslipLayout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dateTo3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateFrom3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addGap(28, 28, 28)
                 .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmpID5)
                     .addComponent(lblID4))
@@ -1812,20 +1958,58 @@ public class EmployeeGUI extends javax.swing.JFrame {
                     .addComponent(lblMyName6)
                     .addComponent(lblName4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMyName7)
-                    .addComponent(dateFrom3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
-                .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblName6)
+                    .addComponent(lblPayrollPeriod))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblName7)
+                    .addComponent(lblPositon))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblName8)
+                    .addComponent(lblGross))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblName9)
+                    .addComponent(lblName16)
+                    .addComponent(lblBenefits))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblName10)
+                    .addComponent(lblOvertime))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(panelPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblName11)
+                            .addComponent(lblName19))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblName12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblName13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblName14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblName15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblName21))
+                    .addGroup(panelPayslipLayout.createSequentialGroup()
+                        .addComponent(lblUndertime)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblSSS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPhilHealth)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPagIbig)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTax)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNetPay)))
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout tabbedPayslipLayout = new javax.swing.GroupLayout(tabbedPayslip);
@@ -1833,16 +2017,16 @@ public class EmployeeGUI extends javax.swing.JFrame {
         tabbedPayslipLayout.setHorizontalGroup(
             tabbedPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabbedPayslipLayout.createSequentialGroup()
-                .addGap(222, 222, 222)
+                .addGap(267, 267, 267)
                 .addComponent(panelPayslip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(306, Short.MAX_VALUE))
         );
         tabbedPayslipLayout.setVerticalGroup(
             tabbedPayslipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabbedPayslipLayout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+            .addGroup(tabbedPayslipLayout.createSequentialGroup()
+                .addGap(55, 55, 55)
                 .addComponent(panelPayslip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("tab5", tabbedPayslip);
@@ -2166,19 +2350,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     private void dateFrom2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateFrom2PropertyChange
         // TODO add your handling code here:
-//         if(dateTo2.getDate() != null && dateFrom2.getDate() != null){
-////            if(employee.countNumberOfDays(dateFrom2.getDate().toString(), dateTo2.getDate().toString())){
-//                System.out.println("1 If : "+employee.getNumberOfDaysLeave());
-////                employee.getNumberOfDaysLeave();
-////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
-////                employee.setNumberOfDaysLeave();
-////            }else{
-////                employee.setNumberOfDaysLeave();  
-////                System.out.println("2 Else : "+employee.getNumberOfDaysLeave());
-//////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
-////            }
-//        }
-
             if ("date".equals(evt.getPropertyName()) && dateFrom2.getDate() != null && dateTo2.getDate() != null) {
             // If the date is valid, refresh the table with the new date range
                 if (!dateTo2.getDate().before(dateFrom2.getDate())) {
@@ -2189,19 +2360,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     private void dateTo2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateTo2PropertyChange
         // TODO add your handling code here:
-//         if(dateFrom2.getDate() != null && dateTo2.getDate() != null){
-//            if(employee.countNumberOfDays(dateFrom2.getDate(), dateTo2.getDate())){
-//                System.out.println("3 If : "+employee.getNumberOfDaysLeave());
-////                employee.getNumberOfDaysLeave();
-////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
-////                employee.setNumberOfDaysLeave();
-//            }else{
-//                employee.setNumberOfDaysLeave(); 
-//                System.out.println("4 If : "+employee.getNumberOfDaysLeave());
-////                employee.setNumberOfDaysLeave();
-////                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
-//            }
-//        }
             if ("date".equals(evt.getPropertyName()) && dateFrom2.getDate() != null && dateTo2.getDate() != null) {
                 // If the date is valid, refresh the table with the new date range
                 if (!dateTo2.getDate().before(dateFrom2.getDate())) {
@@ -2241,6 +2399,42 @@ public class EmployeeGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        // TODO add your handling code here:
+        ArrayList<ArrayList<String>> tempData = employee.viewPersonalPayslip(dateFrom3.getDate(), dateTo3.getDate(), lblIDSidebar.getText());
+        if(tempData.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No Payroll Found!");
+            lblID4.setText("N/A");
+            lblMyName6.setText("N/A");
+            lblPayrollPeriod.setText("N/A");
+            lblPositon.setText("N/A");
+            lblGross.setText("0.00");
+            lblBenefits.setText("0.00");
+            lblOvertime.setText("0.00");
+            lblUndertime.setText("0.00");
+            lblSSS.setText("0.00");
+            lblPhilHealth.setText("0.00");
+            lblPagIbig.setText("0.00");
+            lblTax.setText("0.00");
+            lblNetPay.setText("0.00");
+        }else{
+            lblID4.setText(tempData.get(0).get(0));
+            lblMyName6.setText(tempData.get(0).get(1));
+            lblPayrollPeriod.setText(tempData.get(0).get(2));
+            lblPositon.setText(tempData.get(0).get(3));
+            lblGross.setText(tempData.get(0).get(4));
+            lblBenefits.setText(tempData.get(0).get(5));
+            lblOvertime.setText(tempData.get(0).get(6));
+            lblUndertime.setText(tempData.get(0).get(7));
+            lblSSS.setText(tempData.get(0).get(8));
+            lblPhilHealth.setText(tempData.get(0).get(9));
+            lblPagIbig.setText(tempData.get(0).get(10));
+            lblTax.setText(tempData.get(0).get(11));
+            lblNetPay.setText(tempData.get(0).get(12));
+        }
+        tempData.clear();
+    }//GEN-LAST:event_btnReportActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -2274,14 +2468,15 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateFromOvertime;
     private com.toedter.calendar.JDateChooser dateTo;
     private com.toedter.calendar.JDateChooser dateTo2;
+    private com.toedter.calendar.JDateChooser dateTo3;
     private com.toedter.calendar.JDateChooser dateToOvertime;
-    private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -2289,18 +2484,17 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator14;
+    private javax.swing.JSeparator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -2316,6 +2510,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblAllRequest;
     private javax.swing.JLabel lblBDay;
     private javax.swing.JLabel lblBasicSalary;
+    private javax.swing.JLabel lblBenefits;
     private javax.swing.JLabel lblBiMonthlyRate;
     private javax.swing.JLabel lblClothingAllowanes;
     private javax.swing.JLabel lblEmpID;
@@ -2325,6 +2520,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblEmpID4;
     private javax.swing.JLabel lblEmpID5;
     private javax.swing.JLabel lblFName;
+    private javax.swing.JLabel lblGross;
     private javax.swing.JLabel lblHourlyRate;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblID1;
@@ -2343,30 +2539,51 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblMyName4;
     private javax.swing.JLabel lblMyName5;
     private javax.swing.JLabel lblMyName6;
-    private javax.swing.JLabel lblMyName7;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblName1;
+    private javax.swing.JLabel lblName10;
+    private javax.swing.JLabel lblName11;
+    private javax.swing.JLabel lblName12;
+    private javax.swing.JLabel lblName13;
+    private javax.swing.JLabel lblName14;
+    private javax.swing.JLabel lblName15;
+    private javax.swing.JLabel lblName16;
+    private javax.swing.JLabel lblName19;
     private javax.swing.JLabel lblName2;
+    private javax.swing.JLabel lblName21;
     private javax.swing.JLabel lblName3;
     private javax.swing.JLabel lblName4;
     private javax.swing.JLabel lblName5;
+    private javax.swing.JLabel lblName6;
+    private javax.swing.JLabel lblName7;
+    private javax.swing.JLabel lblName8;
+    private javax.swing.JLabel lblName9;
     private javax.swing.JLabel lblNameSidebar;
+    private javax.swing.JLabel lblNetPay;
+    private javax.swing.JLabel lblOvertime;
+    private javax.swing.JLabel lblPagIbig;
     private javax.swing.JLabel lblPagIbigNum;
+    private javax.swing.JLabel lblPayrollPeriod;
     private javax.swing.JLabel lblPeriod;
+    private javax.swing.JLabel lblPhilHealth;
     private javax.swing.JLabel lblPhilNum;
     private javax.swing.JLabel lblPhoneAllowances;
     private javax.swing.JLabel lblPhoneNum;
     private javax.swing.JLabel lblPosition;
+    private javax.swing.JLabel lblPositon;
     private javax.swing.JLabel lblRequestType;
     private javax.swing.JLabel lblRiceSubsidy;
     private javax.swing.JLabel lblSL;
     private javax.swing.JLabel lblSL1;
     private javax.swing.JLabel lblSLBalance;
     private javax.swing.JLabel lblSLBalance1;
+    private javax.swing.JLabel lblSSS;
     private javax.swing.JLabel lblSSSNum;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblSupervisor;
     private javax.swing.JLabel lblTINNum;
+    private javax.swing.JLabel lblTax;
+    private javax.swing.JLabel lblUndertime;
     private javax.swing.JLabel lblVL;
     private javax.swing.JLabel lblVL1;
     private javax.swing.JLabel lblVLBalance;
