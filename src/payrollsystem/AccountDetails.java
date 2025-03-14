@@ -29,7 +29,7 @@ public class AccountDetails {
     
     
     private String filePath;
-    private String employeeID = "10001";
+    private String employeeID;
     private String employeeCompleteName;
     private String firstName, lastName, birthday, address, phoneNumber, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor;
     private double basicSalary, riceSubsidy, phoneAllowance, clothingAllowance, semiBasicSalary, hourlyRate;
@@ -39,6 +39,7 @@ public class AccountDetails {
     AccountDetails(){
         
     }
+   
   
     void retrivedDetails(){
         String line; 
@@ -55,7 +56,8 @@ public class AccountDetails {
         }
     }
     
-    void userDetails(){
+    void userDetails(String id){
+        this.employeeID = id;
         for(ArrayList<String> data : dataList){
             if(data.get(0).equals(String.valueOf(getEmployeeID()))){
                 this.lastName = data.get(1);
@@ -90,7 +92,6 @@ public class AccountDetails {
                         writer.newLine();
                 }
                 writer.close();
-                JOptionPane.showMessageDialog(null, "Successfuly Added");
                 getDataList().clear();
             }catch(IOException e){
                 e.printStackTrace();
@@ -130,8 +131,8 @@ public class AccountDetails {
         return filePath;
     }
 
-    public int getEmployeeID() {
-        return Integer.parseInt(employeeID);
+    public String getEmployeeID() {
+        return this.employeeID;
     }
 
     public String getFirstName() {
@@ -212,6 +213,7 @@ public class AccountDetails {
         return this.tableData;
     }
     public void setFilePath(String path){
+        System.out.println("Path : "+path);
         this.filePath = path;
     }
    void setEmployeeID(String employeeID){

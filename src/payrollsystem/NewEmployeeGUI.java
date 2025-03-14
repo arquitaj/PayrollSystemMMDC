@@ -4,17 +4,24 @@
  */
 package payrollsystem;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Paul
  */
 public class NewEmployeeGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form NewEmployeeGUI
-     */
-    public NewEmployeeGUI() {
+    String id, name, role;
+    public NewEmployeeGUI(ArrayList<ArrayList<String>> userDetails) {
         initComponents();
+        this.id = userDetails.get(0).get(0);
+        this.name = userDetails.get(0).get(1);
+        this.role = userDetails.get(0).get(3);
+    }
+
+    NewEmployeeGUI() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**

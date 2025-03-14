@@ -24,15 +24,13 @@ public class PayrollStaff extends Employee implements Payroll{
     Employee employee = new Employee();
     private ArrayList <String> fullName = new ArrayList<>();
     private ArrayList<ArrayList<String>> data = new ArrayList<>();
-    private String selectedName;
+    private String employeeID, selectedName;
     private double perHour, perMonth, riceSubsidy, phoneAllowance, clothingAllowance, grossPay;
  
-;
-    
-    PayrollStaff(){
+    PayrollStaff(String employeeID){
         super();
+        this.employeeID = employeeID;
     }
-    
 
     @Override
     public double taxCalculation(double totalDeductions){

@@ -23,13 +23,13 @@ public class Supervisor extends Employee{
     
     Employee employee = new Employee();
     private ArrayList<ArrayList<String>> data = new ArrayList<>();
-    private ArrayList<ArrayList<String>> idAndNames = new ArrayList<>();
     ArrayList<String> list = new ArrayList<>();
     private String selectedName;
     private ArrayList <String> fullName = new ArrayList<>();
-    
-    Supervisor(){
+    private String employeeID;
+    Supervisor(String employeeID){
         super();
+        this.employeeID = employeeID;
     }
     
     void setEmployeeRequest(String filePath){
@@ -39,8 +39,9 @@ public class Supervisor extends Employee{
     
      void employeeRequest(){
        employee.retrivedDetails();
+       
        for(int i=1; i<employee.getDataList().size(); i++){
-          if(employee.getDataList().get(i).get(8).equals("Pending")){
+          if(!employee.getDataList().get(i).get(0).equals(employeeID) && employee.getDataList().get(i).get(8).equals("Pending")){
             getNewData().add(employee.getDataList().get(i));
           }
        }
@@ -136,10 +137,13 @@ public class Supervisor extends Employee{
                employee.getDataList().get(i).get(2).equals(list.get(2)) && employee.getDataList().get(i).get(3).equals(list.get(3)) &&
                employee.getDataList().get(i).get(4).equals(list.get(4)) && employee.getDataList().get(i).get(5).equals(list.get(5)) &&
                employee.getDataList().get(i).get(6).equals(list.get(6))){
-                  if(command.equals("APPROVED"))
+                  if(command.equals("APPROVED")){
                         employee.getDataList().get(i).set(8, "Approved");
-                   else
+                        JOptionPane.showMessageDialog(null, "Successfuly Approved Request!");
+                  } else{
                         employee.getDataList().get(i).set(8, "Disapproved");
+                        JOptionPane.showMessageDialog(null, "Successfuly Disapproved Request!");
+                  }
             return;
             }
         }
@@ -179,6 +183,8 @@ public class Supervisor extends Employee{
                 boolean isFound = false;
                 if(!date.getDayOfWeek().toString().equals("SUNDAY")){
                     for(int i=1; i<employee.getDataList().size(); i++){
+                        System.out.println("ID : "+list.get(0)+"--"+employee.getDataList().get(i).get(0));
+                        System.out.println("Date : "+dateFormat.format(date)+"--"+employee.getDataList().get(i).get(2));
                         if(list.get(0).equals(employee.getDataList().get(i).get(0)) && dateFormat.format(date).equals(employee.getDataList().get(i).get(2))){
                             employee.getDataList().get(i).set(7, "With Approved Overtime");
                             isFound = true;
@@ -186,10 +192,10 @@ public class Supervisor extends Employee{
                         }
                     }
                     if(!isFound){
-                         System.out.println("Not Found : " +employee.getDataList());
                          String [] newOvertime = {list.get(0),list.get(1),dateFormat.format(date)," "," ","No","No","With Approved Overtime"};
                          row.addAll(Arrays.asList(newOvertime));
                          employee.getDataList().add(row);
+                         System.out.println("Not Found : " +employee.getDataList());
                          row.clear();
                     }      
                 }
@@ -284,9 +290,6 @@ public class Supervisor extends Employee{
        this.data.clear();
    }
 
-   void printData(){
-       System.out.print("The data is: "+getData());
-   }
    void setSelectedName(String selectedName){
        this.selectedName = selectedName;
    }
