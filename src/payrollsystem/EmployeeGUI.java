@@ -62,6 +62,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         lblIDSidebar = new javax.swing.JLabel();
         mainTabbed = new javax.swing.JTabbedPane();
         panelMotorPH = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
         tabbedPersonalDetails = new javax.swing.JPanel();
         panelPersonalDetails = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -424,15 +425,23 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         jPanel1.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 760));
 
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/employeePortal.jpg"))); // NOI18N
+
         javax.swing.GroupLayout panelMotorPHLayout = new javax.swing.GroupLayout(panelMotorPH);
         panelMotorPH.setLayout(panelMotorPHLayout);
         panelMotorPHLayout.setHorizontalGroup(
             panelMotorPHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1510, Short.MAX_VALUE)
+            .addGroup(panelMotorPHLayout.createSequentialGroup()
+                .addGap(262, 262, 262)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 895, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(353, Short.MAX_VALUE))
         );
         panelMotorPHLayout.setVerticalGroup(
             panelMotorPHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 765, Short.MAX_VALUE)
+            .addGroup(panelMotorPHLayout.createSequentialGroup()
+                .addGap(267, 267, 267)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(373, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("tab6", panelMotorPH);
@@ -2382,6 +2391,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
