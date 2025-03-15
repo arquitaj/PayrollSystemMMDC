@@ -71,7 +71,6 @@ public class Employee extends AccountDetails {
          accountDetails.setFilePath("CSVFiles//LeaveBalances.csv");
          accountDetails.retrivedDetails();
          for(int i=1; i<accountDetails.getDataList().size(); i++){
-              System.out.println(1);
              if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID())){
                  this.balanceVL = accountDetails.getDataList().get(i).get(1);
                  this.balanceSL = accountDetails.getDataList().get(i).get(2);
@@ -92,18 +91,14 @@ public class Employee extends AccountDetails {
     
     //To Validate Attendance first before adding it in CSV
     boolean validateAttendance(String date){
-        System.out.println("DataList : "+accountDetails.getDataList());
-       
         for (int i=1; i<accountDetails.getDataList().size(); i++){
             if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && 
                     accountDetails.getDataList().get(i).get(1).equals(accountDetails.getEmployeeCompleteName()) &&
                     accountDetails.getDataList().get(i).get(2).equals(date)) {
                 this.indexAttendance = i;
-                System.out.println("FOUND");
                 return true;
             }
         }
-        System.out.println("Index : "+indexAttendance);
         return false;
     }
     
@@ -204,12 +199,10 @@ public class Employee extends AccountDetails {
     }
     
     ArrayList<ArrayList<String>> getDataAllRequests() {
-    // Initialize collections to store both types of requests
     accountDetails.getDataList().clear();
     ArrayList<ArrayList<String>> tempData = new ArrayList<>();
     accountDetails.setFilePath("CSVFiles//LeaveRequests.csv");
     accountDetails.retrivedDetails();
-    System.out.println("ID : "+accountDetails.getDataList());
     for(int i=0; i<accountDetails.getDataList().size(); i++){
         if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Pending")){
             ArrayList<String> data = new ArrayList<>();
@@ -292,82 +285,29 @@ public class Employee extends AccountDetails {
         }
         return tempData;
 }
-    public boolean displayLeaveLedger(javax.swing.JTable leaveTable) {
+    ArrayList<ArrayList<String>> allApprovedPersonalLeaveLedger() {
     //load personal details to ensure we have the employee ID
-//    viewPersonalDetails(lblIDSidebar.getText());
-    
-    // Load leave request data
-    AccountDetails leaveRequests = new AccountDetails();
-    leaveRequests.setFilePath("CSVFiles//LeaveRequests.csv");
-    leaveRequests.retrivedDetails();
-    
-    // Clear the table model
-    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) leaveTable.getModel();
-    model.setRowCount(0);
-    
-    boolean recordsFound = false;
-    
-    try {
-        // Filter leave request records for the current employee
-        for (int i = 1; i < leaveRequests.getDataList().size(); i++) {
-            ArrayList<String> record = leaveRequests.getDataList().get(i);
-            
-            // Check if this record belongs to the current employee and is approved
-            if (String.valueOf(this.accountDetails.getEmployeeID()).equals(record.get(0)) && 
-                record.get(8).equalsIgnoreCase("Approved")) {
-                
-                // Get data from the record
-                String dateField = record.get(2);   // Date Filed
-                String leaveType = record.get(3);   // Type of Leave
-                String fromDate = record.get(4);    // Period From
-                String toDate = record.get(5);      // Period To
-                String numDays = record.get(6);     // Number of Days
-                String reason = record.get(7);      // Reason
-                String status = record.get(8);      // Status
-                
-                // Add row to table with the correct columns
-                model.addRow(new Object[] {
-                    dateField,     // DATE FILED
-                    leaveType,     // TYPE OF LEAVE
-                    fromDate,      // FROM
-                    toDate,        // TO
-                    numDays,       // NUMBER OF DAYS
-                    reason,        // REASON
-                    status         // STATUS
-                });
-                
-                recordsFound = true;
-            }
-        }
+    accountDetails.getDataList().clear();
+    accountDetails.setFilePath("CSVFiles//LeaveRequests.csv");
+    accountDetails.retrivedDetails();
+    ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+    for(int i=1; i<accountDetails.getDataList().size(); i++){
         
-        // Sort the table by date (descending - newest first)
-        if (recordsFound && leaveTable.getRowCount() > 0) {
-            javax.swing.table.TableRowSorter<javax.swing.table.TableModel> sorter = 
-                new javax.swing.table.TableRowSorter<>(leaveTable.getModel());
-            leaveTable.setRowSorter(sorter);
-            
-            // Sort by date filed column (index 0)
-            java.util.List<javax.swing.RowSorter.SortKey> sortKeys = new ArrayList<>();
-            sortKeys.add(new javax.swing.RowSorter.SortKey(0, javax.swing.SortOrder.DESCENDING));
-            sorter.setSortKeys(sortKeys);
-            sorter.sort();
+        if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Approved")){
+            String [] list = {accountDetails.getDataList().get(i).get(2), accountDetails.getDataList().get(i).get(3),accountDetails.getDataList().get(i).get(4),
+                    accountDetails.getDataList().get(i).get(5),accountDetails.getDataList().get(i).get(6), accountDetails.getDataList().get(i).get(7), 
+                    accountDetails.getDataList().get(i).get(8)
+            };
+            ArrayList<String> row = new ArrayList<>();
+            row.addAll(Arrays.asList(list));
+            tempData.add(row);
         }
-        
-    } catch (Exception e) {
-        System.out.println("Error displaying leave ledger: " + e.getMessage());
-        e.printStackTrace();
-        return false;
-    } finally {
-        // Clear collection after use
-        leaveRequests.getDataList().clear();
     }
-    
-    return recordsFound;
+    return tempData;
 }
 
     public void updateLeaveBalanceLabels(javax.swing.JLabel lblVL, javax.swing.JLabel lblSL) {
         // Load personal details to ensure we have the employee ID
-//        viewPersonalDetails();
     
         // Load leave balances
         leaveBalancesInformation();
@@ -385,7 +325,6 @@ public class Employee extends AccountDetails {
             String fromFormatted = new SimpleDateFormat("MM/dd/yyyy").format(dateFrom);
             String toFormatted = new SimpleDateFormat("MM/dd/yyyy").format(dateTo);
             String datePeriod = fromFormatted + " to " + toFormatted;
-            System.out.println("Date period : "+datePeriod);
             int date = dateFrom.compareTo(dateTo);
             if(date > 0){
                 JOptionPane.showMessageDialog(null, "Invalid Payroll Period");

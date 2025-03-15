@@ -37,58 +37,39 @@ public class Supervisor extends Employee{
         employee.retrivedDetails();
     }
     
-     void employeeRequest(){
-       employee.retrivedDetails();
-       
-       for(int i=1; i<employee.getDataList().size(); i++){
-          if(!employee.getDataList().get(i).get(0).equals(employeeID) && employee.getDataList().get(i).get(8).equals("Pending")){
-            getNewData().add(employee.getDataList().get(i));
-          }
-       }
-       
+    ArrayList<ArrayList<String>> employeeRequest(){
+         ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+         for(int i=1; i<employee.getDataList().size(); i++){
+             if(!employee.getDataList().get(i).get(0).equals(employee.getEmployeeID()) && employee.getDataList().get(i).get(8).equals("Pending")){
+                tempData.add(employee.getDataList().get(i));
+             }
+         }
+         return tempData;       
    } 
-   DefaultTableModel TableData(JTable jTableEmployeeRequest, String selectedItem){
-      DefaultTableModel model = (DefaultTableModel) jTableEmployeeRequest.getModel();
-        employee.getDataList().clear();
-        int tableSize = 0;
-        switch (selectedItem) {
-            case "Leave Request" -> {
-                employee.setFilePath("CSVFiles//LeaveRequests.csv");
-                employeeRequest();
-                employee.getDataList().clear();
-                tableSize = 9;
-            }
-            case "Overtime Request" -> {
-                employee.setFilePath("CSVFiles//OvertimeRequest.csv");
-                employeeRequest();
-                tableSize = 9;  
-            }
-            case "All Request" -> {
-                employee.setFilePath("CSVFiles//LeaveRequests.csv");
-                employeeRequest();
-                getDataList().clear();
-                employee.setFilePath("CSVFiles//OvertimeRequest.csv");
-                employeeRequest();
-                employee.getDataList().clear();
-                tableSize = 9;
-            }
-            default -> {
-                setFilePath("CSVFiles//AttendanceDatabase.csv");
-                employeeRequest();
-                tableSize = 6;
-            }
-        }
-           model.setRowCount(0);
-           Object rowData[] = new Object [tableSize];
-
-           for(int row=0; row<getNewData().size(); row++){
-               for(int i=0; i<rowData.length; i++){
-                  rowData[i] = getNewData().get(row).get(i); 
-               }
-               model.addRow(rowData);
-           }
-           getNewData().clear();
-            return model;
+   ArrayList<ArrayList<String>> getAllRequestData(String selectedItem){
+      employee.getDataList().clear();
+      ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+      switch (selectedItem){
+          case "Leave Request":
+              employee.setFilePath("CSVFiles//LeaveRequests.csv");
+              employee.retrivedDetails();
+              tempData = employeeRequest();
+//              tempData.add(employeeRequest());
+              break;
+          case "Overtime Request":
+              employee.setFilePath("CSVFiles//OvertimeRequest.csv");
+              employee.retrivedDetails();
+              tempData = employeeRequest();
+              break;
+          default :
+              employee.setFilePath("CSVFiles//LeaveRequests.csv");
+              employee.retrivedDetails();
+              employee.setFilePath("CSVFiles//OvertimeRequest.csv");
+              employee.retrivedDetails();
+              tempData = employeeRequest();
+              break;
+      }
+      return tempData;
    } 
    
     void getEmployeeNames(){  
@@ -112,6 +93,7 @@ public class Supervisor extends Employee{
 
     ArrayList<ArrayList<String>> getDataForDTRTable(){
         employee.getDataList().clear();
+        data.clear();
         String id = "";
         for(ArrayList<String> idName : getIdAndNames()){
            if(idName.get(1).equals(getSelectedName())){
@@ -148,6 +130,7 @@ public class Supervisor extends Employee{
             }
         }
     }
+    
     void updateAttendanceForRequest(String request){
         ArrayList<String> row = new ArrayList<>();
         employee.getDataList().clear();
@@ -183,8 +166,6 @@ public class Supervisor extends Employee{
                 boolean isFound = false;
                 if(!date.getDayOfWeek().toString().equals("SUNDAY")){
                     for(int i=1; i<employee.getDataList().size(); i++){
-                        System.out.println("ID : "+list.get(0)+"--"+employee.getDataList().get(i).get(0));
-                        System.out.println("Date : "+dateFormat.format(date)+"--"+employee.getDataList().get(i).get(2));
                         if(list.get(0).equals(employee.getDataList().get(i).get(0)) && dateFormat.format(date).equals(employee.getDataList().get(i).get(2))){
                             employee.getDataList().get(i).set(7, "With Approved Overtime");
                             isFound = true;
@@ -195,7 +176,6 @@ public class Supervisor extends Employee{
                          String [] newOvertime = {list.get(0),list.get(1),dateFormat.format(date)," "," ","No","No","With Approved Overtime"};
                          row.addAll(Arrays.asList(newOvertime));
                          employee.getDataList().add(row);
-                         System.out.println("Not Found : " +employee.getDataList());
                          row.clear();
                     }      
                 }
@@ -223,6 +203,7 @@ public class Supervisor extends Employee{
     }
     
     void approvedEmployeeRequest(String command){
+        employee.getDataList().clear();
         switch (list.get(3)){
             case "Overtime":
                 employee.setFilePath("CSVFiles//OvertimeRequest.csv");
@@ -236,7 +217,6 @@ public class Supervisor extends Employee{
                 int numberOfLeave = Integer.parseInt(String.valueOf(list.get(6)));
                 int leaveBalance = 0;
                 boolean canLeave = false;
-                System.out.println("Command is: "+command);
                 if(command.equals("APPROVED")){
                     employee.setFilePath("CSVFiles//LeaveBalances.csv");
                     employee.retrivedDetails();

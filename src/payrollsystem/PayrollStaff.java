@@ -359,10 +359,6 @@ public class PayrollStaff extends Employee implements Payroll{
              String dateTo = new SimpleDateFormat("MM/dd/yyyy").format(jDateTo);
              String payrollPeriod = dateFrom+" to "+dateTo;
             employee.retrivedDetails();
-            System.out.println("Payroll period: "+employee.getDataList().get(1).get(2));
-            System.out.println("AName: "+employee.getDataList().get(1).get(1));
-            System.out.println("Status: "+employee.getDataList().get(1).get(13)); 
-            System.out.println("Data : "+employee.getDataList());
             for(int i=0; i<employee.getDataList().size(); i++){
                 if(employee.getDataList().get(i).get(2).equals(payrollPeriod) && employee.getDataList().get(i).get(13).equals("Approved")){
                     tempData.add(employee.getDataList().get(i));
@@ -388,7 +384,6 @@ public class PayrollStaff extends Employee implements Payroll{
                 }
             }
         }
-        System.out.println("Data :"+employee.getDataList());
         employee.addDetailsCSV();
     }
         

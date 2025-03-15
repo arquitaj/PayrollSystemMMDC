@@ -169,8 +169,8 @@ public class LoginGUI extends javax.swing.JFrame {
                         break;
                     case "EMPLOYEE":
                         dispose();
-//                        EmployeeGUI employee = new EmployeeGUI(userDetails);
-//                        employee.setVisible(true);
+                        EmployeeGUI employee = new EmployeeGUI(userDetails);
+                        employee.setVisible(true);
                         break;
                     case "PAYROLL STAFF":
                         dispose();
@@ -182,7 +182,6 @@ public class LoginGUI extends javax.swing.JFrame {
                         SupervisorGUI supervisor = new SupervisorGUI(userDetails);
                         supervisor.setVisible(true);
                         break;
-                  
                 }
             }
         }else{

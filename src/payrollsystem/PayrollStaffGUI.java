@@ -130,8 +130,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableAllRequest = new javax.swing.JTable();
         jSeparator6 = new javax.swing.JSeparator();
-        btnUpdate = new javax.swing.JButton();
-        btnCancel2 = new javax.swing.JButton();
         panelLeaveRequestDetails = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtReason = new javax.swing.JTextArea();
@@ -262,7 +260,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         jTableDTR = new javax.swing.JTable();
         jSeparator17 = new javax.swing.JSeparator();
-        btnUpdate2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -279,6 +276,11 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         jPanel8.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 110, 90));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logout.png"))); // NOI18N
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
         jPanel8.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1600, 30, -1, 50));
 
         jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1750, 100));
@@ -1012,33 +1014,13 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
         jSeparator6.setBackground(new java.awt.Color(255, 204, 153));
 
-        btnUpdate.setText("UPDATE");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-
-        btnCancel2.setText("CANCEL");
-        btnCancel2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancel2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelAllRequestLayout = new javax.swing.GroupLayout(panelAllRequest);
         panelAllRequest.setLayout(panelAllRequestLayout);
         panelAllRequestLayout.setHorizontalGroup(
             panelAllRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAllRequestLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(btnCancel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(749, Short.MAX_VALUE))
             .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAllRequestLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(panelAllRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAllRequestLayout.createSequentialGroup()
                         .addComponent(lblAllRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1056,11 +1038,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelAllRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                .addGap(76, 76, 76))
         );
 
         tabbedInsideRequest.addTab("", panelAllRequest);
@@ -2239,13 +2217,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
         jSeparator17.setBackground(new java.awt.Color(255, 204, 153));
 
-        btnUpdate2.setText("FORWARD TO PAYROLL STAFF");
-        btnUpdate2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelAllRequest2Layout = new javax.swing.GroupLayout(panelAllRequest2);
         panelAllRequest2.setLayout(panelAllRequest2Layout);
         panelAllRequest2Layout.setHorizontalGroup(
@@ -2259,13 +2230,8 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 1097, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
             .addGroup(panelAllRequest2Layout.createSequentialGroup()
-                .addGroup(panelAllRequest2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAllRequest2Layout.createSequentialGroup()
-                        .addGap(486, 486, 486)
-                        .addComponent(lblAllRequest2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelAllRequest2Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(btnUpdate2)))
+                .addGap(486, 486, 486)
+                .addComponent(lblAllRequest2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAllRequest2Layout.setVerticalGroup(
@@ -2277,9 +2243,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnUpdate2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(76, 76, 76))
         );
 
         tabbedInsideRequest2.addTab("", panelAllRequest2);
@@ -2396,7 +2360,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
             payrollStaff.displayDataTable(jTablePayroll);
             lblPayrollPeriod.setText("Payroll from "+payrollRange);
             payrollStaff.setTableData();
-            
+            JOptionPane.showMessageDialog(null, "Successfuly Released Payroll!");
         }else{
             JOptionPane.showMessageDialog(null, "Select Payroll First!");
         }
@@ -2410,10 +2374,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         payrollStaff.displayDataTable(jTableDTR);
         payrollStaff.setTableData();
     }//GEN-LAST:event_comboEmployeeNameActionPerformed
-
-    private void btnUpdate2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdate2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -2515,6 +2475,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         // Update leave balance labels
         payrollStaff.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
 
+        payrollStaff.setTableData(payrollStaff.allApprovedPersonalLeaveLedger());
+        payrollStaff.setTableSize(7);
+        payrollStaff.displayDataTable(jTableAllRequest3);
     }//GEN-LAST:event_btnLeaveLedgerActionPerformed
 
     private void btnLeaveLedger1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger1ActionPerformed
@@ -2649,14 +2612,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboTypeRequestActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
-    private void btnCancel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancel2ActionPerformed
-
     private void dateToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateToPropertyChange
         // TODO add your handling code here:
         if(dateFrom.getDate() != null && dateTo.getDate() != null){
@@ -2773,6 +2728,17 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDaysNumber1ActionPerformed
 
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+        int choice = JOptionPane.showConfirmDialog(null, "Are You Sure You Want To Logout This Account?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if(choice == 0){
+            JOptionPane.showMessageDialog(null, "Successfuly Logout Account!");
+            dispose();
+            LoginGUI login = new LoginGUI();
+            login.setVisible(true);
+        }
+    }//GEN-LAST:event_jLabel8MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2809,7 +2775,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancel2;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDTR;
     private javax.swing.JButton btnLeaveLedger;
@@ -2825,8 +2790,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnSubmit1;
     private javax.swing.JButton btnSubmitToSepervisor;
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton btnUpdate2;
     private javax.swing.JComboBox<String> comboEmployeeName;
     private javax.swing.JComboBox<String> comboLeaveType;
     private javax.swing.JComboBox<String> comboTypeRequest;

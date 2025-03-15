@@ -130,8 +130,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableAllRequest = new javax.swing.JTable();
         jSeparator6 = new javax.swing.JSeparator();
-        btnUpdate = new javax.swing.JButton();
-        btnCancel2 = new javax.swing.JButton();
         panelLeaveRequestDetails = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtReason = new javax.swing.JTextArea();
@@ -277,6 +275,11 @@ public class SupervisorGUI extends javax.swing.JFrame {
         jPanel8.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 110, 90));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logout.png"))); // NOI18N
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
         jPanel8.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1600, 30, -1, 50));
 
         jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1750, 100));
@@ -1011,33 +1014,13 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
         jSeparator6.setBackground(new java.awt.Color(255, 204, 153));
 
-        btnUpdate.setText("UPDATE");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-
-        btnCancel2.setText("CANCEL");
-        btnCancel2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancel2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelAllRequestLayout = new javax.swing.GroupLayout(panelAllRequest);
         panelAllRequest.setLayout(panelAllRequestLayout);
         panelAllRequestLayout.setHorizontalGroup(
             panelAllRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAllRequestLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(btnCancel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(749, Short.MAX_VALUE))
             .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAllRequestLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(panelAllRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAllRequestLayout.createSequentialGroup()
                         .addComponent(lblAllRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1055,11 +1038,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelAllRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                .addGap(76, 76, 76))
         );
 
         tabbedInsideRequest.addTab("", panelAllRequest);
@@ -2352,7 +2331,10 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void btnLeaveLedger2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger2ActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(6);
-        supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
+        supervisor.setTableData(supervisor.getAllRequestData(comboTypeRequest1.getSelectedItem().toString()));
+        supervisor.setTableSize(9);
+        supervisor.displayDataTable(jTableAllRequest1);
+//        supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
     }//GEN-LAST:event_btnLeaveLedger2ActionPerformed
 
     private void btnLeaveLedger3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger3ActionPerformed
@@ -2370,24 +2352,25 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
     private void comboTypeRequest1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTypeRequest1ActionPerformed
         // TODO add your handling code here:
-        supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
-        supervisor.getNewData().clear();
-        supervisor.getDataList().clear();
+        supervisor.setTableData(supervisor.getAllRequestData(comboTypeRequest1.getSelectedItem().toString()));
+        supervisor.setTableSize(9);
+        supervisor.displayDataTable(jTableAllRequest1);
     }//GEN-LAST:event_comboTypeRequest1ActionPerformed
 
     private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
         // TODO add your handling code here:
         int row = jTableAllRequest1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)jTableAllRequest1.getModel();
-        for(int i=0; i<9; i++){
-            supervisor.list.add(model.getValueAt(row, i).toString());
-        }
-
         if(jTableAllRequest1.getSelectedRow() != -1){
+            for(int i=0; i<9; i++){
+                supervisor.list.add(model.getValueAt(row, i).toString());
+            }
             supervisor.approvedEmployeeRequest(btnUpdate1.getText());
-            supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
+            supervisor.setTableData(supervisor.getAllRequestData(comboTypeRequest1.getSelectedItem().toString()));
+            supervisor.setTableSize(9);
+            supervisor.displayDataTable(jTableAllRequest1);
         }else{
-            JOptionPane.showMessageDialog(null, "Select Request First!");
+            JOptionPane.showMessageDialog(null, "Please Select A Request First!");
         }
         supervisor.getDataList().clear();
     }//GEN-LAST:event_btnUpdate1ActionPerformed
@@ -2396,15 +2379,16 @@ public class SupervisorGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = jTableAllRequest1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)jTableAllRequest1.getModel();
-        for(int i=0; i<9; i++){
-            supervisor.list.add(model.getValueAt(row, i).toString());
-        }
-
         if(jTableAllRequest1.getSelectedRow() != -1){
+            for(int i=0; i<9; i++){
+                supervisor.list.add(model.getValueAt(row, i).toString());
+            }
             supervisor.approvedEmployeeRequest(btnCancel3.getText());
-            supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
+            supervisor.setTableData(supervisor.getAllRequestData(comboTypeRequest1.getSelectedItem().toString()));
+            supervisor.setTableSize(9);
+            supervisor.displayDataTable(jTableAllRequest1);
         }else{
-            JOptionPane.showMessageDialog(null, "Select Request First!");
+            JOptionPane.showMessageDialog(null, "Please Select A Request First!");
         }
     }//GEN-LAST:event_btnCancel3ActionPerformed
 
@@ -2415,7 +2399,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
         supervisor.setTableSize(6);
         supervisor.displayDataTable(jTableDTR);
         supervisor.setTableData();
-//        supervisor.setData();
     }//GEN-LAST:event_comboEmployeeNameActionPerformed
 
     private void btnForwardToPayrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForwardToPayrollActionPerformed
@@ -2532,6 +2515,10 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
         // Update leave balance labels
         supervisor.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
+        
+        supervisor.setTableData(supervisor.allApprovedPersonalLeaveLedger());
+        supervisor.setTableSize(7);
+        supervisor.displayDataTable(jTableAllRequest3);
 
     }//GEN-LAST:event_btnLeaveLedgerActionPerformed
 
@@ -2594,14 +2581,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
             supervisor.displayDataTable(jTableAllRequest);
         }
     }//GEN-LAST:event_comboTypeRequestActionPerformed
-
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
-    private void btnCancel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancel2ActionPerformed
 
     private void dateToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateToPropertyChange
         // TODO add your handling code here:
@@ -2791,6 +2770,17 @@ public class SupervisorGUI extends javax.swing.JFrame {
         tempData.clear();
     }//GEN-LAST:event_btnReportActionPerformed
 
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+        int choice = JOptionPane.showConfirmDialog(null, "Are You Sure You Want To Logout This Account?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if(choice == 0){
+            JOptionPane.showMessageDialog(null, "Successfuly Logout Account!");
+            dispose();
+            LoginGUI login = new LoginGUI();
+            login.setVisible(true);
+        }
+    }//GEN-LAST:event_jLabel8MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2827,7 +2817,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancel2;
     private javax.swing.JButton btnCancel3;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDTR;
@@ -2844,7 +2833,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnSubmit1;
     private javax.swing.JButton btnSubmitToSepervisor;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUpdate1;
     private javax.swing.JComboBox<String> comboEmployeeName;
     private javax.swing.JComboBox<String> comboLeaveType;

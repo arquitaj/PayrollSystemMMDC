@@ -5,21 +5,63 @@
 package payrollsystem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 
 public class HumanResource extends Employee{
     Employee employee = new Employee();
-    private String employeeID;
+    private String employeeID, selectedName;
+    private ArrayList <String> fullName = new ArrayList<>();
     
     HumanResource(String employeeID){
         super();
         this.employeeID = employeeID;
     }
     
+    String nextID(){
+        int tempID = 0;
+        employee.getDataList().clear();
+        employee.setFilePath("CSVFiles//EmployeeDatabase.csv");
+        employee.retrivedDetails();
+        employee.getDataList();
+        for(int i=1; i<employee.getDataList().size(); i++){
+            if(tempID < Integer.parseInt(employee.getDataList().get(i).get(0))){
+                tempID = Integer.parseInt(employee.getDataList().get(i).get(0));
+            }
+        }
+        return String.valueOf(tempID+1);
+    }
     
-    void addDetails(){
+    void addDetails(ArrayList<String> tempData){
+         boolean isComplete = true;
+        for(String info : tempData){
+            if(info.equals("")){
+                JOptionPane.showMessageDialog(null, "Please Complete All The Details!");
+                isComplete = false;
+                break;
+            }
+        }
+        if(isComplete){
+            boolean isValid = true;
+            employee.getDataList().clear();
+            employee.setFilePath("CSVFiles//EmployeeDatabase.csv");
+            employee.retrivedDetails();
+            for(int i=1; i<employee.getDataList().size(); i++){
+                if(employee.getDataList().get(i).get(1).equals(tempData.get(2)) && employee.getDataList().get(i).get(2).equals(tempData.get(1))){
+                    isValid = false;
+                    JOptionPane.showMessageDialog(null, "Cannot Be Add New Employee Due To Employee Already Exist!");
+                    break;
+                }
+            }
+            if(isValid){
+                employee.getDataList().add(tempData);
+                employee.addDetailsCSV();
+                JOptionPane.showMessageDialog(null, "Successfuly Added New Employee!");
+            }
+        }
         
     }
+    
     void updateDetails(){
         
     }
@@ -27,6 +69,9 @@ public class HumanResource extends Employee{
         
     }
     
+    void addNewCredentials(){
+        
+    }
     ArrayList<ArrayList<String>> displayAllDetails(){
         employee.getDataList().clear();
         employee.setFilePath("CSVFiles//EmployeeDatabase.csv");
@@ -49,31 +94,72 @@ public class HumanResource extends Employee{
         employee.setFilePath("CSVFiles//CredentialsDatabase.csv");
         employee.retrivedDetails();
         employee.getDataList().remove(0);
-        System.out.println(employee.getDataList());
         return employee.getDataList();
     }
     
-    String nextID(){
-        int tempID = 0;
+
+    void getEmployeeNames(){  
         employee.getDataList().clear();
+        employee.getNewData().clear();
+        fullName.clear();
         employee.setFilePath("CSVFiles//EmployeeDatabase.csv");
         employee.retrivedDetails();
-        employee.getDataList();
         for(int i=1; i<employee.getDataList().size(); i++){
-            if(tempID < Integer.parseInt(employee.getDataList().get(i).get(0))){
-                tempID = Integer.parseInt(employee.getDataList().get(i).get(0));
-            }
+            ArrayList <String> names = new ArrayList<>();
+            names.add(employee.getDataList().get(i).get(0));
+            names.add(employee.getDataList().get(i).get(1) + " "+employee.getDataList().get(i).get(2));
+            getIdAndNames().add(names);
+            fullName.add(employee.getDataList().get(i).get(1) + " "+employee.getDataList().get(i).get(2));
         }
-        System.out.println("Temp ID : "+tempID);
-        return String.valueOf(tempID+1);
+           
+        Collections.sort(fullName);
+        getNewData().add(fullName); 
     }
     
-    void addNewEmployee(ArrayList<String> tempData){
+    String getID(){
         employee.getDataList().clear();
-        employee.setFilePath("CSVFiles//EmployeeDatabase.csv");
-        employee.retrivedDetails();
-        employee.getDataList().add(tempData);
-        employee.addDetailsCSV();
-        JOptionPane.showMessageDialog(null, "Successfuly Added New Employee!");
+        String id = "";
+        for(ArrayList<String> idName : getIdAndNames()){
+           if(idName.get(1).equals(getSelectedName())){
+               id = idName.get(0);
+           }
+        }
+        return id;
     }
+    
+    void addNewCredentials(ArrayList<String> tempData){
+        boolean isValid = true;
+        for(String info : tempData){
+            if(info.equals("")){
+                isValid = false;
+                break;
+            }
+        }
+        if(!isValid){
+            JOptionPane.showMessageDialog(null, "Please Provide All The Necessary Information!");
+        }else{
+            employee.getDataList().clear();
+            employee.setFilePath("CSVFiles//CredentialsDatabase.csv");
+            employee.retrivedDetails();
+            for(int i=1; i<employee.getDataList().size(); i++){
+                if(tempData.get(0).equals(employee.getDataList().get(i).get(0)) && tempData.get(3).equals(employee.getDataList().get(i).get(3))){
+                    JOptionPane.showMessageDialog(null, "Cannot Be Add New Credentials Due To Employee Already Exist With The Same Role!");
+                    isValid = false;
+                    break;
+                }
+            }
+            if(isValid){
+                employee.getDataList().add(tempData);
+                employee.addDetailsCSV();
+                JOptionPane.showMessageDialog(null, "New Credentials Added!");
+            }
+        }
+    }
+   void setSelectedName(String selectedName){
+       this.selectedName = selectedName;
+   }
+      
+   String getSelectedName(){
+       return this.selectedName;
+   } 
 }

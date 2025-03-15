@@ -213,7 +213,6 @@ public class AccountDetails {
         return this.tableData;
     }
     public void setFilePath(String path){
-        System.out.println("Path : "+path);
         this.filePath = path;
     }
    void setEmployeeID(String employeeID){
