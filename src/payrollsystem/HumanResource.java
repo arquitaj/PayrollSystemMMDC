@@ -4,8 +4,12 @@
  */
 package payrollsystem;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class HumanResource extends Employee{
@@ -70,8 +74,17 @@ public class HumanResource extends Employee{
         
     }
     
-    void addNewCredentials(){
+    ArrayList<ArrayList<String>> allCredentials(){
+        employee.getDataList().clear();
+        employee.setFilePath("CSVFiles//CredentialsDatabase.csv");
+        employee.retrivedDetails();
+        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+        for(int i=1; i<employee.getDataList().size(); i++){
+            employee.getDataList().get(i).remove(2);
+            tempData.add(employee.getDataList().get(i));
+        }
         
+        return tempData;
     }
     ArrayList<ArrayList<String>> displayAllDetails(){
         employee.getDataList().clear();
@@ -81,15 +94,48 @@ public class HumanResource extends Employee{
         return employee.getDataList();
     }
     
-    void displayLeaveLedger(){
+    boolean validateDateBirthday(Date dateBirthday){
+        boolean isValid = true;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateBirthday);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int days = calendar.get(Calendar.DATE);
+
         
-    }
-    void displayPayrollHistory(){
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        int currentMonth = currentDate.getMonthValue();
+        int currentDay = currentDate.getDayOfMonth();
+        System.out.println(currentYear);
+        System.out.println(currentMonth);
+        System.out.println(currentDay);
         
-    }
-    void displayEmployeeRequest(){
+        int legalAge = 18;
+        int yearDifference = currentYear - year;
+        int monthDifference = currentMonth - month;
+        int daysDifference = currentDay -days;
         
+        if(yearDifference >= legalAge){   // if  5 >= 5;
+            System.out.println("Age gap : "+yearDifference);
+            if(yearDifference == legalAge){ // 5==5
+                if(currentMonth >= month){    // 3>=3
+                    if(currentMonth == month){ //3==3
+                        if(currentDay >= days) //21 >= 20
+                            isValid = true;
+                        else
+                            isValid = false;
+                    }
+                }else
+                  isValid = true;  
+                
+            }
+        }else
+            isValid = false;
+        
+        return isValid;
     }
+
     ArrayList<ArrayList<String>> displayAllCredentials(){
         employee.getDataList().clear();
         employee.setFilePath("CSVFiles//CredentialsDatabase.csv");

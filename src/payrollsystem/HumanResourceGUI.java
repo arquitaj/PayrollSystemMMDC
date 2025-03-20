@@ -6,8 +6,12 @@ package payrollsystem;
 
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -43,14 +47,22 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     }
     void letterDashConstraints(java.awt.event.KeyEvent evt){
         char c = evt.getKeyChar();
-        if (!(Character.isDigit(c) || c == '-' || c == KeyEvent.VK_BACK_SPACE)) {
+        System.out.println("Back : "+c);
+        if (!(Character.isDigit(c) || c == '-' || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_ENTER)) {
             evt.consume(); // Consume the event, preventing the comma from being entered
             JOptionPane.showMessageDialog(null, "Invalid key!");
         }
     }
     void numberOnly(java.awt.event.KeyEvent evt){
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE) {
+        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_ENTER)) {
+            evt.consume(); // Consume the event, preventing the comma from being entered
+            JOptionPane.showMessageDialog(null, "Invalid key!");
+        }
+    }
+    void numberDotOnly(java.awt.event.KeyEvent evt){
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || c == '.' || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_ENTER)) {
             evt.consume(); // Consume the event, preventing the comma from being entered
             JOptionPane.showMessageDialog(null, "Invalid key!");
         }
@@ -295,11 +307,11 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         lblPosition1 = new javax.swing.JLabel();
         txtPosition1 = new javax.swing.JTextField();
         lblStatus1 = new javax.swing.JLabel();
-        txtStatus1 = new javax.swing.JTextField();
         lblSupervisor1 = new javax.swing.JLabel();
         txtSupervisor1 = new javax.swing.JTextField();
         jSeparator18 = new javax.swing.JSeparator();
         jBDay2 = new com.toedter.calendar.JDateChooser();
+        txtStatus1 = new javax.swing.JComboBox<>();
         tabbedAllCredentials = new javax.swing.JPanel();
         panelTypeRequest2 = new javax.swing.JPanel();
         tabbedInsideRequest2 = new javax.swing.JTabbedPane();
@@ -2321,13 +2333,6 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         lblStatus1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblStatus1.setText("Status:");
 
-        txtStatus1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtStatus1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtStatus1KeyTyped(evt);
-            }
-        });
-
         lblSupervisor1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblSupervisor1.setText("Supervisor:");
 
@@ -2345,6 +2350,14 @@ public class HumanResourceGUI extends javax.swing.JFrame {
 
         jSeparator18.setBackground(new java.awt.Color(255, 204, 153));
         jSeparator18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 51)));
+
+        jBDay2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jBDay2PropertyChange(evt);
+            }
+        });
+
+        txtStatus1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Regular", "Probationary" }));
 
         javax.swing.GroupLayout panelAllRequest1Layout = new javax.swing.GroupLayout(panelAllRequest1);
         panelAllRequest1.setLayout(panelAllRequest1Layout);
@@ -2429,9 +2442,9 @@ public class HumanResourceGUI extends javax.swing.JFrame {
                                     .addComponent(lblStatus1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtStatus1, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtSupervisor1)
-                                    .addComponent(txtPosition1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtPosition1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                    .addComponent(txtStatus1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(txtPagIbigNum1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(59, 59, 59))
                     .addGroup(panelAllRequest1Layout.createSequentialGroup()
@@ -2464,7 +2477,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(lblAllRequest3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
                 .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAllRequest1Layout.createSequentialGroup()
                         .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -2537,12 +2550,12 @@ public class HumanResourceGUI extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblStatus1)
-                                    .addComponent(txtStatus1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                    .addComponent(txtStatus1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, Short.MAX_VALUE)
                                 .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblSupervisor1)
                                     .addComponent(txtSupervisor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)))
                         .addGroup(panelAllRequest1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPagIbigNum1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtBiMonthlyRate1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2622,11 +2635,11 @@ public class HumanResourceGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NAME", "PASSWORD", "ROLE"
+                "ID", "NAME", "ROLE"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -2815,8 +2828,8 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         tempData.add(txtCredentialPassword.getText());
         tempData.add(txtCredentialRole.getSelectedItem().toString());
         if(humanResource.addNewCredentials(tempData)){
-            humanResource.setTableData(humanResource.displayAllCredentials());
-            humanResource.setTableSize(4);
+            humanResource.setTableData(humanResource.allCredentials());
+            humanResource.setTableSize(3);
             humanResource.displayDataTable(jTableCredentials);
             txtCredentialID.setText("");
             comboEmployeeName.setSelectedIndex(0);
@@ -2842,7 +2855,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
             tempData.add(txtPhilNum1.getText());
             tempData.add(txtTINNum1.getText());
             tempData.add(txtPagIbigNum1.getText());
-            tempData.add(txtStatus1.getText());
+            tempData.add(txtStatus1.getSelectedItem().toString());
             tempData.add(txtPosition1.getText());
             tempData.add(txtSupervisor1.getText());
             tempData.add(txtBasicSalary1.getText());
@@ -2858,7 +2871,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
                 humanResource.displayDataTable(jTableEmployees);
                 
                 txtID2.setText(humanResource.nextID());txtFName2.setText("");txtLName2.setText("");jBDay2.setDate(null);textAreaAddress2.setText("");txtPhoneNum2.setText("");txtSSSNum1.setText("");
-                txtPhilNum1.setText("");txtTINNum1.setText("");txtPagIbigNum1.setText("");txtStatus1.setText("");txtPosition1.setText("");txtSupervisor1.setText("");
+                txtPhilNum1.setText("");txtTINNum1.setText("");txtPagIbigNum1.setText("");txtStatus1.setSelectedIndex(0);txtPosition1.setText("");txtSupervisor1.setText("");
                 txtBasicSalary1.setText("");txtRiceSubsidy1.setText("");txtPhoneAllowance1.setText("");txtClothingAllowance1.setText("");txtBiMonthlyRate1.setText("");txtHourlyRate1.setText("");
             }
         }
@@ -2867,8 +2880,8 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private void btnAllCredentialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllCredentialsActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(7);
-        humanResource.setTableData(humanResource.displayAllCredentials());
-        humanResource.setTableSize(4);
+        humanResource.setTableData(humanResource.allCredentials());
+        humanResource.setTableSize(3);
         humanResource.displayDataTable(jTableCredentials);
         
         comboEmployeeName.addItem("");
@@ -3297,7 +3310,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
 
     private void txtBasicSalary1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBasicSalary1KeyTyped
         // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
+        numberDotOnly(evt);   //To call method for comma constraints
     }//GEN-LAST:event_txtBasicSalary1KeyTyped
 
     private void txtBiMonthlyRate1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBiMonthlyRate1KeyTyped
@@ -3312,17 +3325,17 @@ public class HumanResourceGUI extends javax.swing.JFrame {
 
     private void txtRiceSubsidy1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRiceSubsidy1KeyTyped
         // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
+        numberDotOnly(evt);   //To call method for comma constraints
     }//GEN-LAST:event_txtRiceSubsidy1KeyTyped
 
     private void txtPhoneAllowance1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneAllowance1KeyTyped
         // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
+        numberDotOnly(evt);   //To call method for comma constraints
     }//GEN-LAST:event_txtPhoneAllowance1KeyTyped
 
     private void txtClothingAllowance1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClothingAllowance1KeyTyped
         // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
+        numberDotOnly(evt);   //To call method for comma constraints
     }//GEN-LAST:event_txtClothingAllowance1KeyTyped
 
     private void txtPhilNum1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhilNum1KeyTyped
@@ -3349,11 +3362,6 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         commaConstraints(evt);   //To call method for comma constraints
     }//GEN-LAST:event_txtPosition1KeyTyped
-
-    private void txtStatus1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStatus1KeyTyped
-        // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
-    }//GEN-LAST:event_txtStatus1KeyTyped
 
     private void txtSupervisor1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSupervisor1KeyTyped
         // TODO add your handling code here:
@@ -3398,6 +3406,15 @@ public class HumanResourceGUI extends javax.swing.JFrame {
             login.setVisible(true);
         }
     }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jBDay2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jBDay2PropertyChange
+        // TODO add your handling code here:
+        if(jBDay2.getDate() != null)
+            if(!humanResource.validateDateBirthday(jBDay2.getDate())){
+                JOptionPane.showMessageDialog(null, "You must be 18 years old to proceed.");
+                jBDay2.setDate(null);
+            }
+    }//GEN-LAST:event_jBDay2PropertyChange
 
     /**
      * @param args the command line arguments
@@ -3687,7 +3704,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtSSSNum;
     private javax.swing.JTextField txtSSSNum1;
     private javax.swing.JTextField txtStatus;
-    private javax.swing.JTextField txtStatus1;
+    private javax.swing.JComboBox<String> txtStatus1;
     private javax.swing.JTextField txtSupervisor;
     private javax.swing.JTextField txtSupervisor1;
     private javax.swing.JTextField txtTINNum;

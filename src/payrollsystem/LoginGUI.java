@@ -5,6 +5,7 @@
 package payrollsystem;
 
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +16,8 @@ public class LoginGUI extends javax.swing.JFrame {
 
     public LoginGUI() {
         initComponents();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(true);
     }
 
     /**
@@ -91,9 +94,8 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                    .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtID)
-                        .addComponent(jPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
+                    .addComponent(txtID)
+                    .addComponent(jPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
                 .addGap(53, 53, 53))
         );
         panelLoginLayout.setVerticalGroup(
@@ -161,6 +163,7 @@ public class LoginGUI extends javax.swing.JFrame {
             if(userDetails.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Credentials Not Found! ");
             }else{
+                System.out.println(userDetails.get(0).get(3));
                 switch(userDetails.get(0).get(3)){
                     case "HUMAN RESOURCE":
                         dispose();
