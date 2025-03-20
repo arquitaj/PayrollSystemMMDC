@@ -4,6 +4,7 @@
  */
 package payrollsystem;
 
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,9 +38,24 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     void commaConstraints(java.awt.event.KeyEvent evt){
         if (evt.getKeyChar() == ',') {
                     evt.consume(); // Consume the event, preventing the comma from being entered
-                    JOptionPane.showMessageDialog(null, "Commas are not allowed!");
+                    JOptionPane.showMessageDialog(null, "Commas is not allowed!");
         }
     }
+    void letterDashConstraints(java.awt.event.KeyEvent evt){
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || c == '-' || c == KeyEvent.VK_BACK_SPACE)) {
+            evt.consume(); // Consume the event, preventing the comma from being entered
+            JOptionPane.showMessageDialog(null, "Invalid key!");
+        }
+    }
+    void numberOnly(java.awt.event.KeyEvent evt){
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE) {
+            evt.consume(); // Consume the event, preventing the comma from being entered
+            JOptionPane.showMessageDialog(null, "Invalid key!");
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -2722,12 +2738,13 @@ public class HumanResourceGUI extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelAllRequest2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCredentialID)
-                    .addComponent(txtCredentialID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelAllRequest2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAllRequest2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblCredentialPassword)
-                        .addComponent(txtCredentialPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCredentialPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelAllRequest2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblCredentialID)
+                        .addComponent(txtCredentialID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19)
                 .addGroup(panelAllRequest2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboEmployeeName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2797,15 +2814,15 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         tempData.add(comboEmployeeName.getSelectedItem().toString());
         tempData.add(txtCredentialPassword.getText());
         tempData.add(txtCredentialRole.getSelectedItem().toString());
-        humanResource.addNewCredentials(tempData);
-        
-        humanResource.setTableData(humanResource.displayAllCredentials());
-        humanResource.setTableSize(4);
-        humanResource.displayDataTable(jTableCredentials);
-        txtCredentialID.setText("");
-        comboEmployeeName.setSelectedIndex(0);
-        txtCredentialPassword.setText("");
-        txtCredentialRole.setSelectedIndex(0);
+        if(humanResource.addNewCredentials(tempData)){
+            humanResource.setTableData(humanResource.displayAllCredentials());
+            humanResource.setTableSize(4);
+            humanResource.displayDataTable(jTableCredentials);
+            txtCredentialID.setText("");
+            comboEmployeeName.setSelectedIndex(0);
+            txtCredentialPassword.setText("");
+            txtCredentialRole.setSelectedIndex(0);
+        }
     }//GEN-LAST:event_btnUpdate2ActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -2835,14 +2852,15 @@ public class HumanResourceGUI extends javax.swing.JFrame {
             tempData.add(txtBiMonthlyRate1.getText());
             tempData.add(txtHourlyRate1.getText());
 
-            humanResource.addDetails(tempData);
-            humanResource.setTableData(humanResource.displayAllDetails());
-            humanResource.setTableSize(19);
-            humanResource.displayDataTable(jTableEmployees);
-            
-            txtID2.setText(humanResource.nextID());txtFName2.setText("");txtLName2.setText("");jBDay2.setDate(null);textAreaAddress2.setText("");txtPhoneNum2.setText("");txtSSSNum1.setText("");
-            txtPhilNum1.setText("");txtTINNum1.setText("");txtPagIbigNum1.setText("");txtStatus1.setText("");txtPosition1.setText("");txtSupervisor1.setText("");
-            txtBasicSalary1.setText("");txtRiceSubsidy1.setText("");txtPhoneAllowance1.setText("");txtClothingAllowance1.setText("");txtBiMonthlyRate1.setText("");txtHourlyRate1.setText("");
+            if(humanResource.addDetails(tempData)){
+                humanResource.setTableData(humanResource.displayAllDetails());
+                humanResource.setTableSize(19);
+                humanResource.displayDataTable(jTableEmployees);
+                
+                txtID2.setText(humanResource.nextID());txtFName2.setText("");txtLName2.setText("");jBDay2.setDate(null);textAreaAddress2.setText("");txtPhoneNum2.setText("");txtSSSNum1.setText("");
+                txtPhilNum1.setText("");txtTINNum1.setText("");txtPagIbigNum1.setText("");txtStatus1.setText("");txtPosition1.setText("");txtSupervisor1.setText("");
+                txtBasicSalary1.setText("");txtRiceSubsidy1.setText("");txtPhoneAllowance1.setText("");txtClothingAllowance1.setText("");txtBiMonthlyRate1.setText("");txtHourlyRate1.setText("");
+            }
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -3268,8 +3286,8 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLName2KeyTyped
 
     private void txtPhoneNum2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNum2KeyTyped
-        // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
+        // TODO add your handling code here: 
+        letterDashConstraints(evt);   //To call method for comma constraints 
     }//GEN-LAST:event_txtPhoneNum2KeyTyped
 
     private void textAreaAddress2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textAreaAddress2KeyTyped
@@ -3309,22 +3327,22 @@ public class HumanResourceGUI extends javax.swing.JFrame {
 
     private void txtPhilNum1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhilNum1KeyTyped
         // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
+         numberOnly(evt);   //To call method for comma constraints
     }//GEN-LAST:event_txtPhilNum1KeyTyped
 
     private void txtSSSNum1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSSSNum1KeyTyped
         // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
+         letterDashConstraints(evt);   //To call method for comma constraints
     }//GEN-LAST:event_txtSSSNum1KeyTyped
 
     private void txtTINNum1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTINNum1KeyTyped
         // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
+          letterDashConstraints(evt);   //To call method for comma constraints
     }//GEN-LAST:event_txtTINNum1KeyTyped
 
     private void txtPagIbigNum1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPagIbigNum1KeyTyped
         // TODO add your handling code here:
-        commaConstraints(evt);   //To call method for comma constraints
+        numberOnly(evt);   //To call method for comma constraints
     }//GEN-LAST:event_txtPagIbigNum1KeyTyped
 
     private void txtPosition1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPosition1KeyTyped

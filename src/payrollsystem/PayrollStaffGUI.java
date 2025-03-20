@@ -2338,13 +2338,17 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     private void btnLeaveLedger3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger3ActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(7);
+        comboEmployeeName.removeAllItems();
         comboEmployeeName.addItem("");
+        String employeeName = payrollStaff.accountDetails.getLastName()+", "+payrollStaff.accountDetails.getFirstName();
         payrollStaff.getEmployeeNames();
           for (ArrayList<String> row : payrollStaff.getNewData()) {
             for (String item : row) {
-                comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
+                if(!item.equals(payrollStaff.accountDetails.getLastName()+", "+payrollStaff.accountDetails.getFirstName()))
+                    comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
             }
            }
+          System.out.println("Name :"+employeeName);
           payrollStaff.getNewData().clear();
     }//GEN-LAST:event_btnLeaveLedger3ActionPerformed
 
@@ -2377,7 +2381,13 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
         // TODO add your handling code here:
-        payrollStaff.setSelectedName(comboEmployeeName.getSelectedItem().toString());
+        String selectedItem;
+        if(comboEmployeeName.getSelectedItem() == null)
+            selectedItem = "";
+        else
+            selectedItem = comboEmployeeName.getSelectedItem().toString();
+        
+        payrollStaff.setSelectedName(selectedItem);
         payrollStaff.setTableData(payrollStaff.getDataForDTRTable());
         payrollStaff.setTableSize(6);
         payrollStaff.displayDataTable(jTableDTR);

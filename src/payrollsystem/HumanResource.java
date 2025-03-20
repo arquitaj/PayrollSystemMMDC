@@ -32,7 +32,7 @@ public class HumanResource extends Employee{
         return String.valueOf(tempID+1);
     }
     
-    void addDetails(ArrayList<String> tempData){
+    boolean addDetails(ArrayList<String> tempData){
          boolean isComplete = true;
         for(String info : tempData){
             if(info.equals("")){
@@ -49,6 +49,7 @@ public class HumanResource extends Employee{
             for(int i=1; i<employee.getDataList().size(); i++){
                 if(employee.getDataList().get(i).get(1).equals(tempData.get(2)) && employee.getDataList().get(i).get(2).equals(tempData.get(1))){
                     isValid = false;
+                    isComplete = false;
                     JOptionPane.showMessageDialog(null, "Cannot Be Add New Employee Due To Employee Already Exist!");
                     break;
                 }
@@ -59,7 +60,7 @@ public class HumanResource extends Employee{
                 JOptionPane.showMessageDialog(null, "Successfuly Added New Employee!");
             }
         }
-        
+        return isComplete;
     }
     
     void updateDetails(){
@@ -127,7 +128,7 @@ public class HumanResource extends Employee{
         return id;
     }
     
-    void addNewCredentials(ArrayList<String> tempData){
+    boolean addNewCredentials(ArrayList<String> tempData){
         boolean isValid = true;
         for(String info : tempData){
             if(info.equals("")){
@@ -137,6 +138,7 @@ public class HumanResource extends Employee{
         }
         if(!isValid){
             JOptionPane.showMessageDialog(null, "Please Provide All The Necessary Information!");
+            isValid = false;
         }else{
             employee.getDataList().clear();
             employee.setFilePath("CSVFiles//CredentialsDatabase.csv");
@@ -154,6 +156,7 @@ public class HumanResource extends Employee{
                 JOptionPane.showMessageDialog(null, "New Credentials Added!");
             }
         }
+        return isValid;
     }
    void setSelectedName(String selectedName){
        this.selectedName = selectedName;

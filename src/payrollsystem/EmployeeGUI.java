@@ -23,7 +23,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     
     public EmployeeGUI(ArrayList<ArrayList<String>> userDetails) {             
         initComponents();
-
+        
         this.id = userDetails.get(0).get(0);
         this.name = userDetails.get(0).get(1);
         this.role = userDetails.get(0).get(3);
