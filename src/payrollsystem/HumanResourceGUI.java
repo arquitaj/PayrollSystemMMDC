@@ -2684,7 +2684,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         });
 
         lblRequestType2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblRequestType2.setText("Employee Name:");
+        lblRequestType2.setText("Employee Role:");
 
         txtCredentialRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EMPLOYEE", "HUMAN RESOURCE", "PAYROLL STAFF", "SUPERVISOR" }));
         txtCredentialRole.addActionListener(new java.awt.event.ActionListener() {
