@@ -2353,6 +2353,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
           mainTabbed.setSelectedIndex(7);
           supervisor.getEmployeeNames();
+       
           supervisor.getNewData().forEach(row -> {
               for (String item : row) {
                   comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList

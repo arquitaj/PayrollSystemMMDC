@@ -1,4 +1,5 @@
 Employee #,Complete Name, Date Filed,Leave Type,From Date,To Date,Number of Days,Reason,Status,
-10003,Aquino Bianca Sofia,03/14/2025,Vacation Leave,03/14/2025,03/14/2025,1,First  Leave,Pending,
-10003,Aquino Bianca Sofia,03/14/2025,Vacation Leave,03/15/2025,03/16/2025,1,First  Leave,Pending,
-10001,Garcia Manuel III,03/18/2025,Vacation Leave,03/20/2025,03/21/2025,2,Pagod na pagod,Pending,
+10001,Garcia Manuel III,03/14/2025,Vacation Leave,03/15/2025,03/15/2025,1,First Leave,Approved,
+10002,Lim Antonio,03/14/2025,Vacation Leave,03/15/2025,03/15/2025,1,First Leave,Approved,
+10003,Aquino Bianca Sofia,03/14/2025,Vacation Leave,03/15/2025,03/15/2025,1,First Leave,Approved,
+10004,Reyes Isabella,03/14/2025,Vacation Leave,03/15/2025,03/15/2025,1,First Leave,Approved,
