@@ -2332,6 +2332,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         mainTabbed.setSelectedIndex(6);
         btnReleased.setEnabled(true);
         String payrollRange = payrollStaff.computePayroll();
+        System.out.println("Somnething");
         payrollStaff.setTableData(payrollStaff.getDataForPayrollTable());
         payrollStaff.setTableSize(14);
         payrollStaff.displayDataTable(jTablePayroll);

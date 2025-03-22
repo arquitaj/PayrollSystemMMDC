@@ -131,6 +131,7 @@ public class PayrollStaff extends Employee implements Payroll{
     }
     @Override
     public double undertimeCalculations(ArrayList<ArrayList<String>> perEmployeeAttendance){
+        
         double minutesDifference = 0;
         String timeInMorning = "08:00";
         String timeOutAfternoon = "17:00";
@@ -243,13 +244,17 @@ public class PayrollStaff extends Employee implements Payroll{
                 double gross = grossCalculation(perEmployeeAttendance);
                 double benefits = benefitsCalculation();
                 double overtime = overtimeCalculations(perEmployeeAttendance);
+                System.out.println("Overtime: "+overtime);
                 double undertime = undertimeCalculations(perEmployeeAttendance);
+                System.out.println("Undertime: "+undertime);
                 double sss = sssCalculation();
                 double philhealth = philhealthCalculation();
                 double pagibig = pagibigCalculation();
                 double tax = taxCalculation(sss+philhealth+pagibig);
                 double totalDeductions = sss + philhealth + pagibig + tax;
                 double netPay = netPayrollCalculations(gross, benefits, overtime, undertime, totalDeductions);
+                
+                
                 
                 employee.getDataList().clear();
                 employee.setFilePath("CSVFiles//Payroll.csv");
