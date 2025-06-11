@@ -4,11 +4,16 @@
  */
 package payrollsystem;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,6 +35,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         lblIDSidebar.setText(id);
         supervisor = new Supervisor(lblIDSidebar.getText().toString());
         supervisor.viewPersonalDetails(lblIDSidebar.getText());
+        setClockText();
     }
 
     private SupervisorGUI() {
@@ -55,7 +61,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         btnLogout = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        txtClock = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jSeparator13 = new javax.swing.JSeparator();
         jSeparator14 = new javax.swing.JSeparator();
@@ -304,8 +310,8 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/clock.png"))); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel5.setText("8:00 AM");
+        txtClock.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        txtClock.setText("8:00 AM");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/employee.png"))); // NOI18N
 
@@ -388,7 +394,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(sideBarPanelLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jLabel5)))
+                        .addComponent(txtClock)))
                 .addGap(36, 36, 36))
             .addGroup(sideBarPanelLayout.createSequentialGroup()
                 .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -474,7 +480,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addComponent(txtClock)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2794,6 +2800,20 @@ public class SupervisorGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel8MouseClicked
 
+    private void setClockText(){ //code for realtime date & time updates to the dashboard
+        Timer timer = new Timer(60000, new ActionListener(){ //timer updates every minute (60000 milliseconds)
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtClock.setText("<html>" + DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date()) + "<br/>" + DateFormat.getDateInstance().format(new Date()) + "</html>");
+                // added <html> and <br> tags to line break between the time and date texts
+            }
+        });
+        timer.setRepeats(true);
+        timer.setCoalesce(true);
+        timer.setInitialDelay(0);
+        timer.start();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -2863,7 +2883,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -3026,6 +3045,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtBDay;
     private javax.swing.JTextField txtBasicSalary;
     private javax.swing.JTextField txtBiMonthlyRate;
+    private javax.swing.JLabel txtClock;
     private javax.swing.JTextField txtClothingAllowance;
     private javax.swing.JTextField txtDaysNumber;
     private javax.swing.JTextField txtDaysNumber1;
