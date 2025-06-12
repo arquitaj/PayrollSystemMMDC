@@ -3425,7 +3425,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jBDay2PropertyChange
 
     private void setClockText(){ //code for realtime date & time updates to the dashboard
-        Timer timer = new Timer(60000, new ActionListener(){ //timer updates every minute (60000 milliseconds)
+        Timer timer = new Timer(1000, new ActionListener(){ //timer updates every second (1000 milliseconds)
             @Override
             public void actionPerformed(ActionEvent e) {
                 txtClock.setText("<html>" + DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date()) + "<br/>" + DateFormat.getDateInstance().format(new Date()) + "</html>");
