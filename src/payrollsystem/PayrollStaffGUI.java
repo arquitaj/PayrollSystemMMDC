@@ -6,11 +6,15 @@ package payrollsystem;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
@@ -2323,12 +2327,25 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        payrollStaff.userLogout();
+        try {
+            if(payrollStaff.accountDetails.userLogin(Integer.parseInt(payrollStaff.accountDetails.getEmployeeID()))){
+                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        payrollStaff.userLogin();
+         try {
+            if(payrollStaff.accountDetails.userLogout(Integer.parseInt(payrollStaff.accountDetails.getEmployeeID()))){
+                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLeaveLedger2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger2ActionPerformed
@@ -2729,27 +2746,34 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void btnSubmit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmit1ActionPerformed
         // TODO add your handling code here:
-        if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
-            if(payrollStaff.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
-                data.add(String.valueOf(payrollStaff.accountDetails.getEmployeeID()));
-                data.add(payrollStaff.accountDetails.getEmployeeCompleteName());
-                data.add(dateFormat.format(dateFromOvertime.getDate()));
-                data.add(dateFormat.format(dateToOvertime.getDate()));
-                data.add(txtDaysNumber1.getText());
-                data.add(txtReasonOvertime.getText());
-                if(payrollStaff.fileOvertimeRequest(data)){
-                    dateFromOvertime.setDate(null);
-                    dateToOvertime.setDate(null);
-                    txtDaysNumber1.setText(null);
-                    txtReasonOvertime.setText(null);
-                    payrollStaff.setNumberOfDaysLeave();
-                    JOptionPane.showMessageDialog(null, "Successfuly File A Overtime Request!");
-                }else{
-                    JOptionPane.showMessageDialog(null, "Error Overtime Request!");
-                }
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "Provide all the neccessary details for overtime!!");
+                if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
+             if(payrollStaff.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
+                 try {
+                     Boolean isSuccessfulyAdded = payrollStaff.accountDetails.addOvertimeToDatabase(
+                             Integer.parseInt(payrollStaff.accountDetails.getEmployeeID()),
+                             dateFromOvertime.getDate(),
+                             dateToOvertime.getDate(),
+                             Integer.parseInt(txtDaysNumber1.getText()),
+                             txtReasonOvertime.getText() 
+                        );
+                     if(isSuccessfulyAdded){
+                        dateFromOvertime.setDate(null);
+                        dateToOvertime.setDate(null);
+                        txtDaysNumber1.setText(null);
+                        txtReasonOvertime.setText(null);
+                        payrollStaff.setNumberOfDaysLeave();
+                        JOptionPane.showMessageDialog(null, "Successfuly File An Overtime Request!");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Error Overtime Request!");
+                    }
+                 } catch (SQLException ex) {
+                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                 } catch (ParseException ex) {
+                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+             } 
+        } else{
+           JOptionPane.showMessageDialog(null, "Provide all the neccessary details for overtime!!");
         }
     }//GEN-LAST:event_btnSubmit1ActionPerformed
 

@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -90,65 +91,8 @@ public class Employee extends AccountDetails {
     }
   
     
-    //To Validate Attendance first before adding it in CSV
-    boolean validateAttendance(String date){
-        for (int i=1; i<accountDetails.getDataList().size(); i++){
-            if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && 
-                    accountDetails.getDataList().get(i).get(1).equals(accountDetails.getEmployeeCompleteName()) &&
-                    accountDetails.getDataList().get(i).get(2).equals(date)) {
-                this.indexAttendance = i;
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    //To record the login or time in of the employeee
-    void userLogin(){
-        accountDetails.getDataList().clear();
-        accountDetails.setFilePath("CSVFiles//AttendanceDatabase.csv");
-        accountDetails.retrivedDetails();
-        
-        localDateTimeNow(); // To format the date
 
-        if(validateAttendance(getDateToday())){
-            JOptionPane.showMessageDialog(null, "You already made your time-in!!");
-        }else{
-            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getEmployeeCompleteName(), getDateToday() , getTimeNow(),"","No", "No"," "};
-            ArrayList<String> data = new ArrayList<>();
-            data.addAll(Arrays.asList(newAttendance));
-            accountDetails.getDataList().add(data);
-            accountDetails.addDetailsCSV();
-            JOptionPane.showMessageDialog(null, "Successfuly Time-in!!");
-        }
-    }
-    
-    //To record the logout or time out of the employee
-    void userLogout(){
-        accountDetails.getDataList().clear();
-        accountDetails.setFilePath("CSVFiles//AttendanceDatabase.csv");
-        accountDetails.retrivedDetails();
-        localDateTimeNow();
-        if(validateAttendance(getDateToday())){
-            if(accountDetails.getDataList().get(indexAttendance).size() == 6){
-        
-                accountDetails.getDataList().get(indexAttendance).add(5, getTimeNow());
-                accountDetails.addDetailsCSV();
-                JOptionPane.showMessageDialog(null, "Successfuly Time-out!!");
-            }else if (accountDetails.getDataList().get(indexAttendance).size() > 5 || attendance.getDataList().get(indexAttendance).get(4).equals("")){
-                accountDetails.getDataList().get(indexAttendance).set(4, getTimeNow());
-                accountDetails.addDetailsCSV();
-                JOptionPane.showMessageDialog(null, "Successfuly Time-out!");
-            }
-        }else{
-            String [] newAttendance = {String.valueOf(accountDetails.getEmployeeID()), accountDetails.getEmployeeCompleteName(), getDateToday(), "",getTimeNow(),"No", "No",""};
-            ArrayList<String> data = new ArrayList<>();
-            data.addAll(Arrays.asList(newAttendance));
-            accountDetails.getDataList().add(data);
-            accountDetails.addDetailsCSV(); 
-            JOptionPane.showMessageDialog(null, "Successfuly Time-out!");
-        }
-    }
+      
     
     boolean countNumberOfDays(Date dateFrom, Date dateTo){ // New method to count the days for leave
         Calendar startDate = Calendar.getInstance();

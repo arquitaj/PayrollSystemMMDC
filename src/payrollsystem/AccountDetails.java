@@ -19,9 +19,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Timestamp;
 
 /**
  *
@@ -48,12 +51,6 @@ public class AccountDetails extends DatabaseConnection{
     AccountDetails(){
         
     }
-   
-    void databaseConnection () throws SQLException{
-        System.out.println(dbConnection.getDBConnection());
-    }
-    
-    
   
     void retrivedDetails(){
         String line; 
@@ -112,6 +109,17 @@ public class AccountDetails extends DatabaseConnection{
             }
     }
     
+    //To get the id of the column table in the database
+    int getConnectionKey (String query) throws SQLException{
+        int requestID = 0;
+     
+        PreparedStatement getStatement =  conn.prepareStatement(query);
+        ResultSet resultSet = getStatement.executeQuery();
+        requestID = resultSet.getInt("request_status_id");
+        
+        return requestID;
+    }
+    
     //Implementation of CSV to DATABASE FOR OVERTIME REQUEST
     Boolean addOvertimeToDatabase(int employee_id, Date overtime_from, Date overtime_to, int number_of_days, String reason) throws SQLException, ParseException{
         Boolean isSuccessfulyAdded = false;
@@ -119,9 +127,8 @@ public class AccountDetails extends DatabaseConnection{
         java.sql.Date sqldate = new java.sql.Date(date.getTime());
         if(conn != null){
             int requestID = 0;
-            String getSQL = "SELECT request_status_id FROM request_status WHERE status = ? ";
+            String getSQL = "SELECT request_status_id FROM request_status WHERE status = 'Pending' ";
             PreparedStatement getStatement = conn.prepareStatement(getSQL);
-            getStatement.setString(1, "Pending");
             ResultSet resultSet = getStatement.executeQuery();
             while (resultSet.next()) {
                 requestID = resultSet.getInt("request_status_id");
@@ -147,6 +154,81 @@ public class AccountDetails extends DatabaseConnection{
         return isSuccessfulyAdded;
     }
     
+    Boolean userLogin(int employeeID) throws SQLException{
+        Boolean isSuccessfulyAdded = false;
+          java.sql.Date dateNow = new java.sql.Date(System.currentTimeMillis());
+          Timestamp timeNow = new Timestamp(System.currentTimeMillis());
+        if(conn != null){
+            int requestID = 0;
+            String getSQL = "SELECT * FROM attendance_records WHERE employee_id = ? AND attendance_date = ?";
+            PreparedStatement getStatement = conn.prepareStatement(getSQL);
+            getStatement.setInt(1, employeeID);
+            getStatement.setDate(2, dateNow);
+            ResultSet resultSet = getStatement.executeQuery();
+            while (resultSet.next()) {
+                requestID = resultSet.getInt("employee_id");
+            }
+            
+            if(requestID == 0){
+                String insertSQL = "INSERT INTO attendance_records (employee_id, attendance_date, login) VALUES (?,?,?)";
+                PreparedStatement statement = conn.prepareStatement(insertSQL);
+                statement.setInt(1, employeeID);
+                statement.setDate(2, dateNow);
+                statement.setTimestamp(3, timeNow);
+
+                int rowsInserted = statement.executeUpdate();
+                if (rowsInserted > 0) {
+                    isSuccessfulyAdded = true;
+                }       
+            }else{
+                JOptionPane.showMessageDialog(null, "You already time in!");
+            }
+        }    
+        return isSuccessfulyAdded;
+    }
+    
+    Boolean userLogout(int employeeID) throws SQLException{
+        Boolean isSuccessfulyAdded = false;
+          java.sql.Date dateNow = new java.sql.Date(System.currentTimeMillis());
+          Timestamp timeNow = new Timestamp(System.currentTimeMillis());
+        if(conn != null){
+       
+            int requestID = 0;
+            String getSQL = "SELECT * FROM attendance_records WHERE employee_id = ? AND attendance_date = ?";
+            PreparedStatement getStatement = conn.prepareStatement(getSQL);
+            getStatement.setInt(1, employeeID);
+            getStatement.setDate(2, dateNow);
+            ResultSet resultSet = getStatement.executeQuery();
+            while (resultSet.next()) {
+                requestID = resultSet.getInt("employee_id");
+            }
+            
+            if(requestID != 0){
+                String insertSQL = "UPDATE attendance_records SET logout = ? WHERE employee_id = ? AND attendance_date = ?";
+                PreparedStatement statement = conn.prepareStatement(insertSQL);
+                statement.setTimestamp(1, timeNow);
+                statement.setInt(2, employeeID);
+                statement.setDate(3, dateNow);
+                int rowsInserted = statement.executeUpdate();
+                if (rowsInserted > 0) {
+                    isSuccessfulyAdded = true;
+                }       
+            }else{
+                String insertSQL = "INSERT INTO attendance_records (employee_id, attendance_date, logout) VALUES (?,?,?)";
+                PreparedStatement statement = conn.prepareStatement(insertSQL);
+                statement.setInt(1, employeeID);
+                statement.setDate(2, dateNow);
+                statement.setTimestamp(3, timeNow);
+
+                int rowsInserted = statement.executeUpdate();
+                if (rowsInserted > 0) {
+                    isSuccessfulyAdded = true;
+                }       
+            }
+        }    
+        return isSuccessfulyAdded;
+    }
+        
     
     DefaultTableModel displayDataTable(JTable jTable){
     DefaultTableModel model = (DefaultTableModel) jTable.getModel();

@@ -2047,25 +2047,28 @@ public class EmployeeGUI extends javax.swing.JFrame {
         txtStatus.setText(employee.accountDetails.getStatus());
         txtSupervisor.setText(employee.accountDetails.getSupervisor());
         
-       
-//        try {
-//            employee.accountDetails.addDetailsDatabase();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ParseException ex) {
-//            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-  
     }//GEN-LAST:event_btnPersonalDetailsActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        employee.userLogin();
+        try {
+            if(employee.accountDetails.userLogin(Integer.parseInt(employee.accountDetails.getEmployeeID()))){
+                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        employee.userLogout();
+        try {
+            if(employee.accountDetails.userLogout(Integer.parseInt(employee.accountDetails.getEmployeeID()))){
+                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnRequestPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestPortActionPerformed
