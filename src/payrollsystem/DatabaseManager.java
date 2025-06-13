@@ -87,6 +87,114 @@ public class DatabaseManager {
         return rowsAffectedByQuery;
     }
     
+    public ResultSet readFromDatabase(String table){ //method to read everything from a table
+        ResultSet result;
+        String query = "SELECT * FROM payroll_system_db." + table + ";";
+        try{
+            Connection queryConnection = connection.getDBConnection();
+            PreparedStatement statement = queryConnection.prepareStatement(query);
+            System.out.println(statement);
+            result = statement.executeQuery();
+            
+            //statement.close();
+            
+            System.out.println(result);
+            return result;
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        
+        return null;
+    }
+    
+    public ResultSet readFromDatabase(String table, String condition, String value){ //method to read from a table with specified WHERE condition
+        ResultSet result;
+        String query = "SELECT * FROM payroll_system_db." + table + " WHERE ? = ?;";
+        
+        try{
+            Connection queryConnection = connection.getDBConnection();
+            PreparedStatement statement = queryConnection.prepareStatement(query);
+            statement.setNString(1, condition);
+            statement.setNString(2, value);
+            result = statement.executeQuery();
+            
+            statement.close();
+            
+            return result;
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        
+        return null;
+    }
+    
+    public ResultSet readFromDatabase(String columnName, String table, String condition, String value){ //method to read specific column from a table with specified WHERE condition
+        ResultSet result;
+        String query = "SELECT " + columnName + " FROM payroll_system_db." + table + " WHERE ? = ?;";
+        
+        try{
+            Connection queryConnection = connection.getDBConnection();
+            PreparedStatement statement = queryConnection.prepareStatement(query);
+            statement.setNString(1, condition);
+            statement.setNString(2, value);
+            result = statement.executeQuery();
+            
+            statement.close();
+            
+            return result;
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        
+        return null;
+    }
+    
+    public ResultSet queryFromDatabase(String query){
+        ResultSet result;
+        
+        try{
+            Connection queryConnection = connection.getDBConnection();
+            Statement statement = queryConnection.createStatement();
+            result = statement.executeQuery(query);
+            
+            statement.close();
+            
+            return result;
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        
+        return null;
+    }
+    
+    public String readEmployeePosition(String employeeID){
+        ResultSet result;
+        String positionResult = null;
+        
+        try{
+            Connection queryConnection = connection.getDBConnection();
+            PreparedStatement statement = queryConnection.prepareStatement(
+                "SELECT credentials.role FROM credentials WHERE employee_id = ?;"
+            );
+            statement.setInt(1, Integer.parseInt(employeeID));
+            result = statement.executeQuery();
+            while (result.next()) positionResult = result.getString(1);
+            
+            statement.close();
+            
+            return positionResult;
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        
+        return null;
+    }
+    
     public java.sql.Date parseDateFromString(String date){ //method to convert String to sql.Date
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         

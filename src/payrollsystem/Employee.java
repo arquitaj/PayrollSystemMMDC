@@ -107,41 +107,41 @@ public class Employee extends AccountDetails {
     }
     
     ArrayList<ArrayList<String>> getDataAllRequests() {
-    accountDetails.getDataList().clear();
-    ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-    accountDetails.setFilePath("CSVFiles//LeaveRequests.csv");
-    accountDetails.retrivedDetails();
-    for(int i=0; i<accountDetails.getDataList().size(); i++){
-        if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Pending")){
-            ArrayList<String> data = new ArrayList<>();
-            data.add(accountDetails.getDataList().get(i).get(2)); // Date Filed
-            data.add(accountDetails.getDataList().get(i).get(3)); // Type of Request (Leave Type)
-            data.add(accountDetails.getDataList().get(i).get(4)); // Period From
-            data.add(accountDetails.getDataList().get(i).get(5)); // Period To
-            data.add(accountDetails.getDataList().get(i).get(6)); // Number of days
-            data.add(accountDetails.getDataList().get(i).get(7)); // Reason
-            data.add(accountDetails.getDataList().get(i).get(8)); // Status
-            tempData.add(data);
+        accountDetails.getDataList().clear();
+        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+        accountDetails.setFilePath("CSVFiles//LeaveRequests.csv");
+        accountDetails.retrivedDetails("employees");
+        for(int i=0; i<accountDetails.getDataList().size(); i++){
+            if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Pending")){
+                ArrayList<String> data = new ArrayList<>();
+                data.add(accountDetails.getDataList().get(i).get(2)); // Date Filed
+                data.add(accountDetails.getDataList().get(i).get(3)); // Type of Request (Leave Type)
+                data.add(accountDetails.getDataList().get(i).get(4)); // Period From
+                data.add(accountDetails.getDataList().get(i).get(5)); // Period To
+                data.add(accountDetails.getDataList().get(i).get(6)); // Number of days
+                data.add(accountDetails.getDataList().get(i).get(7)); // Reason
+                data.add(accountDetails.getDataList().get(i).get(8)); // Status
+                tempData.add(data);
+            }
         }
-    }
-    
-    accountDetails.getDataList().clear();
-    accountDetails.setFilePath("CSVFiles//OvertimeRequest.csv");
-    accountDetails.retrivedDetails();
-    for(int i=0; i<accountDetails.getDataList().size(); i++){
-        if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Pending")){
-            ArrayList<String> data = new ArrayList<>();
-            data.add(accountDetails.getDataList().get(i).get(2)); // Date Filed
-            data.add(accountDetails.getDataList().get(i).get(3)); // Type of Request (Leave Type)
-            data.add(accountDetails.getDataList().get(i).get(4)); // Period From
-            data.add(accountDetails.getDataList().get(i).get(5)); // Period To
-            data.add(accountDetails.getDataList().get(i).get(6)); // Number of days
-            data.add(accountDetails.getDataList().get(i).get(7)); // Reason
-            data.add(accountDetails.getDataList().get(i).get(8)); // Status
-            tempData.add(data);
+
+        accountDetails.getDataList().clear();
+        accountDetails.setFilePath("CSVFiles//OvertimeRequest.csv");
+        accountDetails.retrivedDetails();
+        for(int i=0; i<accountDetails.getDataList().size(); i++){
+            if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Pending")){
+                ArrayList<String> data = new ArrayList<>();
+                data.add(accountDetails.getDataList().get(i).get(2)); // Date Filed
+                data.add(accountDetails.getDataList().get(i).get(3)); // Type of Request (Leave Type)
+                data.add(accountDetails.getDataList().get(i).get(4)); // Period From
+                data.add(accountDetails.getDataList().get(i).get(5)); // Period To
+                data.add(accountDetails.getDataList().get(i).get(6)); // Number of days
+                data.add(accountDetails.getDataList().get(i).get(7)); // Reason
+                data.add(accountDetails.getDataList().get(i).get(8)); // Status
+                tempData.add(data);
+            }
         }
-    }
-    return tempData;
+        return tempData;
     }
     
     void viewPersonalDTR(Date dateFrom, Date dateTo){
@@ -194,23 +194,23 @@ public class Employee extends AccountDetails {
         return tempData;
 }
     ArrayList<ArrayList<String>> allApprovedPersonalLeaveLedger() {
-    //load personal details to ensure we have the employee ID
-    accountDetails.getDataList().clear();
-    accountDetails.setFilePath("CSVFiles//LeaveRequests.csv");
-    accountDetails.retrivedDetails();
-    ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-    for(int i=1; i<accountDetails.getDataList().size(); i++){
-        
-        if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Approved")){
-            String [] list = {accountDetails.getDataList().get(i).get(2), accountDetails.getDataList().get(i).get(3),accountDetails.getDataList().get(i).get(4),
-                    accountDetails.getDataList().get(i).get(5),accountDetails.getDataList().get(i).get(6), accountDetails.getDataList().get(i).get(7), 
-                    accountDetails.getDataList().get(i).get(8)
-            };
-            ArrayList<String> row = new ArrayList<>();
-            row.addAll(Arrays.asList(list));
-            tempData.add(row);
+        //load personal details to ensure we have the employee ID
+        accountDetails.getDataList().clear();
+        accountDetails.setFilePath("CSVFiles//LeaveRequests.csv");
+        accountDetails.retrivedDetails();
+        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+        for(int i=1; i<accountDetails.getDataList().size(); i++){
+
+            if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Approved")){
+                String [] list = {accountDetails.getDataList().get(i).get(2), accountDetails.getDataList().get(i).get(3),accountDetails.getDataList().get(i).get(4),
+                        accountDetails.getDataList().get(i).get(5),accountDetails.getDataList().get(i).get(6), accountDetails.getDataList().get(i).get(7), 
+                        accountDetails.getDataList().get(i).get(8)
+                };
+                ArrayList<String> row = new ArrayList<>();
+                row.addAll(Arrays.asList(list));
+                tempData.add(row);
+            }
         }
-    }
     return tempData;
 }
 
@@ -250,7 +250,7 @@ public class Employee extends AccountDetails {
         return tempData;
     }    
     
-        void forwardDTRToSupervisor(ArrayList<ArrayList <String>> tempData){
+    void forwardDTRToSupervisor(ArrayList<ArrayList <String>> tempData){
         accountDetails.getDataList().clear();
         accountDetails.setFilePath("CSVFiles//AttendanceDatabase.csv");
         accountDetails.retrivedDetails();

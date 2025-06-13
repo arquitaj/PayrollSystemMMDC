@@ -22,14 +22,15 @@ abstract class Credentials extends AccountDetails {
     
     ArrayList<ArrayList<String>> checkCredentials(){
         ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+        ArrayList<ArrayList<String>> dataList;
         accountDetails.setFilePath("CSVFiles//CredentialsDatabase.csv");
-        accountDetails.retrivedDetails();
-        for(ArrayList<String> data : accountDetails.getDataList()){
-            if(data.get(0).equals(userID) && data.get(2).equals(userPassword)){
-                tempData.add(data);
+        accountDetails.retrivedDetails("credentials");
+        dataList = accountDetails.getDataList();
+        for(int i = 0; i < dataList.size(); i++){
+            if(userID.equals(dataList.get(i).get(1)) && userPassword.equals(dataList.get(i).get(2))){
+                tempData.add(dataList.get(i));
             }
         }
         return tempData;
     }
-
 }

@@ -3,15 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package payrollsystem;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import com.sun.jdi.connect.spi.Connection;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -24,9 +21,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.sql.*;
 
 /**
  *
@@ -52,7 +49,7 @@ public class AccountDetails extends DatabaseConnection{
     
     AccountDetails(){}
   
-    void retrivedDetails(){
+    void retrivedDetails(){        
         String line; 
         try (BufferedReader reader = new BufferedReader(new FileReader(getFilePath()))) {
             while ((line = reader.readLine()) != null){
@@ -65,6 +62,37 @@ public class AccountDetails extends DatabaseConnection{
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+    
+    void retrivedDetails(String table){
+        ArrayList<ArrayList<String>> dataListClone = new ArrayList<>();
+        
+        String[] columnNames;
+        int columnCount;
+        
+        try{
+            ResultSet result = db.readFromDatabase(table);
+            columnCount = result.getMetaData().getColumnCount();
+            columnNames = new String[columnCount];
+            
+            for (int i = 0; i < columnCount; i++){
+                columnNames[i] = result.getMetaData().getColumnName(i + 1);
+            }
+            
+            while (result.next()){
+                ArrayList<String> resultItems = new ArrayList<>();
+                for (String columnName : columnNames){
+                    resultItems.add(result.getString(columnName));
+                }
+                dataListClone.add(resultItems);
+            }
+            result.close();
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        
+        dataList = dataListClone;
     }
     
     void userDetails(String id){
@@ -252,16 +280,16 @@ public class AccountDetails extends DatabaseConnection{
     }
     
     DefaultTableModel displayDataTable(JTable jTable){
-    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
-           Object rowData[] = new Object [this.tableSize];
-           for(int row=0; row<getTableData().size(); row++){
-               for(int i=0; i<rowData.length; i++){
-                  rowData[i] = getTableData().get(row).get(i); 
-               }
-               model.addRow(rowData);
-           }
-           getNewData().clear();
+        Object rowData[] = new Object [this.tableSize];
+        for(int row=0; row<getTableData().size(); row++){
+            for(int i=0; i<rowData.length; i++){
+               rowData[i] = getTableData().get(row).get(i); 
+            }
+            model.addRow(rowData);
+        }
+        getNewData().clear();
         return model;
     }
     
