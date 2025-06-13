@@ -37,8 +37,9 @@ public class AccountDetails extends DatabaseConnection{
     
     private String filePath;
     private String employeeID;
+    private String address = "";
     private String employeeCompleteName;
-    private String firstName, lastName, birthday, address, phoneNumber, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor, dateToday, timeNow;
+    private String firstName, lastName, birthday, phoneNumber, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor, dateToday, timeNow;
     private double basicSalary, riceSubsidy, phoneAllowance, clothingAllowance, semiBasicSalary, hourlyRate;
 
     int tableSize;
@@ -66,7 +67,6 @@ public class AccountDetails extends DatabaseConnection{
     
     void retrivedDetails(String table){
         ArrayList<ArrayList<String>> dataListClone = new ArrayList<>();
-        
         String[] columnNames;
         int columnCount;
         
@@ -84,7 +84,7 @@ public class AccountDetails extends DatabaseConnection{
                 for (String columnName : columnNames){
                     resultItems.add(result.getString(columnName));
                 }
-                dataListClone.add(resultItems);
+                dataListClone.add(resultItems); //dataListClone is used instead of direct assignment due to an object reference error
             }
             result.close();
         }
@@ -99,24 +99,36 @@ public class AccountDetails extends DatabaseConnection{
         this.employeeID = id;
         for(ArrayList<String> data : dataList){
             if(data.get(0).equals(String.valueOf(getEmployeeID()))){
-                this.lastName = data.get(1);
-                this.firstName = data.get(2); 
-                this.birthday = data.get(3);
-                this.address = data.get(4);
-                this.phoneNumber = data.get(5);
-                this.sssNumber = data.get(6);
-                this.philHealthNumber = data.get(7);
-                this.tinNumber = data.get(8);
-                this.pagibigNumber = data.get(9);
-                this.status = data.get(10);
-                this.position = data.get(11);
-                this.supervisor = data.get(12);
-                this.basicSalary = Double.parseDouble(data.get(13));
-                this.riceSubsidy = Double.parseDouble(data.get(14));
-                this.phoneAllowance = Double.parseDouble(data.get(15));
-                this.clothingAllowance = Double.parseDouble(data.get(16));
-                this.semiBasicSalary = Double.parseDouble(data.get(17));
-                this.hourlyRate = Double.parseDouble(data.get(18));
+                this.lastName = data.get(6);
+                this.firstName = data.get(5); 
+                this.birthday = data.get(7);
+                this.phoneNumber = data.get(8);
+                this.status = db.readEmployeeStatus(employeeID);
+                this.position = db.readEmployeePosition(employeeID);
+                this.supervisor = data.get(3);
+//                this.semiBasicSalary = Double.parseDouble(data.get(17)); //TODO
+                
+                
+                for(String item : db.readEmployeeAddress(employeeID)){ //assigning this.address from address columns in database
+                    this.address += item;
+                }
+                
+                Double[] compensationDetails = db.readCompensationDetails(employeeID);
+                this.basicSalary = compensationDetails[0];
+                this.riceSubsidy = compensationDetails[1];
+                this.phoneAllowance = compensationDetails[2];
+                this.clothingAllowance = compensationDetails[3];
+                this.hourlyRate = compensationDetails[4];
+                
+                String[] governmentDetails = db.readGovernmentDetails(employeeID);
+                this.sssNumber = governmentDetails[0];
+                this.philHealthNumber = governmentDetails[1];
+                this.tinNumber = governmentDetails[2];
+                this.pagibigNumber = governmentDetails[3];
+
+                if (!this.lastName.isBlank() || !this.lastName.isEmpty()){
+                    break;
+                }
             }
         }
     }

@@ -32,11 +32,14 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     HumanResource humanResource;
     ArrayList<String> data = new ArrayList<>(); //To hold as storage
     SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
+    AccountDetails accountDetails = new AccountDetails();
+    
     public HumanResourceGUI(ArrayList<ArrayList<String>> userDetails) {
         initComponents();
-        this.id = userDetails.get(0).get(0);
-        this.name = userDetails.get(0).get(1);
-        this.role = userDetails.get(0).get(3);
+        accountDetails.retrivedDetails("employees");
+        accountDetails.userDetails(userDetails.get(0).get(1));
+        this.id = accountDetails.getEmployeeID();
+        this.name = accountDetails.getFirstName() + " " + accountDetails.getLastName();
         
         lblNameSidebar.setText(name);
         lblIDSidebar.setText(id);
@@ -2942,25 +2945,25 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(1);
-        txtID.setText(String.valueOf(humanResource.accountDetails.getEmployeeID()));
-        txtFName.setText(humanResource.accountDetails.getFirstName());
-        txtLName.setText(humanResource.accountDetails.getLastName());
-        txtBDay.setText(humanResource.accountDetails.getBirthday());
-        txtPhoneNum.setText(humanResource.accountDetails.getPhoneNumber());
-        textAreaAddress.setText(humanResource.accountDetails.getAddress());
-        txtBasicSalary.setText(String.valueOf(humanResource.accountDetails.getBasicSalary()));
-        txtBiMonthlyRate.setText(String.valueOf(humanResource.accountDetails.getSemiBasicSalary()));
-        txtHourlyRate.setText(String.valueOf(humanResource.accountDetails.getHourlyRate()));
-        txtRiceSubsidy.setText(String.valueOf(humanResource.accountDetails.getRiceSubsidy()));
-        txtPhoneAllowance.setText(String.valueOf(humanResource.accountDetails.getRiceSubsidy()));
-        txtClothingAllowance.setText(String.valueOf(humanResource.accountDetails.getClothingAllowance()));
-        txtPhilNum.setText(humanResource.accountDetails.getPhilHealthNumber());
-        txtSSSNum.setText(humanResource.accountDetails.getPhilHealthNumber());
-        txtTINNum.setText(humanResource.accountDetails.getTinNumber());
-        txtPagIbigNum.setText(humanResource.accountDetails.getPagibigNumber());
-        txtPosition.setText(humanResource.accountDetails.getPosition());
-        txtStatus.setText(humanResource.accountDetails.getStatus());
-        txtSupervisor.setText(humanResource.accountDetails.getSupervisor());
+        txtID.setText(String.valueOf(accountDetails.getEmployeeID()));
+        txtFName.setText(accountDetails.getFirstName());
+        txtLName.setText(accountDetails.getLastName());
+        txtBDay.setText(accountDetails.getBirthday());
+        txtPhoneNum.setText(accountDetails.getPhoneNumber());
+        textAreaAddress.setText(accountDetails.getAddress());
+        txtBasicSalary.setText(String.valueOf(accountDetails.getBasicSalary()));
+        txtBiMonthlyRate.setText(String.valueOf(accountDetails.getSemiBasicSalary()));
+        txtHourlyRate.setText(String.valueOf(accountDetails.getHourlyRate()));
+        txtRiceSubsidy.setText(String.valueOf(accountDetails.getRiceSubsidy()));
+        txtPhoneAllowance.setText(String.valueOf(accountDetails.getRiceSubsidy()));
+        txtClothingAllowance.setText(String.valueOf(accountDetails.getClothingAllowance()));
+        txtPhilNum.setText(accountDetails.getPhilHealthNumber());
+        txtSSSNum.setText(accountDetails.getPhilHealthNumber());
+        txtTINNum.setText(accountDetails.getTinNumber());
+        txtPagIbigNum.setText(accountDetails.getPagibigNumber());
+        txtPosition.setText(accountDetails.getPosition());
+        txtStatus.setText(accountDetails.getStatus());
+        txtSupervisor.setText(accountDetails.getSupervisor());
     }//GEN-LAST:event_btnPersonalDetailsActionPerformed
 
     private void btnRequestPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestPortActionPerformed
