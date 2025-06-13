@@ -2249,7 +2249,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_dateFromOvertimePropertyChange
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-
+        //leave request submit
         if (comboLeaveType.getSelectedIndex() == 0 || dateFrom.getDate() == null || dateTo.getDate() == null || txtReason.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide all the necessary details for filing of Leave Request!");
             return;

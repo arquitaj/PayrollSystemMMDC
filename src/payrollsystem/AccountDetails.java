@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Timestamp;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -36,21 +38,19 @@ public class AccountDetails extends DatabaseConnection{
     private ArrayList<ArrayList<String>> newData = new ArrayList<>();
     private ArrayList<ArrayList<String>> idAndNames = new ArrayList<>();
     
-    
     private String filePath;
     private String employeeID;
     private String employeeCompleteName;
-    private String firstName, lastName, birthday, address, phoneNumber, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor;
+    private String firstName, lastName, birthday, address, phoneNumber, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor, dateToday, timeNow;
     private double basicSalary, riceSubsidy, phoneAllowance, clothingAllowance, semiBasicSalary, hourlyRate;
 
     int tableSize;
     
     DatabaseConnection dbConnection = new DatabaseConnection();
     java.sql.Connection conn = dbConnection.getDBConnection();
+    DatabaseManager db = new DatabaseManager();
     
-    AccountDetails(){
-        
-    }
+    AccountDetails(){}
   
     void retrivedDetails(){
         String line; 
@@ -228,7 +228,28 @@ public class AccountDetails extends DatabaseConnection{
         }    
         return isSuccessfulyAdded;
     }
+    
+    //To file new leave request
+    boolean fileLeaveRequest(ArrayList<String> data){
+        localDateTimeNow();
         
+        data.add(2, getDateToday()); //To insert date filed in index 2 of the arraylist data 
+        data.add("Pending");
+        db.writeLeaveApplicationToDatabase(data);
+        
+        data.clear(); //To empty or clear data in array list
+        return true;
+    }
+    
+    // To format the Local Time and Date Now
+    void localDateTimeNow(){
+        LocalDate dateNow = LocalDate.now();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        this.dateToday = dateFormat.format(dateNow); 
+        
+        LocalTime time = LocalTime.now();
+        this.timeNow = time.getHour()+":"+time.getMinute();
+    }
     
     DefaultTableModel displayDataTable(JTable jTable){
     DefaultTableModel model = (DefaultTableModel) jTable.getModel();
@@ -343,6 +364,12 @@ public class AccountDetails extends DatabaseConnection{
     }
     ArrayList<ArrayList<String>> getTableData(){
         return this.tableData;
+    }
+    String getDateToday(){
+        return dateToday;
+    }
+    String getTimeNow(){
+        return timeNow;
     }
     public void setFilePath(String path){
         this.filePath = path;

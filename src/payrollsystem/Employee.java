@@ -28,16 +28,15 @@ public class Employee extends AccountDetails {
     
     AccountDetails accountDetails = new AccountDetails();
     AccountDetails attendance = new AccountDetails();
-    AccountDetails leave = new AccountDetails();
     AccountDetails overtime = new AccountDetails();
     AccountDetails balance = new AccountDetails();
     AccountDetails payroll = new AccountDetails();
     AccountDetails dbConnection = new AccountDetails();
     
+    
     private String employeeID;
     protected int indexAttendance;
     private String filePath;
-    private String dateToday, timeNow;
     private String leaveDays;
     private int numberOfDaysLeave = 0;
     private String balanceVL, balanceSL;
@@ -52,13 +51,6 @@ public class Employee extends AccountDetails {
         accountDetails.setFilePath("CSVFiles//EmployeeDatabase.csv");
         accountDetails.retrivedDetails();
         accountDetails.userDetails(employeeID);
-    }
-    
-    
-    //To view all Personal Leave Ledger
-    void viewPersonalLeaveLedger(){
-        leave.setFilePath("CSVFiles//LeaveRequests.csv");
-        leave.retrivedDetails();
     }
     
     //To view
@@ -80,20 +72,6 @@ public class Employee extends AccountDetails {
          }
      }
      
-    // To format the Local Time and Date Now
-    void localDateTimeNow(){
-        LocalDate dateNow = LocalDate.now();
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        this.dateToday = dateFormat.format(dateNow); 
-        
-        LocalTime time = LocalTime.now();
-        this.timeNow = time.getHour()+":"+time.getMinute();
-    }
-  
-    
-
-      
-    
     boolean countNumberOfDays(Date dateFrom, Date dateTo){ // New method to count the days for leave
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
@@ -112,21 +90,6 @@ public class Employee extends AccountDetails {
         }
         return true;
     }
-    //To file new leave request
-    boolean fileLeaveRequest(ArrayList<String> data){
-        localDateTimeNow();
-        viewPersonalLeaveLedger();
-        
-        data.add(2, getDateToday()); //To insert date filed in index 1 of the arraylist data 
-        data.add("Pending");
-        leave.getDataList().add(data);
-        leave.addDetailsCSV(); //To add all data in the LeaveRequest CSV  
-        
-        data.clear(); //To empty or clear data in array list
-        leave.getDataList().clear(); //To empty or clear all data list
-        return true;
-    }
-
     
     boolean fileOvertimeRequest(ArrayList<String> data) {
         localDateTimeNow();
@@ -310,14 +273,6 @@ public class Employee extends AccountDetails {
     public void updateOvertimeRequest() {
     
     }
-    
-    String getDateToday(){
-        return dateToday;
-    }
-    String getTimeNow(){
-        return timeNow;
-    }
-
     int getNumberOfDaysLeave(){
         return numberOfDaysLeave;
     }
