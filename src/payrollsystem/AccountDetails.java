@@ -46,7 +46,7 @@ public class AccountDetails extends DatabaseConnection{
     
     DatabaseConnection dbConnection = new DatabaseConnection();
     java.sql.Connection conn = dbConnection.getDBConnection();
-    DatabaseManager db = new DatabaseManager();
+    DatabaseManager databaseManager = new DatabaseManager();
 
     AccountDetails(){}
   
@@ -71,7 +71,7 @@ public class AccountDetails extends DatabaseConnection{
         int columnCount;
         
         try{
-            ResultSet result = db.readFromDatabase(table);
+            ResultSet result = databaseManager.readFromDatabase(table);
             columnCount = result.getMetaData().getColumnCount();
             columnNames = new String[columnCount];
             
@@ -100,20 +100,22 @@ public class AccountDetails extends DatabaseConnection{
           try{   
               PreparedStatement statement = conn.prepareStatement(sql);
               statement.setInt(1, userID);
-               data = db.getData(statement);
+               data = databaseManager.getData(statement);
                 System.out.println("Data is: "+data);
                 System.out.println("Data ID: "+data.get(0).get(0));
                 this.employeeID = Integer.parseInt(data.get(0).get(0));
                 this.firstName = data.get(0).get(1);
                 this.lastName = data.get(0).get(2);
                 this.birthday = data.get(0).get(3);
-                this.phoneNumber = data.get(0).get(4);
+                this.phoneNumber = data.get(0).get(4); 
                 this.street = data.get(0).get(5);
                 this.barangay = data.get(0).get(6);
                 this.city = data.get(0).get(7);
                 this.province = data.get(0).get(8);
                 this.zipcode = data.get(0).get(9);
                 this.basicSalary = Double.parseDouble(data.get(0).get(10));
+                this.semiBasicSalary = this.basicSalary / 2;
+                this.hourlyRate = (semiBasicSalary/21)/8;
                 this.riceSubsidy = Double.parseDouble(data.get(0).get(11));
                 this.phoneAllowance = Double.parseDouble(data.get(0).get(12));
                 this.clothingAllowance = Double.parseDouble(data.get(0).get(13));
@@ -335,7 +337,7 @@ public class AccountDetails extends DatabaseConnection{
         
         data.add(2, getDateToday()); //To insert date filed in index 2 of the arraylist data 
         data.add("Pending");
-        db.writeLeaveApplicationToDatabase(data);
+        databaseManager.writeLeaveApplicationToDatabase(data);
         
         data.clear(); //To empty or clear data in array list
         return true;
@@ -396,8 +398,20 @@ public class AccountDetails extends DatabaseConnection{
         return lastName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
+    }
+    public String getBarangay() {
+        return barangay;
+    }
+    public String getCity() {
+        return city;
+    }
+    public String getProvince() {
+        return province;
+    }
+    public String getZipCode() {
+        return zipcode;
     }
 
     public String getPhoneNumber() {

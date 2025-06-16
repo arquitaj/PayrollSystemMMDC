@@ -103,7 +103,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         txtBDay = new javax.swing.JTextField();
         txtPhoneNum = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        textAreaAddress = new javax.swing.JTextArea();
+        textAreaStreet = new javax.swing.JTextArea();
         lblBrgy = new javax.swing.JLabel();
         lblCity = new javax.swing.JLabel();
         lblProvince = new javax.swing.JLabel();
@@ -641,10 +641,10 @@ public class EmployeeGUI extends javax.swing.JFrame {
         txtPhoneNum.setEditable(false);
         txtPhoneNum.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        textAreaAddress.setEditable(false);
-        textAreaAddress.setColumns(20);
-        textAreaAddress.setRows(5);
-        jScrollPane1.setViewportView(textAreaAddress);
+        textAreaStreet.setEditable(false);
+        textAreaStreet.setColumns(20);
+        textAreaStreet.setRows(5);
+        jScrollPane1.setViewportView(textAreaStreet);
 
         lblBrgy.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblBrgy.setText("Barangay :");
@@ -2093,14 +2093,18 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
         // TODO add your handling code here:
-        employee.viewPersonalDetails(id);
+//        employee.viewPersonalDetails(id);
         mainTabbed.setSelectedIndex(1);
         txtID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
         txtFName.setText(employee.accountDetails.getFirstName());
         txtLName.setText(employee.accountDetails.getLastName());
         txtBDay.setText(employee.accountDetails.getBirthday());
         txtPhoneNum.setText(employee.accountDetails.getPhoneNumber());
-        textAreaAddress.setText(employee.accountDetails.getAddress());
+        textAreaStreet.setText(employee.accountDetails.getStreet());
+        txtBrgy.setText(employee.accountDetails.getBarangay());
+        txtCity.setText(employee.accountDetails.getCity());
+        txtProvince.setText(employee.accountDetails.getProvince());
+        txtZipCode.setText(employee.accountDetails.getZipCode());
         txtBasicSalary.setText(String.valueOf(employee.accountDetails.getBasicSalary()));
         txtBiMonthlyRate.setText(String.valueOf(employee.accountDetails.getSemiBasicSalary()));
         txtHourlyRate.setText(String.valueOf(employee.accountDetails.getHourlyRate()));
@@ -2652,7 +2656,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel tabbedRequest;
     private javax.swing.JScrollPane tableDTR;
     private javax.swing.JScrollPane tableDTR1;
-    private javax.swing.JTextArea textAreaAddress;
+    private javax.swing.JTextArea textAreaStreet;
     private javax.swing.JTextField txtBDay;
     private javax.swing.JTextField txtBasicSalary;
     private javax.swing.JTextField txtBiMonthlyRate;

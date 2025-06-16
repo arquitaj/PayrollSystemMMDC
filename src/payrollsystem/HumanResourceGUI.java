@@ -128,7 +128,15 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         txtBDay = new javax.swing.JTextField();
         txtPhoneNum = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        textAreaAddress = new javax.swing.JTextArea();
+        textAreaStreet = new javax.swing.JTextArea();
+        lblBrgy = new javax.swing.JLabel();
+        lblCity = new javax.swing.JLabel();
+        lblProvince = new javax.swing.JLabel();
+        lblZipCode = new javax.swing.JLabel();
+        txtBrgy = new javax.swing.JTextField();
+        txtCity = new javax.swing.JTextField();
+        txtProvince = new javax.swing.JTextField();
+        txtZipCode = new javax.swing.JTextField();
         panelPersonalDetails = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         lblBasicSalary = new javax.swing.JLabel();
@@ -582,9 +590,9 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         panelMotorPHLayout.setHorizontalGroup(
             panelMotorPHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMotorPHLayout.createSequentialGroup()
-                .addGap(262, 262, 262)
+                .addGap(256, 256, 256)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 895, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(353, Short.MAX_VALUE))
+                .addContainerGap(359, Short.MAX_VALUE))
         );
         panelMotorPHLayout.setVerticalGroup(
             panelMotorPHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -613,7 +621,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         lblBDay.setText("Birthday:");
 
         lblAddress.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblAddress.setText("Address: ");
+        lblAddress.setText("Street");
 
         lblPhoneNum.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPhoneNum.setText("Phone No.");
@@ -633,39 +641,81 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         txtPhoneNum.setEditable(false);
         txtPhoneNum.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        textAreaAddress.setEditable(false);
-        textAreaAddress.setColumns(20);
-        textAreaAddress.setRows(5);
-        jScrollPane1.setViewportView(textAreaAddress);
+        textAreaStreet.setEditable(false);
+        textAreaStreet.setColumns(20);
+        textAreaStreet.setRows(5);
+        jScrollPane1.setViewportView(textAreaStreet);
+
+        lblBrgy.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblBrgy.setText("Barangay :");
+
+        lblCity.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblCity.setText("City :");
+
+        lblProvince.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblProvince.setText("Province :");
+
+        lblZipCode.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblZipCode.setText("Zip Code:");
+
+        txtBrgy.setEditable(false);
+        txtBrgy.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        txtCity.setEditable(false);
+        txtCity.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        txtProvince.setEditable(false);
+        txtProvince.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        txtZipCode.setEditable(false);
+        txtZipCode.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblEmpID, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblFName)
-                        .addGap(25, 25, 25)
-                        .addComponent(txtFName))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lblPhoneNum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblBDay, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblLName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(lblAddress))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(txtLName)
-                            .addComponent(txtBDay)
-                            .addComponent(txtPhoneNum))))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblEmpID, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblFName)
+                                .addGap(25, 25, 25)
+                                .addComponent(txtFName))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lblPhoneNum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblBDay, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblLName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(lblAddress))
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(txtLName)
+                                    .addComponent(txtBDay)
+                                    .addComponent(txtPhoneNum)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblZipCode)
+                                .addGap(36, 36, 36)
+                                .addComponent(txtZipCode))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblBrgy)
+                                .addGap(30, 30, 30)
+                                .addComponent(txtBrgy))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblCity, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(txtCity))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblProvince)
+                        .addGap(41, 41, 41)
+                        .addComponent(txtProvince)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -694,8 +744,24 @@ public class HumanResourceGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAddress)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBrgy)
+                    .addComponent(txtBrgy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCity)
+                    .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblProvince)
+                    .addComponent(txtProvince, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblZipCode)
+                    .addComponent(txtZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelPersonalDetails1Layout = new javax.swing.GroupLayout(panelPersonalDetails1);
@@ -712,7 +778,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
             .addGroup(panelPersonalDetails1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         panelPersonalDetails.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Salaries and Allowances", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51))); // NOI18N
@@ -1045,12 +1111,13 @@ public class HumanResourceGUI extends javax.swing.JFrame {
             tabbedPersonalDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabbedPersonalDetailsLayout.createSequentialGroup()
                 .addGap(152, 152, 152)
-                .addGroup(tabbedPersonalDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelPersonalDetails1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelPersonalDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelPersonalDetails2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelPersonalDetails3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addGroup(tabbedPersonalDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabbedPersonalDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(panelPersonalDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelPersonalDetails2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelPersonalDetails3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelPersonalDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("Personal Details", tabbedPersonalDetails);
@@ -2951,7 +3018,11 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         txtLName.setText(accountDetails.getLastName());
         txtBDay.setText(accountDetails.getBirthday());
         txtPhoneNum.setText(accountDetails.getPhoneNumber());
-        textAreaAddress.setText(accountDetails.getAddress());
+        textAreaStreet.setText(accountDetails.getStreet());
+        txtBrgy.setText(accountDetails.getBarangay());
+        txtCity.setText(accountDetails.getCity());
+        txtProvince.setText(accountDetails.getProvince());
+        txtZipCode.setText(accountDetails.getZipCode());
         txtBasicSalary.setText(String.valueOf(accountDetails.getBasicSalary()));
         txtBiMonthlyRate.setText(String.valueOf(accountDetails.getSemiBasicSalary()));
         txtHourlyRate.setText(String.valueOf(accountDetails.getHourlyRate()));
@@ -3594,6 +3665,8 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblBenefits;
     private javax.swing.JLabel lblBiMonthlyRate;
     private javax.swing.JLabel lblBiMonthlyRate1;
+    private javax.swing.JLabel lblBrgy;
+    private javax.swing.JLabel lblCity;
     private javax.swing.JLabel lblClothingAllowanes;
     private javax.swing.JLabel lblClothingAllowanes1;
     private javax.swing.JLabel lblCredentialID;
@@ -3665,6 +3738,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblPosition;
     private javax.swing.JLabel lblPosition1;
     private javax.swing.JLabel lblPositon;
+    private javax.swing.JLabel lblProvince;
     private javax.swing.JLabel lblRequestType;
     private javax.swing.JLabel lblRequestType2;
     private javax.swing.JLabel lblRequestType3;
@@ -3689,6 +3763,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblVL1;
     private javax.swing.JLabel lblVLBalance;
     private javax.swing.JLabel lblVLBalance1;
+    private javax.swing.JLabel lblZipCode;
     private javax.swing.JTabbedPane mainTabbed;
     private javax.swing.JPanel panelAllRequest;
     private javax.swing.JPanel panelAllRequest1;
@@ -3719,13 +3794,15 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private javax.swing.JPanel tabbedRequest;
     private javax.swing.JScrollPane tableDTR;
     private javax.swing.JScrollPane tableDTR1;
-    private javax.swing.JTextArea textAreaAddress;
     private javax.swing.JTextArea textAreaAddress2;
+    private javax.swing.JTextArea textAreaStreet;
     private javax.swing.JTextField txtBDay;
     private javax.swing.JTextField txtBasicSalary;
     private javax.swing.JTextField txtBasicSalary1;
     private javax.swing.JTextField txtBiMonthlyRate;
     private javax.swing.JTextField txtBiMonthlyRate1;
+    private javax.swing.JTextField txtBrgy;
+    private javax.swing.JTextField txtCity;
     private javax.swing.JLabel txtClock;
     private javax.swing.JTextField txtClothingAllowance;
     private javax.swing.JTextField txtClothingAllowance1;
@@ -3752,6 +3829,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtPhoneNum2;
     private javax.swing.JTextField txtPosition;
     private javax.swing.JTextField txtPosition1;
+    private javax.swing.JTextField txtProvince;
     private javax.swing.JTextArea txtReason;
     private javax.swing.JTextArea txtReasonOvertime;
     private javax.swing.JTextField txtRiceSubsidy;
@@ -3764,5 +3842,6 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtSupervisor1;
     private javax.swing.JTextField txtTINNum;
     private javax.swing.JTextField txtTINNum1;
+    private javax.swing.JTextField txtZipCode;
     // End of variables declaration//GEN-END:variables
 }

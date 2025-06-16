@@ -498,13 +498,15 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="panelPersonalDetails1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="panelPersonalDetails" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="panelPersonalDetails2" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="panelPersonalDetails3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="panelPersonalDetails" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="panelPersonalDetails2" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="panelPersonalDetails3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="panelPersonalDetails1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="258" max="32767" attributes="0"/>
+                              <EmptySpace pref="124" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -526,7 +528,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel3" max="32767" attributes="0"/>
+                                  <Component id="jPanel7" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -535,47 +537,71 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="28" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Container class="javax.swing.JPanel" name="jPanel3">
+                        <Container class="javax.swing.JPanel" name="jPanel7">
 
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblEmpID" min="-2" pref="88" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="txtID" pref="164" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblFName" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                                              <Component id="txtFName" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="lblPhoneNum" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="lblBDay" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="lblLName" alignment="0" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="lblEmpID6" min="-2" pref="88" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="txtID" pref="164" max="32767" attributes="0"/>
                                                   </Group>
-                                                  <Component id="lblAddress" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="lblFName1" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                                      <Component id="txtFName" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                              <Component id="lblPhoneNum1" alignment="0" max="32767" attributes="0"/>
+                                                              <Component id="lblBDay1" alignment="0" max="32767" attributes="0"/>
+                                                              <Component id="lblLName1" alignment="0" max="32767" attributes="0"/>
+                                                          </Group>
+                                                          <Component id="lblAddress1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="jScrollPane8" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                          <Component id="txtLName" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="txtBDay" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="txtPhoneNum" alignment="0" max="32767" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="lblZipCode1" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                                      <Component id="txtZipCode" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="lblBrgy1" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                                      <Component id="txtBrgy" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="lblCity1" min="-2" pref="47" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                                                      <Component id="txtCity" max="32767" attributes="0"/>
+                                                  </Group>
                                               </Group>
-                                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
-                                                  <Component id="txtLName" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="txtBDay" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="txtPhoneNum" alignment="0" max="32767" attributes="0"/>
-                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lblProvince1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                                              <Component id="txtProvince" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -587,41 +613,61 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblEmpID" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblEmpID6" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtID" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblFName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblFName1" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtFName" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblLName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblLName1" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtLName" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblBDay" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblBDay1" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtBDay" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="lblPhoneNum" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblPhoneNum1" alignment="1" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtPhoneNum" alignment="1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblAddress" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jScrollPane1" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                          <Component id="lblAddress1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane8" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lblBrgy1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtBrgy" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lblCity1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCity" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lblProvince1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtProvince" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblZipCode1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtZipCode" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace pref="11" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JLabel" name="lblEmpID">
+                            <Component class="javax.swing.JLabel" name="lblEmpID6">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="14" style="0"/>
@@ -629,7 +675,7 @@
                                 <Property name="text" type="java.lang.String" value="Employee ID:"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JLabel" name="lblFName">
+                            <Component class="javax.swing.JLabel" name="lblFName1">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="14" style="0"/>
@@ -637,7 +683,7 @@
                                 <Property name="text" type="java.lang.String" value="First Name:"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JLabel" name="lblLName">
+                            <Component class="javax.swing.JLabel" name="lblLName1">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="14" style="0"/>
@@ -645,7 +691,7 @@
                                 <Property name="text" type="java.lang.String" value="Last Name:"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JLabel" name="lblBDay">
+                            <Component class="javax.swing.JLabel" name="lblBDay1">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="14" style="0"/>
@@ -653,15 +699,15 @@
                                 <Property name="text" type="java.lang.String" value="Birthday:"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JLabel" name="lblAddress">
+                            <Component class="javax.swing.JLabel" name="lblAddress1">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
-                                <Property name="text" type="java.lang.String" value="Address: "/>
+                                <Property name="text" type="java.lang.String" value="Street"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JLabel" name="lblPhoneNum">
+                            <Component class="javax.swing.JLabel" name="lblPhoneNum1">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="14" style="0"/>
@@ -709,14 +755,14 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                            <Container class="javax.swing.JScrollPane" name="jScrollPane8">
                               <AuxValues>
                                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                               </AuxValues>
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JTextArea" name="textAreaAddress">
+                                <Component class="javax.swing.JTextArea" name="textAreaStreet">
                                   <Properties>
                                     <Property name="editable" type="boolean" value="false"/>
                                     <Property name="columns" type="int" value="20"/>
@@ -725,6 +771,70 @@
                                 </Component>
                               </SubComponents>
                             </Container>
+                            <Component class="javax.swing.JLabel" name="lblBrgy1">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="0"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Barangay :"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="lblCity1">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="0"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="City :"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="lblProvince1">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="0"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Province :"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="lblZipCode1">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="0"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Zip Code:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JTextField" name="txtBrgy">
+                              <Properties>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="0"/>
+                                </Property>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JTextField" name="txtCity">
+                              <Properties>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="0"/>
+                                </Property>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JTextField" name="txtProvince">
+                              <Properties>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="0"/>
+                                </Property>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JTextField" name="txtZipCode">
+                              <Properties>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="0"/>
+                                </Property>
+                              </Properties>
+                            </Component>
                           </SubComponents>
                         </Container>
                       </SubComponents>

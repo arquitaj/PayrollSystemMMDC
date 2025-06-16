@@ -947,7 +947,7 @@
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JTextArea" name="textAreaAddress">
+                                <Component class="javax.swing.JTextArea" name="textAreaStreet">
                                   <Properties>
                                     <Property name="editable" type="boolean" value="false"/>
                                     <Property name="columns" type="int" value="20"/>
