@@ -36,10 +36,10 @@ public class AccountDetails extends DatabaseConnection{
     private ArrayList<ArrayList<String>> idAndNames = new ArrayList<>();
     
     private String filePath;
-    private String employeeID;
+    private int employeeID;
     private String address = "";
     private String employeeCompleteName;
-    private String firstName, lastName, birthday, phoneNumber, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor, dateToday, timeNow;
+    private String firstName, lastName, birthday, phoneNumber, street, barangay, city, province, zipcode, sssNumber, philHealthNumber, tinNumber, pagibigNumber, status, position, supervisor, dateToday, timeNow;
     private double basicSalary, riceSubsidy, phoneAllowance, clothingAllowance, semiBasicSalary, hourlyRate;
 
     int tableSize;
@@ -47,7 +47,7 @@ public class AccountDetails extends DatabaseConnection{
     DatabaseConnection dbConnection = new DatabaseConnection();
     java.sql.Connection conn = dbConnection.getDBConnection();
     DatabaseManager db = new DatabaseManager();
-    
+
     AccountDetails(){}
   
     void retrivedDetails(){        
@@ -95,43 +95,77 @@ public class AccountDetails extends DatabaseConnection{
         dataList = dataListClone;
     }
     
-    void userDetails(String id){
-        this.employeeID = id;
-        for(ArrayList<String> data : dataList){
-            if(data.get(0).equals(String.valueOf(getEmployeeID()))){
-                this.lastName = data.get(6);
-                this.firstName = data.get(5); 
-                this.birthday = data.get(7);
-                this.phoneNumber = data.get(8);
-                this.status = db.readEmployeeStatus(employeeID);
-                this.position = db.readEmployeePosition(employeeID);
-                this.supervisor = data.get(3);
-//                this.semiBasicSalary = Double.parseDouble(data.get(17)); //TODO
-                
-                
-                for(String item : db.readEmployeeAddress(employeeID)){ //assigning this.address from address columns in database
-                    this.address += item;
-                }
-                
-                Double[] compensationDetails = db.readCompensationDetails(employeeID);
-                this.basicSalary = compensationDetails[0];
-                this.riceSubsidy = compensationDetails[1];
-                this.phoneAllowance = compensationDetails[2];
-                this.clothingAllowance = compensationDetails[3];
-                this.hourlyRate = compensationDetails[4];
-                
-                String[] governmentDetails = db.readGovernmentDetails(employeeID);
-                this.sssNumber = governmentDetails[0];
-                this.philHealthNumber = governmentDetails[1];
-                this.tinNumber = governmentDetails[2];
-                this.pagibigNumber = governmentDetails[3];
-
-                if (!this.lastName.isBlank() || !this.lastName.isEmpty()){
-                    break;
-                }
+    void retrivedUserDetails (int userID, String sql){
+           ArrayList<ArrayList<String>> data = new ArrayList<>();
+          try{   
+              PreparedStatement statement = conn.prepareStatement(sql);
+              statement.setInt(1, userID);
+               data = db.getData(statement);
+                System.out.println("Data is: "+data);
+                System.out.println("Data ID: "+data.get(0).get(0));
+                this.employeeID = Integer.parseInt(data.get(0).get(0));
+                this.firstName = data.get(0).get(1);
+                this.lastName = data.get(0).get(2);
+                this.birthday = data.get(0).get(3);
+                this.phoneNumber = data.get(0).get(4);
+                this.street = data.get(0).get(5);
+                this.barangay = data.get(0).get(6);
+                this.city = data.get(0).get(7);
+                this.province = data.get(0).get(8);
+                this.zipcode = data.get(0).get(9);
+                this.basicSalary = Double.parseDouble(data.get(0).get(10));
+                this.riceSubsidy = Double.parseDouble(data.get(0).get(11));
+                this.phoneAllowance = Double.parseDouble(data.get(0).get(12));
+                this.clothingAllowance = Double.parseDouble(data.get(0).get(13));
+                this.philHealthNumber = data.get(0).get(14);
+                this.sssNumber = data.get(0).get(15);
+                this.tinNumber = data.get(0).get(16);
+                this.pagibigNumber = data.get(0).get(17);
+                this.position = data.get(0).get(18);
+                this.status = data.get(0).get(19);
+               
+            } catch(SQLException e){
+                System.out.println(e);
             }
-        }
     }
+     
+//    void userDetails(String id){
+//        this.employeeID = id;
+//        for(ArrayList<String> data : dataList){
+//            if(data.get(0).equals(String.valueOf(getEmployeeID()))){
+//                this.lastName = data.get(6);
+//                this.firstName = data.get(5); 
+//                this.birthday = data.get(7);
+//                this.phoneNumber = data.get(8);
+//                this.status = db.readEmployeeStatus(employeeID);
+//                this.position = db.readEmployeePosition(employeeID);
+//                this.supervisor = data.get(3);
+////                this.semiBasicSalary = Double.parseDouble(data.get(17)); //TODO
+//                
+//                
+//                for(String item : db.readEmployeeAddress(employeeID)){ //assigning this.address from address columns in database
+//                    this.address += item;
+//                }
+//                
+//                Double[] compensationDetails = db.readCompensationDetails(employeeID);
+//                this.basicSalary = compensationDetails[0];
+//                this.riceSubsidy = compensationDetails[1];
+//                this.phoneAllowance = compensationDetails[2];
+//                this.clothingAllowance = compensationDetails[3];
+//                this.hourlyRate = compensationDetails[4];
+//                
+//                String[] governmentDetails = db.readGovernmentDetails(employeeID);
+//                this.sssNumber = governmentDetails[0];
+//                this.philHealthNumber = governmentDetails[1];
+//                this.tinNumber = governmentDetails[2];
+//                this.pagibigNumber = governmentDetails[3];
+//
+//                if (!this.lastName.isBlank() || !this.lastName.isEmpty()){
+//                    break;
+//                }
+//            }
+//        }
+//    }
     
     void addDetailsCSV(){
         try(BufferedWriter writer = new BufferedWriter (new FileWriter (getFilePath()))){
@@ -210,12 +244,14 @@ public class AccountDetails extends DatabaseConnection{
             }
             
             if(requestID == 0){
-                String insertSQL = "INSERT INTO attendance_records (employee_id, attendance_date, login) VALUES (?,?,?)";
+                String insertSQL = "INSERT INTO attendance_records (employee_id, attendance_date, login, submitted_supervisor, submitted_payroll_staff) VALUES (?,?,?,?,?)";
                 PreparedStatement statement = conn.prepareStatement(insertSQL);
                 statement.setInt(1, employeeID);
                 statement.setDate(2, dateNow);
                 statement.setTimestamp(3, timeNow);
-
+                statement.setString(4, "No");
+                statement.setString(5, "No");
+               
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
                     isSuccessfulyAdded = true;
@@ -267,6 +303,30 @@ public class AccountDetails extends DatabaseConnection{
             }
         }    
         return isSuccessfulyAdded;
+    }
+    
+    ArrayList<ArrayList<String>> getDataAllDTRFromDatabase(int employeeID, Date fromDate, Date toDate) throws SQLException {
+        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+        if(conn != null){
+            String sql = "SELECT * FROM attendance_records WHERE employee_id = ? AND attendance_date BETWEEN ? AND ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, employeeID);
+            statement.setDate(2, new java.sql.Date(fromDate.getTime()));
+            statement.setDate(3, new java.sql.Date(toDate.getTime()));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                 // Create a new row as an ArrayList<String>
+                ArrayList<String> row = new ArrayList<>();
+                row.add(resultSet.getDate("attendance_date").toString());
+                row.add(resultSet.getTime("login").toString());
+                row.add(resultSet.getTime("logout").toString());
+                row.add(resultSet.getString("submitted_supervisor"));
+                row.add(resultSet.getString("remarks"));
+                // Add row to the 2D list
+                tempData.add(row);
+            }  
+        }
+        return tempData;
     }
     
     //To file new leave request
@@ -324,7 +384,7 @@ public class AccountDetails extends DatabaseConnection{
         return filePath;
     }
 
-    public String getEmployeeID() {
+    public int getEmployeeID() {
         return this.employeeID;
     }
 
@@ -415,7 +475,7 @@ public class AccountDetails extends DatabaseConnection{
         this.filePath = path;
     }
    void setEmployeeID(String employeeID){
-       this.employeeID = employeeID;
+       this.employeeID = Integer.parseInt(employeeID);
    }
    void setEmptyDataList(){
        getDataList().clear();

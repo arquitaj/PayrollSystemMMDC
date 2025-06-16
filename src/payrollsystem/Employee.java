@@ -34,7 +34,7 @@ public class Employee extends AccountDetails {
     AccountDetails dbConnection = new AccountDetails();
     
     
-    private String employeeID;
+    private int employeeID;
     protected int indexAttendance;
     private String filePath;
     private String leaveDays;
@@ -45,12 +45,18 @@ public class Employee extends AccountDetails {
         super();
     }
     
-    
+   
     void viewPersonalDetails(String employeeID){
-        accountDetails.getDataList().clear();
-        accountDetails.setFilePath("CSVFiles//EmployeeDatabase.csv");
-        accountDetails.retrivedDetails();
-        accountDetails.userDetails(employeeID);
+        this.employeeID = Integer.parseInt(employeeID);
+//        accountDetails.getDataList().clear();
+//        accountDetails.setFilePath("CSVFiles//EmployeeDatabase.csv");
+//        accountDetails.retrivedDetails();
+//        accountDetails.userDetails(employeeID);
+        String sql = "SELECT e.employee_id, e.first_name, e.last_name, e.birthdate, e.phone_number,ad.street, ad.barangay, ad.city, ad.province, ad.zipcode,\n" +
+"    sal.basic_salary, sal.rice_subsidy, sal.phone_allowance, sal.clothing_allowance,id.philhealth_number, id.sss_number, id.tin_number, id.pagibig_number,\n" +
+"    p.position_name, s.status_name FROM employees e JOIN employee_address ad ON e.employee_address_id = ad.employee_address_id JOIN compensation_details sal ON e.employee_id = sal.employee_id\n" +
+"    JOIN government_ids id ON e.employee_id = id.employee_id JOIN positions p ON e.position_id = p.position_id JOIN employee_statuses s ON e.status_id = s.status_id WHERE e.employee_id = ?";
+        accountDetails.retrivedUserDetails(this.employeeID, sql);
     }
     
     //To view
@@ -191,6 +197,9 @@ public class Employee extends AccountDetails {
             // Increment the day by one
             start.add(Calendar.DAY_OF_MONTH, 1);
         }
+        
+        
+        
         return tempData;
 }
     ArrayList<ArrayList<String>> allApprovedPersonalLeaveLedger() {

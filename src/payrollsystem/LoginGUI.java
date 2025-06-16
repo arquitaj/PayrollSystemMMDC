@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author Paul
  */
 public class LoginGUI extends javax.swing.JFrame {
-    DatabaseManager db = new DatabaseManager();
+//    DatabaseManager db = new DatabaseManager();
 
     public LoginGUI() {
         initComponents();
@@ -162,34 +162,32 @@ public class LoginGUI extends javax.swing.JFrame {
         String id = txtID.getText().toString();
         String password = jPassword.getText().toString();
         if(!id.isEmpty() && !password.isEmpty()){
-            Login login = new Login(id, password);
-            ArrayList<ArrayList<String>> userDetails = login.checkCredentials();
+            Login login = new Login(Integer.parseInt(id), password);
+            ArrayList<ArrayList<String>> userDetails = login.getDataFromDatabase();
             if(userDetails.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Credentials Not Found! ");
             }else{
-                String position = db.readEmployeePosition(userDetails.get(0).get(1));
-                System.out.println(userDetails.get(0).get(3));
                 switch(userDetails.get(0).get(3)){
-                    case "Human Resource":
+                    case "Human Resource" -> {
                         dispose();
                         HumanResourceGUI hr = new HumanResourceGUI(userDetails);
                         hr.setVisible(true);
-                        break;
-                    case "Employee":
+                    }
+                    case "Employee" -> {
                         dispose();
                         EmployeeGUI employee = new EmployeeGUI(userDetails);
                         employee.setVisible(true);
-                        break;
-                    case "Payroll Staff":
+                    }
+                    case "Payroll Staff" -> {
                         dispose();
                         PayrollStaffGUI payroll = new PayrollStaffGUI(userDetails);
                         payroll.setVisible(true);
-                        break;
-                    default:
+                    }
+                    default -> {
                         dispose();
                         SupervisorGUI supervisor = new SupervisorGUI(userDetails);
                         supervisor.setVisible(true);
-                        break;
+                    }
                 }
             }
         }else{

@@ -4,33 +4,39 @@
  */
 package payrollsystem;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  *
  * @author Paul
  */
-abstract class Credentials extends AccountDetails {
-    private String userID, userPassword;
+abstract class Credentials extends DatabaseManager {
+    private String userPassword;
+    private int userID;
     
-    AccountDetails accountDetails = new AccountDetails();
-    
-    Credentials(String id, String password){
+
+    DatabaseConnection connection = new DatabaseConnection();
+    DatabaseManager databaseManager = new DatabaseManager();
+    Credentials(int id, String password){
         this.userID = id;
         this.userPassword = password;
     }
     
-    ArrayList<ArrayList<String>> checkCredentials(){
-        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-        ArrayList<ArrayList<String>> dataList;
-        accountDetails.setFilePath("CSVFiles//CredentialsDatabase.csv");
-        accountDetails.retrivedDetails("credentials");
-        dataList = accountDetails.getDataList();
-        for(int i = 0; i < dataList.size(); i++){
-            if(userID.equals(dataList.get(i).get(1)) && userPassword.equals(dataList.get(i).get(2))){
-                tempData.add(dataList.get(i));
+    ArrayList<ArrayList<String>> getDataFromDatabase(String sql){
+         ArrayList<ArrayList<String>> tableData = new ArrayList<>();
+          try( Connection queryConnection = connection.getDBConnection();
+               PreparedStatement statement = queryConnection.prepareStatement(sql)){     
+              statement.setInt(1, userID);
+              statement.setString(2, userPassword);
+              return databaseManager.getData(statement);
+            } catch(SQLException e){
+                System.out.println(e);
             }
-        }
-        return tempData;
+          return tableData;
     }
 }

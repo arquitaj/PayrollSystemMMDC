@@ -2343,7 +2343,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         try {
-            if(supervisor.accountDetails.userLogout(Integer.parseInt(supervisor.accountDetails.getEmployeeID()))){
+            if(supervisor.accountDetails.userLogout(supervisor.accountDetails.getEmployeeID())){
                 JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
             }
         } catch (SQLException ex) {
@@ -2354,7 +2354,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         try {
-            if(supervisor.accountDetails.userLogin(Integer.parseInt(supervisor.accountDetails.getEmployeeID()))){
+            if(supervisor.accountDetails.userLogin(supervisor.accountDetails.getEmployeeID())){
                 JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
             }
         } catch (SQLException ex) {
@@ -2534,7 +2534,12 @@ public class SupervisorGUI extends javax.swing.JFrame {
         dateTo2.setDate(endCal.getTime());
 
         // Load and display the attendance records for the current period
-        supervisor.setTableData(supervisor.getDataAllDTR(startCal.getTime(), endCal.getTime()));
+         try {
+            // Load and display the attendance records for the current period
+         supervisor.setTableData(supervisor.getDataAllDTRFromDatabase(supervisor.accountDetails.getEmployeeID(), startCal.getTime(), endCal.getTime()));
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         supervisor.setTableSize(5);
         supervisor.displayDataTable(jTableAllDTR);
     }//GEN-LAST:event_btnDTRActionPerformed
@@ -2710,7 +2715,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
              if(supervisor.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
                  try {
                      Boolean isSuccessfulyAdded = supervisor.accountDetails.addOvertimeToDatabase(
-                             Integer.parseInt(supervisor.accountDetails.getEmployeeID()),
+                            supervisor.accountDetails.getEmployeeID(),
                              dateFromOvertime.getDate(),
                              dateToOvertime.getDate(),
                              Integer.parseInt(txtDaysNumber1.getText()),

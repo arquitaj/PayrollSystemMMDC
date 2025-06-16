@@ -1,3 +1,4 @@
+
 package payrollsystem;
 
 import java.sql.*;
@@ -12,6 +13,24 @@ public class DatabaseManager {
     
     DatabaseManager(){
         connection = new DatabaseConnection();
+    }
+   
+    ArrayList<ArrayList<String>> getData(PreparedStatement statement) throws SQLException{
+        ArrayList<ArrayList<String>> tableData = new ArrayList<>();
+        ResultSet result = statement.executeQuery();
+              ResultSetMetaData metaData = result.getMetaData();
+              int columnCount = metaData.getColumnCount();
+                
+              // Add rows
+              while (result.next()) {
+                ArrayList<String> row = new ArrayList<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.add(result.getString(i));
+                }
+                tableData.add(row);
+              }
+
+            return tableData;
     }
     
     public int writeToDatabase(String query){
@@ -182,7 +201,7 @@ public class DatabaseManager {
             );
             statement.setInt(1, Integer.parseInt(employeeID));
             result = statement.executeQuery();
-            while (result.next()) positionResult = result.getString(1);
+            while (result.next()) positionResult = result.getString("role");
             
             statement.close();
             

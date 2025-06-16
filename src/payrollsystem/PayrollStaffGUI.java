@@ -31,7 +31,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     
     public PayrollStaffGUI(ArrayList<ArrayList<String>> userDetails) {
         initComponents();
-        this.id = userDetails.get(0).get(0);
+        this.id = userDetails.get(0).get(0).toString();
         this.name = userDetails.get(0).get(1);
         this.role = userDetails.get(0).get(3);
         
@@ -2328,7 +2328,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         try {
-            if(payrollStaff.accountDetails.userLogin(Integer.parseInt(payrollStaff.accountDetails.getEmployeeID()))){
+            if(payrollStaff.accountDetails.userLogin(payrollStaff.accountDetails.getEmployeeID())){
                 JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
             }
         } catch (SQLException ex) {
@@ -2340,7 +2340,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
          try {
-            if(payrollStaff.accountDetails.userLogout(Integer.parseInt(payrollStaff.accountDetails.getEmployeeID()))){
+            if(payrollStaff.accountDetails.userLogout(payrollStaff.accountDetails.getEmployeeID())){
                 JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
             }
         } catch (SQLException ex) {
@@ -2503,7 +2503,12 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         dateTo2.setDate(endCal.getTime());
 
         // Load and display the attendance records for the current period
-        payrollStaff.setTableData(payrollStaff.getDataAllDTR(startCal.getTime(), endCal.getTime()));
+        try {
+            // Load and display the attendance records for the current period
+         payrollStaff.setTableData(payrollStaff.getDataAllDTRFromDatabase(payrollStaff.accountDetails.getEmployeeID(), startCal.getTime(), endCal.getTime()));
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         payrollStaff.setTableSize(5);
         payrollStaff.displayDataTable(jTableAllDTR);
     }//GEN-LAST:event_btnDTRActionPerformed
@@ -2750,7 +2755,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
              if(payrollStaff.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
                  try {
                      Boolean isSuccessfulyAdded = payrollStaff.accountDetails.addOvertimeToDatabase(
-                             Integer.parseInt(payrollStaff.accountDetails.getEmployeeID()),
+                             payrollStaff.accountDetails.getEmployeeID(),
                              dateFromOvertime.getDate(),
                              dateToOvertime.getDate(),
                              Integer.parseInt(txtDaysNumber1.getText()),

@@ -6,16 +6,19 @@ package payrollsystem;
 
 import java.util.ArrayList;
 
-
 public class Login extends Credentials {
-
-    Login(String id, String password){
+    private int id;
+    private String password;
+    
+    Login(int id, String password){
+        this.id = id;
+        this.password = password;
         super(id, password);
     }
     
-    @Override
-    ArrayList<ArrayList<String>> checkCredentials(){
-        return super.checkCredentials();
+    ArrayList<ArrayList<String>> getDataFromDatabase(){
+        String sql = "SELECT * FROM credentials WHERE employee_id = ? AND employee_password = ?";
+        return super.getDataFromDatabase(sql);
     }
    
 }

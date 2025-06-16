@@ -28,7 +28,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Paul
  */
 public class HumanResourceGUI extends javax.swing.JFrame {
-    String id, name, role;
+    String name, role;
+    int id;
     HumanResource humanResource;
     ArrayList<String> data = new ArrayList<>(); //To hold as storage
     SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
@@ -37,12 +38,12 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     public HumanResourceGUI(ArrayList<ArrayList<String>> userDetails) {
         initComponents();
         accountDetails.retrivedDetails("employees");
-        accountDetails.userDetails(userDetails.get(0).get(1));
+//        accountDetails(userDetails.get(0).get(1));
         this.id = accountDetails.getEmployeeID();
         this.name = accountDetails.getFirstName() + " " + accountDetails.getLastName();
         
         lblNameSidebar.setText(name);
-        lblIDSidebar.setText(id);
+//        lblIDSidebar.setText(id);
         humanResource = new HumanResource(lblIDSidebar.getText().toString());
         humanResource.viewPersonalDetails(lblIDSidebar.getText());
         setClockText();
@@ -2923,7 +2924,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         try {
-            if(humanResource.accountDetails.userLogin(Integer.parseInt(humanResource.accountDetails.getEmployeeID()))){
+            if(humanResource.accountDetails.userLogin(humanResource.accountDetails.getEmployeeID())){
                 JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
             }
         } catch (SQLException ex) {
@@ -2934,7 +2935,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
          try {
-            if(humanResource.accountDetails.userLogout(Integer.parseInt(humanResource.accountDetails.getEmployeeID()))){
+            if(humanResource.accountDetails.userLogout(humanResource.accountDetails.getEmployeeID())){
                 JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
             }
         } catch (SQLException ex) {
@@ -3012,7 +3013,12 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         dateTo2.setDate(endCal.getTime());
 
         // Load and display the attendance records for the current period
-        humanResource.setTableData(humanResource.getDataAllDTR(startCal.getTime(), endCal.getTime()));
+      try {
+            // Load and display the attendance records for the current period
+         humanResource.setTableData(humanResource.getDataAllDTRFromDatabase(humanResource.accountDetails.getEmployeeID(), startCal.getTime(), endCal.getTime()));
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         humanResource.setTableSize(5);
         humanResource.displayDataTable(jTableAllDTR);
     }//GEN-LAST:event_btnDTRActionPerformed
@@ -3187,7 +3193,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
              if(humanResource.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
                  try {
                      Boolean isSuccessfulyAdded = humanResource.accountDetails.addOvertimeToDatabase(
-                             Integer.parseInt(humanResource.accountDetails.getEmployeeID()),
+                             humanResource.accountDetails.getEmployeeID(),
                              dateFromOvertime.getDate(),
                              dateToOvertime.getDate(),
                              Integer.parseInt(txtDaysNumber1.getText()),
