@@ -4,6 +4,8 @@
  */
 package payrollsystem;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -20,98 +24,120 @@ import javax.swing.table.DefaultTableModel;
  * @author Paul
  */
 public class Supervisor extends Employee{
-    
-    Employee employee = new Employee();
+    private String employeeID;
+    Employee employee = new Employee(this.employeeID);
     private ArrayList<ArrayList<String>> data = new ArrayList<>();
     ArrayList<String> list = new ArrayList<>();
     private String selectedName;
     private ArrayList <String> fullName = new ArrayList<>();
-    private String employeeID;
+  
     Supervisor(String employeeID){
-        super();
         this.employeeID = employeeID;
+        super();  
     }
     
-    void setEmployeeRequest(String filePath){
-        employee.setFilePath(filePath);
-        employee.retrivedDetails();
-    }
-    
-    ArrayList<ArrayList<String>> employeeRequest(){
-         ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-         for(int i=1; i<employee.getDataList().size(); i++){
-             if(!employee.getDataList().get(i).get(0).equals(employee.getEmployeeID()) && employee.getDataList().get(i).get(8).equals("Pending")){
-                tempData.add(employee.getDataList().get(i));
-             }
-         }
-         return tempData;       
-   } 
-   ArrayList<ArrayList<String>> getAllRequestData(String selectedItem){
-      employee.getDataList().clear();
-      ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-      switch (selectedItem){
-          case "Leave Request":
-              employee.setFilePath("CSVFiles//LeaveRequests.csv");
-              employee.retrivedDetails();
-              tempData = employeeRequest();
-//              tempData.add(employeeRequest());
-              break;
-          case "Overtime Request":
-              employee.setFilePath("CSVFiles//OvertimeRequest.csv");
-              employee.retrivedDetails();
-              tempData = employeeRequest();
-              break;
-          default :
-              employee.setFilePath("CSVFiles//LeaveRequests.csv");
-              employee.retrivedDetails();
-              employee.setFilePath("CSVFiles//OvertimeRequest.csv");
-              employee.retrivedDetails();
-              tempData = employeeRequest();
-              break;
-      }
-      return tempData;
-   } 
-   
-    void getEmployeeNames(){  
-        getDataList().clear();
-        getNewData().clear();
-        fullName.clear();
-        setFilePath("CSVFiles//EmployeeDatabase.csv");
-        retrivedDetails();
-        for(int i=1; i<getDataList().size(); i++){
-            ArrayList <String> names = new ArrayList<>();
-            names.add(getDataList().get(i).get(0));
-            names.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
-            getIdAndNames().add(names);
-            fullName.add(getDataList().get(i).get(1) + ", "+getDataList().get(i).get(2));
-        }
-           
-        Collections.sort(fullName);
-        getNewData().add(fullName); 
-    }
-       
+   ArrayList<ArrayList<String>> employeeRequest(String selectedItem){
+       ArrayList<ArrayList<String>> data = new ArrayList<>();
+        try {
+            String sqlForLeave = "SELECT e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, ll.date_filed, " +
+                                "lt.leave_type, ll.leave_from, ll.leave_to, ll.number_of_days, ll.reason, rs.status " +
+                                "FROM employees e " +
+                                "JOIN leave_ledger ll ON e.employee_id = ll.employee_id " +
+                                "JOIN leave_type lt ON ll.leave_type_id = lt.leave_type_id " +
+                                "JOIN request_status rs ON ll.request_status_id = rs.request_status_id " +
+                                "WHERE rs.status = ? AND e.immediate_supervisor = ? ORDER BY employee_id";
+            
+            String sqlForOvertime = "SELECT e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, eo.date_filed, " +
+                                    "'Overtime' AS overtime, eo.overtime_from, eo.overtime_to, eo.number_of_days, eo.reason, rs.status " +
+                                    "FROM employees e " +
+                                    "JOIN overtime_requests eo ON e.employee_id = eo.employee_id " +
+                                    "JOIN request_status rs ON eo.request_status_id = rs.request_status_id " +
+                                    "WHERE rs.status = ? AND e.immediate_supervisor = ? ORDER BY employee_id";
 
-    ArrayList<ArrayList<String>> getDataForDTRTable(){
-        employee.getDataList().clear();
-        data.clear();
-        String id = "";
-        for(ArrayList<String> idName : getIdAndNames()){
-           if(idName.get(1).equals(getSelectedName())){
-               id = idName.get(0);
-           }
-        }
-        employee.setFilePath("CSVFiles//AttendanceDatabase.csv");
-        employee.retrivedDetails();
-        for(int i=1; i<employee.getDataList().size(); i++){
-            if(employee.getDataList().get(i).get(0).equals(id) && employee.getDataList().get(i).get(5).equals("Yes") && employee.getDataList().get(i).get(6).equals("No")){
-                employee.getDataList().get(i).remove(5);
-                employee.getDataList().get(i).remove(5);
-                data.add(employee.getDataList().get(i));
+             String combinedSql = "SELECT e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, ll.date_filed, lt.leave_type AS request_type, " +
+                                    "ll.leave_from AS from_time, ll.leave_to AS to_time, ll.number_of_days, ll.reason, rs.status " +
+                                    "FROM employees e " +
+                                    "JOIN leave_ledger ll ON e.employee_id = ll.employee_id " +
+                                    "JOIN leave_type lt ON ll.leave_type_id = lt.leave_type_id " +
+                                    "JOIN request_status rs ON ll.request_status_id = rs.request_status_id " +
+                                    "WHERE rs.status = ? AND e.immediate_supervisor = ? " +
+                                    "UNION ALL " +
+                                    "SELECT e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, eo.date_filed, 'Overtime' AS request_type, " +
+                                    "eo.overtime_from AS from_time, eo.overtime_to AS to_time, eo.number_of_days, eo.reason, rs.status " +
+                                    "FROM employees e " +
+                                    "JOIN overtime_requests eo ON e.employee_id = eo.employee_id " +
+                                    "JOIN request_status rs ON eo.request_status_id = rs.request_status_id " +
+                                    "WHERE rs.status = ? AND e.immediate_supervisor = ? ORDER BY employee_id";
+             
+            switch (selectedItem){
+                case "Leave Request":
+                    PreparedStatement leaveStatement = conn.prepareStatement(sqlForLeave);
+                    leaveStatement.setString(1, "Pending");
+                    leaveStatement.setInt(2, Integer.parseInt(this.employeeID));
+                    data = accountDetails.retrivedDetails(leaveStatement);
+                    break;
+                case "Overtime Request":
+                    PreparedStatement overtimeStatement = conn.prepareStatement(sqlForOvertime);
+                    overtimeStatement.setString(1, "Pending");
+                    overtimeStatement.setInt(2, Integer.parseInt(this.employeeID));
+                    data = accountDetails.retrivedDetails(overtimeStatement);
+                    break;
+                default :
+                    PreparedStatement combineStatement = conn.prepareStatement(combinedSql);
+                    combineStatement.setString(1, "Pending");
+                    combineStatement.setInt(2, Integer.parseInt(this.employeeID));
+                    combineStatement.setString(3, "Pending");
+                    combineStatement.setInt(4, Integer.parseInt(this.employeeID));
+                    data = accountDetails.retrivedDetails(combineStatement);
+                    break;
             }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+   }  
+    
+
+    ArrayList<ArrayList<String>> employeeNames(){  
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        try {
+            String sql = "SELECT CONCAT(last_name, ', ',first_name) AS full_name FROM employees WHERE immediate_supervisor = ? ORDER BY full_name";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(this.employeeID));
+            data = accountDetails.retrivedDetails(statement);
+            return data;
+        } catch (SQLException ex) {
+            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
         }
         return data;
     }
-      
+       
+    
+     ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        try {
+            String sql = "SELECT e.employee_id, CONCAT(e.last_name, ' ', e.first_name) AS full_name, " +
+                    "ar.attendance_date, ar.login, ar.logout, rs.status " +
+                    "FROM attendance_records ar " +
+                    "JOIN employees e ON ar.employee_id = e.employee_id " +
+                    "JOIN request_status rs ON ar.request_status_id = rs.request_status_id " +
+                    "WHERE e.immediate_supervisor = ? AND CONCAT(e.last_name, ', ', e.first_name) = ? AND rs.status = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(this.employeeID));
+            statement.setString(2, employeeName);
+            statement.setString(3, "Pending");
+            data = accountDetails.retrivedDetails(statement);
+        } catch (SQLException ex) {
+            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+    }
+    
+     
+
+   //Hereunder Codes are not yet modified  
+     
     void updateEmployeeRequestRecord(String command){
         employee.retrivedDetails();
         for(int i=1; i<employee.getDataList().size(); i++){

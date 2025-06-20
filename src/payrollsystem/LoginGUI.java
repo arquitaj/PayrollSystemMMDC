@@ -4,7 +4,10 @@
  */
 package payrollsystem;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -163,11 +166,11 @@ public class LoginGUI extends javax.swing.JFrame {
         String password = jPassword.getText().toString();
         if(!id.isEmpty() && !password.isEmpty()){
             Login login = new Login(Integer.parseInt(id), password);
-            ArrayList<ArrayList<String>> userDetails = login.getDataFromDatabase();
+            ArrayList<ArrayList<String>> userDetails = login.checkCredentials();
             if(userDetails.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Credentials Not Found! ");
             }else{
-                switch(userDetails.get(0).get(3)){
+                switch(userDetails.get(0).get(2)){
                     case "Human Resource" -> {
                         dispose();
                         HumanResourceGUI hr = new HumanResourceGUI(userDetails);

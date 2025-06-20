@@ -33,6 +33,7 @@ public class DatabaseManager {
             return tableData;
     }
     
+    
     public int writeToDatabase(String query){
         int rowsAffectedByQuery = 0;
             

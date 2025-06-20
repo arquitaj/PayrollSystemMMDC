@@ -25,19 +25,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Paul
  */
 public class EmployeeGUI extends javax.swing.JFrame {
-    String id, name, role;
     Employee employee;
-    ArrayList<String> data = new ArrayList<>(); //To hold as storage
-    SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
     
     public EmployeeGUI(ArrayList<ArrayList<String>> userDetails) {             
         initComponents();
         
-        this.id = userDetails.get(0).get(0);
-        this.name = userDetails.get(0).get(1);
-        this.role = userDetails.get(0).get(3);
-        employee = new HumanResource(lblIDSidebar.getText());
-        employee.viewPersonalDetails(lblIDSidebar.getText());
+        lblIDSidebar.setText(userDetails.get(0).get(0));
+        lblNameSidebar.setText(userDetails.get(0).get(1));
+        
+        employee = new Employee(userDetails.get(0).get(0));
+        employee.viewPersonalDetails();
         setClockText();
     }
 
@@ -186,7 +183,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
         dateTo2 = new com.toedter.calendar.JDateChooser();
         lblPeriod = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
-        btnSubmitToSepervisor = new javax.swing.JButton();
         jSeparator8 = new javax.swing.JSeparator();
         lblName2 = new javax.swing.JLabel();
         lblMyName4 = new javax.swing.JLabel();
@@ -434,15 +430,15 @@ public class EmployeeGUI extends javax.swing.JFrame {
                 .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
             .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(sideBarPanelLayout.createSequentialGroup()
                     .addGap(158, 158, 158)
                     .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(599, Short.MAX_VALUE)))
+                    .addContainerGap(629, Short.MAX_VALUE)))
         );
 
-        jPanel1.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 760));
+        jPanel1.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 790));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/employeePortal.jpg"))); // NOI18N
 
@@ -1456,11 +1452,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "DATE", "LOGIN", "LOGOUT", "SUBMITTED TO SUPERVISOR", "REMARKS"
+                "DATE", "LOGIN", "LOGOUT", "REMARKS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1477,7 +1473,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
             jTableAllDTR.getColumnModel().getColumn(1).setResizable(false);
             jTableAllDTR.getColumnModel().getColumn(2).setResizable(false);
             jTableAllDTR.getColumnModel().getColumn(3).setResizable(false);
-            jTableAllDTR.getColumnModel().getColumn(4).setResizable(false);
         }
 
         dateFrom2.setBackground(new java.awt.Color(255, 255, 255));
@@ -1490,13 +1485,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
         lblPeriod.setText("Period :");
 
         jSeparator7.setBackground(new java.awt.Color(255, 204, 153));
-
-        btnSubmitToSepervisor.setText("SUBMIT");
-        btnSubmitToSepervisor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitToSepervisorActionPerformed(evt);
-            }
-        });
 
         jSeparator8.setBackground(new java.awt.Color(255, 204, 153));
         jSeparator8.setForeground(new java.awt.Color(255, 255, 255));
@@ -1526,19 +1514,14 @@ public class EmployeeGUI extends javax.swing.JFrame {
             panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator7)
             .addGroup(panelDTRLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
                 .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelDTRLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(btnSubmitToSepervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelDTRLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblEmpID3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblName2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblID2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMyName4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(lblEmpID3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblName2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblID2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMyName4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(panelDTRLayout.createSequentialGroup()
                 .addContainerGap()
@@ -1587,9 +1570,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
                 .addComponent(tableDTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSubmitToSepervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(67, 67, 67))
         );
 
         javax.swing.GroupLayout tabbedDTRLayout = new javax.swing.GroupLayout(tabbedDTR);
@@ -2060,7 +2041,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
         );
 
         pack();
@@ -2093,7 +2074,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
         // TODO add your handling code here:
-//        employee.viewPersonalDetails(id);
         mainTabbed.setSelectedIndex(1);
         txtID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
         txtFName.setText(employee.accountDetails.getFirstName());
@@ -2122,25 +2102,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPersonalDetailsActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        try {
-            if(employee.accountDetails.userLogin(employee.accountDetails.getEmployeeID())){
-                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        employee.userLogin();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-        try {
-            if(employee.accountDetails.userLogout(employee.accountDetails.getEmployeeID())){
-                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        employee.userLogout();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnRequestPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestPortActionPerformed
@@ -2163,7 +2129,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         mainTabbed.setSelectedIndex(3);
     
         // Set employee details in the DTR panel
-        employee.viewPersonalDetails(lblIDSidebar.getText());
+        employee.viewPersonalDetails();
         lblID2.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
         lblMyName4.setText(employee.accountDetails.getEmployeeCompleteName());
 
@@ -2189,13 +2155,9 @@ public class EmployeeGUI extends javax.swing.JFrame {
         dateFrom2.setDate(startCal.getTime());
         dateTo2.setDate(endCal.getTime());
 
-        try {
-            // Load and display the attendance records for the current period
-         employee.setTableData(employee.getDataAllDTRFromDatabase(employee.accountDetails.getEmployeeID(), startCal.getTime(), endCal.getTime()));
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        employee.setTableSize(5);
+        // Load and display the attendance records for the current period
+        employee.setTableData(employee.getDTR(startCal.getTime(), endCal.getTime()));
+        employee.setTableSize(4);
         employee.displayDataTable(jTableAllDTR);
     }//GEN-LAST:event_btnDTRActionPerformed
 
@@ -2205,14 +2167,14 @@ public class EmployeeGUI extends javax.swing.JFrame {
         mainTabbed.setSelectedIndex(4);
 
         // Set employee details in the Leave Ledger panel
-        employee.viewPersonalDetails(lblIDSidebar.getText());
+        employee.viewPersonalDetails();
         lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
         lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
 
         // Update leave balance labels
         employee.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
         
-        employee.setTableData(employee.allApprovedPersonalLeaveLedger());
+        employee.setTableData(employee.viewPersonalLeaveLedger());
         employee.setTableSize(7);
         employee.displayDataTable(jTableAllRequest3);
         
@@ -2265,31 +2227,21 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     private void btnSubmit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmit1ActionPerformed
         // TODO add your handling code here:
-   
         if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
              if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
-                 try {
-                     Boolean isSuccessfulyAdded = employee.addOvertimeToDatabase(
-                            employee.accountDetails.getEmployeeID(),
-                             dateFromOvertime.getDate(),
-                             dateToOvertime.getDate(),
-                             Integer.parseInt(txtDaysNumber1.getText()),
-                             txtReasonOvertime.getText() 
-                        );
-                     if(isSuccessfulyAdded){
-                        dateFromOvertime.setDate(null);
-                        dateToOvertime.setDate(null);
-                        txtDaysNumber1.setText(null);
-                        txtReasonOvertime.setText(null);
-                        employee.setNumberOfDaysLeave();
-                        JOptionPane.showMessageDialog(null, "Successfuly File An Overtime Request!");
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Error Overtime Request!");
-                    }
-                 } catch (SQLException ex) {
-                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-                 } catch (ParseException ex) {
-                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                 Boolean isSuccessfulyAdded = employee.fileOvertimeRequest(
+                         employee.accountDetails.getEmployeeID(),
+                         dateFromOvertime.getDate(),
+                         dateToOvertime.getDate(),
+                         Integer.parseInt(txtDaysNumber1.getText()),
+                         txtReasonOvertime.getText()
+                 );
+                 if(isSuccessfulyAdded){
+                     dateFromOvertime.setDate(null);
+                     dateToOvertime.setDate(null);
+                     txtDaysNumber1.setText(null);
+                     txtReasonOvertime.setText(null);
+                     employee.setNumberOfDaysLeave();
                  }
              } 
         } else{
@@ -2333,24 +2285,13 @@ public class EmployeeGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error date of leave!");
             return;
         }
-
-        data.add(String.valueOf(employee.accountDetails.getEmployeeID()));
-        data.add(employee.accountDetails.getEmployeeCompleteName());
-        data.add(comboLeaveType.getSelectedItem().toString());
-        data.add(dateFormat.format(dateFrom.getDate()));
-        data.add(dateFormat.format(dateTo.getDate()));
-        data.add(txtDaysNumber.getText());
-        data.add(txtReason.getText());
-
-        if(employee.fileLeaveRequest(data)){
+        if(employee.fileLeaveRequest(dateFrom.getDate(), dateTo.getDate(), comboLeaveType.getSelectedItem().toString(),
+                txtDaysNumber.getText(), txtReason.getText())){
             txtDaysNumber.setText(null);
             comboLeaveType.setSelectedIndex(0);
             dateFrom.setDate(null);
             dateTo.setDate(null);
             txtReason.setText(null);
-            JOptionPane.showMessageDialog(null, "Successfuly File A Leave Request!");
-        }else{
-            JOptionPane.showMessageDialog(null, "Error Leave Request!");
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
@@ -2411,49 +2352,17 @@ public class EmployeeGUI extends javax.swing.JFrame {
             lblMyName2.setText(employee.accountDetails.getEmployeeCompleteName());
             // Display all requests in the table
             employee.setTableData(employee.getDataAllRequests());
-            employee.setTableSize(7);
+            employee.setTableSize(3);
             employee.displayDataTable(jTableAllRequest);
         }
     }//GEN-LAST:event_comboTypeRequestActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        try {
-            // TODO add your handling code here:
-          employee.setTableData(employee.getDataAllDTRFromDatabase(employee.accountDetails.getEmployeeID(), dateFrom2.getDate(), dateTo2.getDate()));
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        employee.setTableSize(5);
+        // TODO add your handling code here:
+        employee.setTableData(employee.getDTR(dateFrom2.getDate(), dateTo2.getDate()));
+        employee.setTableSize(4);
         employee.displayDataTable(jTableAllDTR);
     }//GEN-LAST:event_btnClearActionPerformed
-
-    private void btnSubmitToSepervisorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitToSepervisorActionPerformed
-        // TODO add your handling code here:
-        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-        int[] row = jTableAllDTR.getSelectedRows();
-        DefaultTableModel model = (DefaultTableModel)jTableAllDTR.getModel();
-        for(int r : row){
-            if(model.getValueAt(r, 3).toString().equals("Yes")){
-                JOptionPane.showMessageDialog(null, "You Have Selectetd A DTR That Was Already Forwarded To Supervisor!");
-                btnSubmitToSepervisor.enable(false);
-            }else{
-                btnSubmitToSepervisor.enable(true);
-                ArrayList <String> rowData = new ArrayList<>();
-                rowData.add(model.getValueAt(r, 0).toString());
-                rowData.add(model.getValueAt(r, 3).toString());
-                tempData.add(rowData);
-            }
-        }
-        if(jTableAllDTR.getSelectedRow() != -1 && !tempData.isEmpty()){
-            employee.forwardDTRToSupervisor(tempData);
-            employee.setTableData(employee.getDataAllDTR(dateFrom2.getDate(), dateTo2.getDate()));
-            employee.setTableSize(5);
-            employee.displayDataTable(jTableAllDTR);
-            JOptionPane.showMessageDialog(null, "Successfuly Submitted the "+tempData.size()+" DTR to Your Supervisor!");
-        }else if(jTableAllDTR.getSelectedRow() == -1){
-            JOptionPane.showMessageDialog(null, "Select DTR First!");
-        }
-    }//GEN-LAST:event_btnSubmitToSepervisorActionPerformed
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
@@ -2500,7 +2409,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRequestPort;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnSubmit1;
-    private javax.swing.JButton btnSubmitToSepervisor;
     private javax.swing.JComboBox<String> comboLeaveType;
     private javax.swing.JComboBox<String> comboTypeRequest;
     private com.toedter.calendar.JDateChooser dateFrom;

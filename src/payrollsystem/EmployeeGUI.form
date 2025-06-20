@@ -29,7 +29,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane5" alignment="0" max="32767" attributes="0"/>
+          <Component id="jScrollPane5" alignment="0" pref="889" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -112,7 +112,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="0" y="100" width="-1" height="760"/>
+                  <AbsoluteConstraints x="0" y="100" width="-1" height="790"/>
                 </Constraint>
               </Constraints>
 
@@ -228,13 +228,13 @@
                               <Component id="btnLogin" alignment="3" min="-2" pref="70" max="-2" attributes="0"/>
                               <Component id="btnLogout" alignment="3" min="-2" pref="70" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="20" max="32767" attributes="0"/>
+                          <EmptySpace pref="50" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
                               <Component id="jSeparator13" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="599" max="32767" attributes="0"/>
+                              <EmptySpace pref="629" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -2306,23 +2306,15 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jSeparator7" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                          <Component id="btnSubmitToSepervisor" min="-2" pref="85" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblEmpID3" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                              <Component id="lblName2" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblID2" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                              <Component id="lblMyName4" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="lblEmpID3" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <Component id="lblName2" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblID2" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <Component id="lblMyName4" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -2386,9 +2378,7 @@
                                   <Component id="tableDTR" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jSeparator7" min="-2" pref="3" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnSubmitToSepervisor" min="-2" pref="39" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -2407,21 +2397,15 @@
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                  <Table columnCount="5" rowCount="0">
+                                  <Table columnCount="4" rowCount="0">
                                     <Column editable="false" title="DATE" type="java.lang.Object"/>
                                     <Column editable="false" title="LOGIN" type="java.lang.Object"/>
                                     <Column editable="false" title="LOGOUT" type="java.lang.Object"/>
-                                    <Column editable="false" title="SUBMITTED TO SUPERVISOR" type="java.lang.Object"/>
                                     <Column editable="false" title="REMARKS" type="java.lang.Object"/>
                                   </Table>
                                 </Property>
                                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                                   <TableColumnModel selectionModel="1">
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
                                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                                       <Title/>
                                       <Editor/>
@@ -2499,14 +2483,6 @@
                               <Color blue="99" green="cc" red="ff" type="rgb"/>
                             </Property>
                           </Properties>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="btnSubmitToSepervisor">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="SUBMIT"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubmitToSepervisorActionPerformed"/>
-                          </Events>
                         </Component>
                         <Component class="javax.swing.JSeparator" name="jSeparator8">
                           <Properties>

@@ -25,20 +25,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Paul
  */
 public class SupervisorGUI extends javax.swing.JFrame {
-    String id, name, role;
     Supervisor supervisor;
-    ArrayList<String> data = new ArrayList<>(); //To hold as storage
-    SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
-    
+    Employee employee;
     public SupervisorGUI(ArrayList<ArrayList<String>> userDetails) {
         initComponents();
-        this.id = userDetails.get(0).get(0);
-        this.name = userDetails.get(0).get(1);
-        this.role = userDetails.get(0).get(3);
-        lblNameSidebar.setText(name);
-        lblIDSidebar.setText(id);
-        supervisor = new Supervisor(lblIDSidebar.getText().toString());
-        supervisor.viewPersonalDetails(lblIDSidebar.getText());
+        lblIDSidebar.setText(userDetails.get(0).get(0));
+        lblNameSidebar.setText(userDetails.get(0).get(1));
+        
+        supervisor = new Supervisor(userDetails.get(0).get(0));
+        employee = new Employee(userDetails.get(0).get(0));
+        employee.viewPersonalDetails();
         setClockText();
     }
 
@@ -75,7 +71,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         btnPersonalDetails = new javax.swing.JButton();
         btnRequestPort = new javax.swing.JButton();
         btnDTR = new javax.swing.JButton();
-        btnLeaveLedger = new javax.swing.JButton();
+        btnLeave = new javax.swing.JButton();
         btnLeaveLedger1 = new javax.swing.JButton();
         lblNameSidebar = new javax.swing.JLabel();
         lblName5 = new javax.swing.JLabel();
@@ -92,21 +88,21 @@ public class SupervisorGUI extends javax.swing.JFrame {
         lblBDay1 = new javax.swing.JLabel();
         lblAddress1 = new javax.swing.JLabel();
         lblPhoneNum1 = new javax.swing.JLabel();
-        txtID1 = new javax.swing.JTextField();
-        txtFName1 = new javax.swing.JTextField();
-        txtLName1 = new javax.swing.JTextField();
-        txtBDay1 = new javax.swing.JTextField();
-        txtPhoneNum1 = new javax.swing.JTextField();
+        txtID = new javax.swing.JTextField();
+        txtFName = new javax.swing.JTextField();
+        txtLName = new javax.swing.JTextField();
+        txtBDay = new javax.swing.JTextField();
+        txtPhoneNum = new javax.swing.JTextField();
         jScrollPane7 = new javax.swing.JScrollPane();
         textAreaStreet = new javax.swing.JTextArea();
         lblBrgy1 = new javax.swing.JLabel();
         lblCity1 = new javax.swing.JLabel();
         lblProvince1 = new javax.swing.JLabel();
         lblZipCode1 = new javax.swing.JLabel();
-        txtBrgy1 = new javax.swing.JTextField();
-        txtCity1 = new javax.swing.JTextField();
-        txtProvince1 = new javax.swing.JTextField();
-        txtZipCode1 = new javax.swing.JTextField();
+        txtBrgy = new javax.swing.JTextField();
+        txtCity = new javax.swing.JTextField();
+        txtProvince = new javax.swing.JTextField();
+        txtZipCode = new javax.swing.JTextField();
         panelPersonalDetails = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         lblBasicSalary = new javax.swing.JLabel();
@@ -195,7 +191,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
         dateTo2 = new com.toedter.calendar.JDateChooser();
         lblPeriod = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
-        btnSubmitToSepervisor = new javax.swing.JButton();
         jSeparator8 = new javax.swing.JSeparator();
         lblName2 = new javax.swing.JLabel();
         lblMyName4 = new javax.swing.JLabel();
@@ -371,10 +366,10 @@ public class SupervisorGUI extends javax.swing.JFrame {
             }
         });
 
-        btnLeaveLedger.setText("LEAVE LEDGER");
-        btnLeaveLedger.addActionListener(new java.awt.event.ActionListener() {
+        btnLeave.setText("LEAVE LEDGER");
+        btnLeave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLeaveLedgerActionPerformed(evt);
+                btnLeaveActionPerformed(evt);
             }
         });
 
@@ -445,7 +440,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                             .addComponent(btnPersonalDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnRequestPort, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLeaveLedger, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLeave, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLeaveLedger1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(sideBarPanelLayout.createSequentialGroup()
@@ -480,7 +475,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(btnLeaveLedger, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLeave, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLeaveLedger1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
@@ -502,15 +497,15 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addGroup(sideBarPanelLayout.createSequentialGroup()
                     .addGap(158, 158, 158)
                     .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(614, Short.MAX_VALUE)))
+                    .addContainerGap(639, Short.MAX_VALUE)))
             .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createSequentialGroup()
-                    .addContainerGap(435, Short.MAX_VALUE)
+                    .addContainerGap(460, Short.MAX_VALUE)
                     .addComponent(jSeparator15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(337, 337, 337)))
         );
 
-        jPanel1.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 760));
+        jPanel1.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 800));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/supervisorPortal.jpg"))); // NOI18N
 
@@ -555,20 +550,20 @@ public class SupervisorGUI extends javax.swing.JFrame {
         lblPhoneNum1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPhoneNum1.setText("Phone No.");
 
-        txtID1.setEditable(false);
-        txtID1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtID.setEditable(false);
+        txtID.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtFName1.setEditable(false);
-        txtFName1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtFName.setEditable(false);
+        txtFName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtLName1.setEditable(false);
-        txtLName1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtLName.setEditable(false);
+        txtLName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtBDay1.setEditable(false);
-        txtBDay1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtBDay.setEditable(false);
+        txtBDay.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtPhoneNum1.setEditable(false);
-        txtPhoneNum1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPhoneNum.setEditable(false);
+        txtPhoneNum.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         textAreaStreet.setEditable(false);
         textAreaStreet.setColumns(20);
@@ -587,17 +582,17 @@ public class SupervisorGUI extends javax.swing.JFrame {
         lblZipCode1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblZipCode1.setText("Zip Code:");
 
-        txtBrgy1.setEditable(false);
-        txtBrgy1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtBrgy.setEditable(false);
+        txtBrgy.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtCity1.setEditable(false);
-        txtCity1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCity.setEditable(false);
+        txtCity.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtProvince1.setEditable(false);
-        txtProvince1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtProvince.setEditable(false);
+        txtProvince.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtZipCode1.setEditable(false);
-        txtZipCode1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtZipCode.setEditable(false);
+        txtZipCode.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -611,11 +606,11 @@ public class SupervisorGUI extends javax.swing.JFrame {
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(lblEmpID6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtID1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                                .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(lblFName1)
                                 .addGap(25, 25, 25)
-                                .addComponent(txtFName1))
+                                .addComponent(txtFName))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -626,25 +621,25 @@ public class SupervisorGUI extends javax.swing.JFrame {
                                 .addGap(26, 26, 26)
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(txtLName1)
-                                    .addComponent(txtBDay1)
-                                    .addComponent(txtPhoneNum1)))
+                                    .addComponent(txtLName)
+                                    .addComponent(txtBDay)
+                                    .addComponent(txtPhoneNum)))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(lblZipCode1)
                                 .addGap(36, 36, 36)
-                                .addComponent(txtZipCode1))
+                                .addComponent(txtZipCode))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(lblBrgy1)
                                 .addGap(30, 30, 30)
-                                .addComponent(txtBrgy1))
+                                .addComponent(txtBrgy))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(lblCity1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(47, 47, 47)
-                                .addComponent(txtCity1))))
+                                .addComponent(txtCity))))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(lblProvince1)
                         .addGap(41, 41, 41)
-                        .addComponent(txtProvince1)))
+                        .addComponent(txtProvince)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -653,23 +648,23 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmpID6)
-                    .addComponent(txtID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFName1)
-                    .addComponent(txtFName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLName1)
-                    .addComponent(txtLName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBDay1)
-                    .addComponent(txtBDay1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblPhoneNum1)
-                    .addComponent(txtPhoneNum1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPhoneNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAddress1)
@@ -677,19 +672,19 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBrgy1)
-                    .addComponent(txtBrgy1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBrgy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCity1)
-                    .addComponent(txtCity1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProvince1)
-                    .addComponent(txtProvince1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProvince, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblZipCode1)
-                    .addComponent(txtZipCode1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
@@ -1026,9 +1021,9 @@ public class SupervisorGUI extends javax.swing.JFrame {
         tabbedPersonalDetailsLayout.setHorizontalGroup(
             tabbedPersonalDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabbedPersonalDetailsLayout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
+                .addContainerGap(128, Short.MAX_VALUE)
                 .addComponent(panelPersonalDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addGap(35, 35, 35)
                 .addComponent(panelPersonalDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58)
                 .addComponent(panelPersonalDetails2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1516,11 +1511,11 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "DATE", "LOGIN", "LOGOUT", "SUBMITTED TO SUPERVISOR", "REMARKS"
+                "DATE", "LOGIN", "LOGOUT", "REMARKS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1531,6 +1526,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         jTableAllDTR.setRowHeight(25);
         jTableAllDTR.getTableHeader().setReorderingAllowed(false);
         tableDTR.setViewportView(jTableAllDTR);
+        jTableAllDTR.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         dateFrom2.setBackground(new java.awt.Color(255, 255, 255));
         dateFrom2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "From", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51)))); // NOI18N
@@ -1542,13 +1538,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
         lblPeriod.setText("Period :");
 
         jSeparator7.setBackground(new java.awt.Color(255, 204, 153));
-
-        btnSubmitToSepervisor.setText("SUBMIT");
-        btnSubmitToSepervisor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitToSepervisorActionPerformed(evt);
-            }
-        });
 
         jSeparator8.setBackground(new java.awt.Color(255, 204, 153));
         jSeparator8.setForeground(new java.awt.Color(255, 255, 255));
@@ -1578,19 +1567,14 @@ public class SupervisorGUI extends javax.swing.JFrame {
             panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator7)
             .addGroup(panelDTRLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
                 .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelDTRLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(btnSubmitToSepervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelDTRLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblEmpID3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblName2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblID2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMyName4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(lblEmpID3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblName2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblID2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMyName4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(panelDTRLayout.createSequentialGroup()
                 .addContainerGap()
@@ -1641,9 +1625,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addComponent(tableDTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSubmitToSepervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(67, 67, 67))
         );
 
         javax.swing.GroupLayout tabbedDTRLayout = new javax.swing.GroupLayout(tabbedDTR);
@@ -2400,7 +2382,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 899, Short.MAX_VALUE)
         );
 
         pack();
@@ -2409,31 +2391,18 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        try {
-            if(supervisor.accountDetails.userLogout(supervisor.accountDetails.getEmployeeID())){
-                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        employee.userLogout();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        try {
-            if(supervisor.accountDetails.userLogin(supervisor.accountDetails.getEmployeeID())){
-                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        employee.userLogin();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLeaveLedger2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger2ActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(6);
-        supervisor.setTableData(supervisor.getAllRequestData(comboTypeRequest1.getSelectedItem().toString()));
+        supervisor.setTableData(supervisor.employeeRequest(comboTypeRequest1.getSelectedItem().toString()));
         supervisor.setTableSize(9);
         supervisor.displayDataTable(jTableAllRequest1);
 //        supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
@@ -2442,20 +2411,22 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void btnLeaveLedger3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger3ActionPerformed
         // TODO add your handling code here:
           mainTabbed.setSelectedIndex(7);
-          supervisor.getEmployeeNames();
-       
-          supervisor.getNewData().forEach(row -> {
-              for (String item : row) {
-                  comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
-              }
-        });
-          supervisor.accountDetails.getNewData().clear();
-          supervisor.setData();
+           if(comboEmployeeName.getItemCount() == 0){
+                supervisor.employeeNames().forEach(row -> {
+                   for (String item : row) {
+                       comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
+                   }
+                });
+           }
+        supervisor.setTableData(supervisor.getDataForDTRTable(comboEmployeeName.getSelectedItem().toString()));
+        supervisor.setTableSize(6);
+        supervisor.displayDataTable(jTableDTR);
+        supervisor.setTableData();
     }//GEN-LAST:event_btnLeaveLedger3ActionPerformed
 
     private void comboTypeRequest1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTypeRequest1ActionPerformed
         // TODO add your handling code here:
-        supervisor.setTableData(supervisor.getAllRequestData(comboTypeRequest1.getSelectedItem().toString()));
+        supervisor.setTableData(supervisor.employeeRequest(comboTypeRequest1.getSelectedItem().toString()));
         supervisor.setTableSize(9);
         supervisor.displayDataTable(jTableAllRequest1);
     }//GEN-LAST:event_comboTypeRequest1ActionPerformed
@@ -2469,7 +2440,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 supervisor.list.add(model.getValueAt(row, i).toString());
             }
             supervisor.approvedEmployeeRequest(btnUpdate1.getText());
-            supervisor.setTableData(supervisor.getAllRequestData(comboTypeRequest1.getSelectedItem().toString()));
+            supervisor.setTableData(supervisor.employeeRequest(comboTypeRequest1.getSelectedItem().toString()));
             supervisor.setTableSize(9);
             supervisor.displayDataTable(jTableAllRequest1);
         }else{
@@ -2487,7 +2458,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 supervisor.list.add(model.getValueAt(row, i).toString());
             }
             supervisor.approvedEmployeeRequest(btnCancel3.getText());
-            supervisor.setTableData(supervisor.getAllRequestData(comboTypeRequest1.getSelectedItem().toString()));
+            supervisor.setTableData(supervisor.employeeRequest(comboTypeRequest1.getSelectedItem().toString()));
             supervisor.setTableSize(9);
             supervisor.displayDataTable(jTableAllRequest1);
         }else{
@@ -2498,7 +2469,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
         // TODO add your handling code here:
         supervisor.setSelectedName(comboEmployeeName.getSelectedItem().toString());
-        supervisor.setTableData(supervisor.getDataForDTRTable());
+        supervisor.setTableData(supervisor.getDataForDTRTable(comboEmployeeName.getSelectedItem().toString()));
         supervisor.setTableSize(6);
         supervisor.displayDataTable(jTableDTR);
         supervisor.setTableData();
@@ -2520,7 +2491,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         }
         if(jTableDTR.getSelectedRow() != -1){
             supervisor.forwardDTR(tempData);
-            supervisor.setTableData(supervisor.getDataForDTRTable());
+            supervisor.setTableData(supervisor.getDataForDTRTable(comboEmployeeName.getSelectedItem().toString()));
             supervisor.setTableSize(6);
             supervisor.displayDataTable(jTableDTR);
             supervisor.setTableData();
@@ -2533,29 +2504,29 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(1);
-        txtID.setText(String.valueOf(supervisor.accountDetails.getEmployeeID()));
-        txtFName.setText(supervisor.accountDetails.getFirstName());
-        txtLName.setText(supervisor.accountDetails.getLastName());
-        txtBDay.setText(supervisor.accountDetails.getBirthday());
-        txtPhoneNum.setText(supervisor.accountDetails.getPhoneNumber());
-        textAreaAddress.setText(supervisor.accountDetails.getStreet());
-        txtBrgy.setText(supervisor.accountDetails.getBarangay());
-        txtCity.setText(supervisor.accountDetails.getCity());
-        txtProvince.setText(supervisor.accountDetails.getProvince());
-        txtZipCode.setText(supervisor.accountDetails.getZipCode());
-        txtBasicSalary.setText(String.valueOf(supervisor.accountDetails.getBasicSalary()));
-        txtBiMonthlyRate.setText(String.valueOf(supervisor.accountDetails.getSemiBasicSalary()));
-        txtHourlyRate.setText(String.valueOf(supervisor.accountDetails.getHourlyRate()));
-        txtRiceSubsidy.setText(String.valueOf(supervisor.accountDetails.getRiceSubsidy()));
-        txtPhoneAllowance.setText(String.valueOf(supervisor.accountDetails.getRiceSubsidy()));
-        txtClothingAllowance.setText(String.valueOf(supervisor.accountDetails.getClothingAllowance()));
-        txtPhilNum.setText(supervisor.accountDetails.getPhilHealthNumber());
-        txtSSSNum.setText(supervisor.accountDetails.getPhilHealthNumber());
-        txtTINNum.setText(supervisor.accountDetails.getTinNumber());
-        txtPagIbigNum.setText(supervisor.accountDetails.getPagibigNumber());
-        txtPosition.setText(supervisor.accountDetails.getPosition());
-        txtStatus.setText(supervisor.accountDetails.getStatus());
-        txtSupervisor.setText(supervisor.accountDetails.getSupervisor());
+        txtID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        txtFName.setText(employee.accountDetails.getFirstName());
+        txtLName.setText(employee.accountDetails.getLastName());
+        txtBDay.setText(employee.accountDetails.getBirthday());
+        txtPhoneNum.setText(employee.accountDetails.getPhoneNumber());
+        textAreaStreet.setText(employee.accountDetails.getStreet());
+        txtBrgy.setText(employee.accountDetails.getBarangay());
+        txtCity.setText(employee.accountDetails.getCity());
+        txtProvince.setText(employee.accountDetails.getProvince());
+        txtZipCode.setText(employee.accountDetails.getZipCode());
+        txtBasicSalary.setText(String.valueOf(employee.accountDetails.getBasicSalary()));
+        txtBiMonthlyRate.setText(String.valueOf(employee.accountDetails.getSemiBasicSalary()));
+        txtHourlyRate.setText(String.valueOf(employee.accountDetails.getHourlyRate()));
+        txtRiceSubsidy.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
+        txtPhoneAllowance.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
+        txtClothingAllowance.setText(String.valueOf(employee.accountDetails.getClothingAllowance()));
+        txtPhilNum.setText(employee.accountDetails.getPhilHealthNumber());
+        txtSSSNum.setText(employee.accountDetails.getPhilHealthNumber());
+        txtTINNum.setText(employee.accountDetails.getTinNumber());
+        txtPagIbigNum.setText(employee.accountDetails.getPagibigNumber());
+        txtPosition.setText(employee.accountDetails.getPosition());
+        txtStatus.setText(employee.accountDetails.getStatus());
+        txtSupervisor.setText(employee.accountDetails.getSupervisor());
     }//GEN-LAST:event_btnPersonalDetailsActionPerformed
 
     private void btnRequestPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestPortActionPerformed
@@ -2567,20 +2538,20 @@ public class SupervisorGUI extends javax.swing.JFrame {
         tabbedInsideRequest.setSelectedIndex(0);
 
         // Display all requests in the table
-        supervisor.setTableData(supervisor.getDataAllRequests());
-        supervisor.setTableSize(7);
-        supervisor.displayDataTable(jTableAllRequest);
+        employee.setTableData(employee.getDataAllRequests());
+        employee.setTableSize(7);
+        employee.displayDataTable(jTableAllRequest);
 
     }//GEN-LAST:event_btnRequestPortActionPerformed
 
     private void btnDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTRActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(3);
-
+    
         // Set employee details in the DTR panel
-        supervisor.viewPersonalDetails(lblIDSidebar.getText());
-        lblID2.setText(String.valueOf(supervisor.accountDetails.getEmployeeID()));
-        lblMyName4.setText(supervisor.accountDetails.getEmployeeCompleteName());
+        employee.viewPersonalDetails();
+        lblID2.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        lblMyName4.setText(employee.accountDetails.getEmployeeCompleteName());
 
         // Get current date
         Calendar today = Calendar.getInstance();
@@ -2599,40 +2570,35 @@ public class SupervisorGUI extends javax.swing.JFrame {
             startCal.set(Calendar.DAY_OF_MONTH, 16);
             endCal.set(Calendar.DAY_OF_MONTH, endCal.getActualMaximum(Calendar.DAY_OF_MONTH));
         }
-
+    
         // Set the date fields to show the current period
         dateFrom2.setDate(startCal.getTime());
         dateTo2.setDate(endCal.getTime());
 
         // Load and display the attendance records for the current period
-         try {
-            // Load and display the attendance records for the current period
-         supervisor.setTableData(supervisor.getDataAllDTRFromDatabase(supervisor.accountDetails.getEmployeeID(), startCal.getTime(), endCal.getTime()));
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        supervisor.setTableSize(5);
-        supervisor.displayDataTable(jTableAllDTR);
-    }//GEN-LAST:event_btnDTRActionPerformed
+        employee.setTableData(employee.getDTR(startCal.getTime(), endCal.getTime()));
+        employee.setTableSize(4);
+        employee.displayDataTable(jTableAllDTR);
+    }                                      
 
-    private void btnLeaveLedgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedgerActionPerformed
+    private void btnLeaveLedgerActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here:
         // Switch to the Leave Ledger tab
         mainTabbed.setSelectedIndex(4);
 
         // Set employee details in the Leave Ledger panel
-        supervisor.viewPersonalDetails(lblIDSidebar.getText());
-        lblID3.setText(String.valueOf(supervisor.accountDetails.getEmployeeID()));
-        lblMyName5.setText(supervisor.accountDetails.getEmployeeCompleteName());
+        employee.viewPersonalDetails();
+        lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
 
         // Update leave balance labels
-        supervisor.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
+        employee.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
         
-        supervisor.setTableData(supervisor.allApprovedPersonalLeaveLedger());
-        supervisor.setTableSize(7);
-        supervisor.displayDataTable(jTableAllRequest3);
-
-    }//GEN-LAST:event_btnLeaveLedgerActionPerformed
+        employee.setTableData(employee.viewPersonalLeaveLedger());
+        employee.setTableSize(7);
+        employee.displayDataTable(jTableAllRequest3);
+        
+    }//GEN-LAST:event_btnDTRActionPerformed
 
     private void btnLeaveLedger1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger1ActionPerformed
         // TODO add your handling code here:
@@ -2670,39 +2636,39 @@ public class SupervisorGUI extends javax.swing.JFrame {
         if(selectedItem.equals("All Request")) {
             tabbedInsideRequest.setSelectedIndex(0);
             // Display all requests in the table
-            supervisor.setTableData(supervisor.getDataAllRequests());
-            supervisor.setTableSize(7);
-            supervisor.displayDataTable(jTableAllRequest);
+            employee.setTableData(employee.getDataAllRequests());
+            employee.setTableSize(7);
+            employee.displayDataTable(jTableAllRequest);
 
         } else if(selectedItem.equals("Leave Application")) {
             tabbedInsideRequest.setSelectedIndex(1);
 
-            supervisor.leaveBalancesInformation();
-            lblID.setText(String.valueOf(supervisor.accountDetails.getEmployeeID()));
-            lblMyName.setText(supervisor.accountDetails.getEmployeeCompleteName());
-            lblVLBalance.setText(supervisor.getBalanceVL());
-            lblSLBalance.setText(supervisor.getBalanceSL());
+            employee.leaveBalancesInformation();
+            lblID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+            lblMyName.setText(employee.accountDetails.getEmployeeCompleteName());
+            lblVLBalance.setText(employee.getBalanceVL());
+            lblSLBalance.setText(employee.getBalanceSL());
 
         } else {
             tabbedInsideRequest.setSelectedIndex(2);
-            lblID1.setText(String.valueOf(supervisor.accountDetails.getEmployeeID()));
-            lblMyName2.setText(supervisor.accountDetails.getEmployeeCompleteName());
+            lblID1.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+            lblMyName2.setText(employee.accountDetails.getEmployeeCompleteName());
             // Display all requests in the table
-            supervisor.setTableData(supervisor.getDataAllRequests());
-            supervisor.setTableSize(7);
-            supervisor.displayDataTable(jTableAllRequest);
+            employee.setTableData(employee.getDataAllRequests());
+            employee.setTableSize(7);
+            employee.displayDataTable(jTableAllRequest);
         }
     }//GEN-LAST:event_comboTypeRequestActionPerformed
 
     private void dateToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateToPropertyChange
         // TODO add your handling code here:
         if(dateFrom.getDate() != null && dateTo.getDate() != null){
-            if(supervisor.countNumberOfDays(dateFrom.getDate(), dateTo.getDate())){
-                txtDaysNumber.setText(String.valueOf(supervisor.getNumberOfDaysLeave()));
-                supervisor.setNumberOfDaysLeave();
+            if(employee.countNumberOfDays(dateFrom.getDate(), dateTo.getDate())){
+                txtDaysNumber.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
             }else{
-                supervisor.setNumberOfDaysLeave();
-                txtDaysNumber.setText(String.valueOf(supervisor.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
+                txtDaysNumber.setText(String.valueOf(employee.getNumberOfDaysLeave()));
             }
         }
     }//GEN-LAST:event_dateToPropertyChange
@@ -2710,12 +2676,12 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void dateFromPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateFromPropertyChange
         // TODO add your handling code here:
         if(dateTo.getDate() != null && dateFrom.getDate() != null){
-            if(supervisor.countNumberOfDays(dateFrom.getDate(), dateTo.getDate())){
-                txtDaysNumber.setText(String.valueOf(supervisor.getNumberOfDaysLeave()));
-                supervisor.setNumberOfDaysLeave();
+            if(employee.countNumberOfDays(dateFrom.getDate(), dateTo.getDate())){
+                txtDaysNumber.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
             }else{
-                supervisor.setNumberOfDaysLeave();
-                txtDaysNumber.setText(String.valueOf(supervisor.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
+                txtDaysNumber.setText(String.valueOf(employee.getNumberOfDaysLeave()));
             }
         }
     }//GEN-LAST:event_dateFromPropertyChange
@@ -2725,7 +2691,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDaysNumberActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-
+ //leave request submit
         if (comboLeaveType.getSelectedIndex() == 0 || dateFrom.getDate() == null || dateTo.getDate() == null || txtReason.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide all the necessary details for filing of Leave Request!");
             return;
@@ -2733,36 +2699,25 @@ public class SupervisorGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error date of leave!");
             return;
         }
-
-        data.add(String.valueOf(supervisor.accountDetails.getEmployeeID()));
-        data.add(supervisor.accountDetails.getEmployeeCompleteName());
-        data.add(comboLeaveType.getSelectedItem().toString());
-        data.add(dateFormat.format(dateFrom.getDate()));
-        data.add(dateFormat.format(dateTo.getDate()));
-        data.add(txtDaysNumber.getText());
-        data.add(txtReason.getText());
-
-        if(supervisor.fileLeaveRequest(data)){
+        if(employee.fileLeaveRequest(dateFrom.getDate(), dateTo.getDate(), comboLeaveType.getSelectedItem().toString(),
+                txtDaysNumber.getText(), txtReason.getText())){
             txtDaysNumber.setText(null);
             comboLeaveType.setSelectedIndex(0);
             dateFrom.setDate(null);
             dateTo.setDate(null);
             txtReason.setText(null);
-            JOptionPane.showMessageDialog(null, "Successfuly File A Leave Request!");
-        }else{
-            JOptionPane.showMessageDialog(null, "Error Leave Request!");
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void dateFromOvertimePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateFromOvertimePropertyChange
         // TODO add your handling code here:
         if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null){
-            if(supervisor.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
-                txtDaysNumber1.setText(String.valueOf(supervisor.getNumberOfDaysLeave()));
-                supervisor.setNumberOfDaysLeave();
+            if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
+                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
             }else{
-                supervisor.setNumberOfDaysLeave();
-                txtDaysNumber1.setText(String.valueOf(supervisor.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
+                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
             }
         }
     }//GEN-LAST:event_dateFromOvertimePropertyChange
@@ -2770,92 +2725,55 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void dateToOvertimePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateToOvertimePropertyChange
         // TODO add your handling code here:
         if(dateFromOvertime.getDate() != null && dateToOvertime.getDate() != null){
-            if(supervisor.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
-                txtDaysNumber1.setText(String.valueOf(supervisor.getNumberOfDaysLeave()));
-                supervisor.setNumberOfDaysLeave();
+            if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
+                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
             }else{
-                supervisor.setNumberOfDaysLeave();
-                txtDaysNumber1.setText(String.valueOf(supervisor.getNumberOfDaysLeave()));
+                employee.setNumberOfDaysLeave();
+                txtDaysNumber1.setText(String.valueOf(employee.getNumberOfDaysLeave()));
             }
         }
     }//GEN-LAST:event_dateToOvertimePropertyChange
 
     private void btnSubmit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmit1ActionPerformed
-        // TODO add your handling code here:    
+       // TODO add your handling code here:
         if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
-             if(supervisor.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
-                 try {
-                     Boolean isSuccessfulyAdded = supervisor.accountDetails.addOvertimeToDatabase(
-                            supervisor.accountDetails.getEmployeeID(),
-                             dateFromOvertime.getDate(),
-                             dateToOvertime.getDate(),
-                             Integer.parseInt(txtDaysNumber1.getText()),
-                             txtReasonOvertime.getText() 
-                        );
-                     if(isSuccessfulyAdded){
-                        dateFromOvertime.setDate(null);
-                        dateToOvertime.setDate(null);
-                        txtDaysNumber1.setText(null);
-                        txtReasonOvertime.setText(null);
-                        supervisor.setNumberOfDaysLeave();
-                        JOptionPane.showMessageDialog(null, "Successfuly File An Overtime Request!");
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Error Overtime Request!");
-                    }
-                 } catch (SQLException ex) {
-                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-                 } catch (ParseException ex) {
-                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+             if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
+                 Boolean isSuccessfulyAdded = employee.fileOvertimeRequest(
+                         employee.accountDetails.getEmployeeID(),
+                         dateFromOvertime.getDate(),
+                         dateToOvertime.getDate(),
+                         Integer.parseInt(txtDaysNumber1.getText()),
+                         txtReasonOvertime.getText()
+                 );
+                 if(isSuccessfulyAdded){
+                     dateFromOvertime.setDate(null);
+                     dateToOvertime.setDate(null);
+                     txtDaysNumber1.setText(null);
+                     txtReasonOvertime.setText(null);
+                     employee.setNumberOfDaysLeave();
                  }
              } 
         } else{
            JOptionPane.showMessageDialog(null, "Provide all the neccessary details for overtime!!");
         }
+
     }//GEN-LAST:event_btnSubmit1ActionPerformed
 
     private void txtDaysNumber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDaysNumber1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDaysNumber1ActionPerformed
 
-    private void btnSubmitToSepervisorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitToSepervisorActionPerformed
-        // TODO add your handling code here:
-        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-        int[] row = jTableAllDTR.getSelectedRows();
-        DefaultTableModel model = (DefaultTableModel)jTableAllDTR.getModel();
-        for(int r : row){
-            if(model.getValueAt(r, 3).toString().equals("Yes")){
-                JOptionPane.showMessageDialog(null, "You Have Selectetd A DTR That Was Already Forwarded To Supervisor!");
-                btnSubmitToSepervisor.enable(false);
-            }else{
-                btnSubmitToSepervisor.enable(true);
-                ArrayList <String> rowData = new ArrayList<>();
-                rowData.add(model.getValueAt(r, 0).toString());
-                rowData.add(model.getValueAt(r, 3).toString());
-                tempData.add(rowData);
-            }
-        }
-        if(jTableAllDTR.getSelectedRow() != -1 && !tempData.isEmpty()){
-            supervisor.forwardDTRToSupervisor(tempData);
-            supervisor.setTableData(supervisor.getDataAllDTR(dateFrom2.getDate(), dateTo2.getDate()));
-            supervisor.setTableSize(5);
-            supervisor.displayDataTable(jTableAllDTR);
-            JOptionPane.showMessageDialog(null, "Successfuly Submitted the "+tempData.size()+" DTR to Your Supervisor!");
-        }else if(jTableAllDTR.getSelectedRow() == -1){
-            JOptionPane.showMessageDialog(null, "Select DTR First!");
-        }
-    }//GEN-LAST:event_btnSubmitToSepervisorActionPerformed
-
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
-
-        supervisor.setTableData(supervisor.getDataAllDTR(dateFrom2.getDate(), dateTo2.getDate()));
-        supervisor.setTableSize(5);
-        supervisor.displayDataTable(jTableAllDTR);
+        employee.setTableData(employee.getDTR(dateFrom2.getDate(), dateTo2.getDate()));
+        employee.setTableSize(4);
+        employee.displayDataTable(jTableAllDTR);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
-        ArrayList<ArrayList<String>> tempData = supervisor.viewPersonalPayslip(dateFrom3.getDate(), dateTo3.getDate(), lblIDSidebar.getText());
+        ArrayList<ArrayList<String>> tempData = employee.viewPersonalPayslip(dateFrom3.getDate(), dateTo3.getDate(), lblIDSidebar.getText());
         if(tempData.isEmpty()){
             JOptionPane.showMessageDialog(null, "No Payroll Found!");
             lblID4.setText("N/A");
@@ -2899,6 +2817,24 @@ public class SupervisorGUI extends javax.swing.JFrame {
             login.setVisible(true);
         }
     }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void btnLeaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveActionPerformed
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        mainTabbed.setSelectedIndex(4);
+
+        // Set employee details in the Leave Ledger panel
+        employee.viewPersonalDetails();
+        lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
+
+        // Update leave balance labels
+        employee.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
+        
+        employee.setTableData(employee.allApprovedPersonalLeaveLedger());
+        employee.setTableSize(7);
+        employee.displayDataTable(jTableAllRequest3);
+    }//GEN-LAST:event_btnLeaveActionPerformed
 
     private void setClockText(){ //code for realtime date & time updates to the dashboard
         Timer timer = new Timer(1000, new ActionListener(){ //timer updates every second (1000 milliseconds)
@@ -2954,7 +2890,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDTR;
     private javax.swing.JButton btnForwardToPayroll;
-    private javax.swing.JButton btnLeaveLedger;
+    private javax.swing.JButton btnLeave;
     private javax.swing.JButton btnLeaveLedger1;
     private javax.swing.JButton btnLeaveLedger2;
     private javax.swing.JButton btnLeaveLedger3;
@@ -2965,7 +2901,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRequestPort;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnSubmit1;
-    private javax.swing.JButton btnSubmitToSepervisor;
     private javax.swing.JButton btnUpdate1;
     private javax.swing.JComboBox<String> comboEmployeeName;
     private javax.swing.JComboBox<String> comboLeaveType;
@@ -2991,13 +2926,11 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -3027,29 +2960,23 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTableAllRequest1;
     private javax.swing.JTable jTableAllRequest3;
     private javax.swing.JTable jTableDTR;
-    private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblAddress1;
     private javax.swing.JLabel lblAllRequest;
     private javax.swing.JLabel lblAllRequest1;
     private javax.swing.JLabel lblAllRequest2;
-    private javax.swing.JLabel lblBDay;
     private javax.swing.JLabel lblBDay1;
     private javax.swing.JLabel lblBasicSalary;
     private javax.swing.JLabel lblBenefits;
     private javax.swing.JLabel lblBiMonthlyRate;
-    private javax.swing.JLabel lblBrgy;
     private javax.swing.JLabel lblBrgy1;
-    private javax.swing.JLabel lblCity;
     private javax.swing.JLabel lblCity1;
     private javax.swing.JLabel lblClothingAllowanes;
-    private javax.swing.JLabel lblEmpID;
     private javax.swing.JLabel lblEmpID1;
     private javax.swing.JLabel lblEmpID2;
     private javax.swing.JLabel lblEmpID3;
     private javax.swing.JLabel lblEmpID4;
     private javax.swing.JLabel lblEmpID5;
     private javax.swing.JLabel lblEmpID6;
-    private javax.swing.JLabel lblFName;
     private javax.swing.JLabel lblFName1;
     private javax.swing.JLabel lblGross;
     private javax.swing.JLabel lblHourlyRate;
@@ -3059,7 +2986,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblID3;
     private javax.swing.JLabel lblID4;
     private javax.swing.JLabel lblIDSidebar;
-    private javax.swing.JLabel lblLName;
     private javax.swing.JLabel lblLName1;
     private javax.swing.JLabel lblLeaveBalances;
     private javax.swing.JLabel lblLeaveBalances1;
@@ -3100,11 +3026,9 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblPhilHealth;
     private javax.swing.JLabel lblPhilNum;
     private javax.swing.JLabel lblPhoneAllowances;
-    private javax.swing.JLabel lblPhoneNum;
     private javax.swing.JLabel lblPhoneNum1;
     private javax.swing.JLabel lblPosition;
     private javax.swing.JLabel lblPositon;
-    private javax.swing.JLabel lblProvince;
     private javax.swing.JLabel lblProvince1;
     private javax.swing.JLabel lblRequestType;
     private javax.swing.JLabel lblRequestType1;
@@ -3125,7 +3049,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblVL1;
     private javax.swing.JLabel lblVLBalance;
     private javax.swing.JLabel lblVLBalance1;
-    private javax.swing.JLabel lblZipCode;
     private javax.swing.JLabel lblZipCode1;
     private javax.swing.JTabbedPane mainTabbed;
     private javax.swing.JPanel panelAllRequest;
@@ -3157,35 +3080,26 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JPanel tabbedRequest;
     private javax.swing.JScrollPane tableDTR;
     private javax.swing.JScrollPane tableDTR1;
-    private javax.swing.JTextArea textAreaAddress;
     private javax.swing.JTextArea textAreaStreet;
     private javax.swing.JTextField txtBDay;
-    private javax.swing.JTextField txtBDay1;
     private javax.swing.JTextField txtBasicSalary;
     private javax.swing.JTextField txtBiMonthlyRate;
     private javax.swing.JTextField txtBrgy;
-    private javax.swing.JTextField txtBrgy1;
     private javax.swing.JTextField txtCity;
-    private javax.swing.JTextField txtCity1;
     private javax.swing.JLabel txtClock;
     private javax.swing.JTextField txtClothingAllowance;
     private javax.swing.JTextField txtDaysNumber;
     private javax.swing.JTextField txtDaysNumber1;
     private javax.swing.JTextField txtFName;
-    private javax.swing.JTextField txtFName1;
     private javax.swing.JTextField txtHourlyRate;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtID1;
     private javax.swing.JTextField txtLName;
-    private javax.swing.JTextField txtLName1;
     private javax.swing.JTextField txtPagIbigNum;
     private javax.swing.JTextField txtPhilNum;
     private javax.swing.JTextField txtPhoneAllowance;
     private javax.swing.JTextField txtPhoneNum;
-    private javax.swing.JTextField txtPhoneNum1;
     private javax.swing.JTextField txtPosition;
     private javax.swing.JTextField txtProvince;
-    private javax.swing.JTextField txtProvince1;
     private javax.swing.JTextArea txtReason;
     private javax.swing.JTextArea txtReasonOvertime;
     private javax.swing.JTextField txtRiceSubsidy;
@@ -3194,6 +3108,5 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtSupervisor;
     private javax.swing.JTextField txtTINNum;
     private javax.swing.JTextField txtZipCode;
-    private javax.swing.JTextField txtZipCode1;
     // End of variables declaration//GEN-END:variables
 }

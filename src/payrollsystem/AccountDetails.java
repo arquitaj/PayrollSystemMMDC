@@ -65,44 +65,29 @@ public class AccountDetails extends DatabaseConnection{
         }
     }
     
-    void retrivedDetails(String table){
-        ArrayList<ArrayList<String>> dataListClone = new ArrayList<>();
-        String[] columnNames;
-        int columnCount;
-        
-        try{
-            ResultSet result = databaseManager.readFromDatabase(table);
-            columnCount = result.getMetaData().getColumnCount();
-            columnNames = new String[columnCount];
-            
-            for (int i = 0; i < columnCount; i++){
-                columnNames[i] = result.getMetaData().getColumnName(i + 1);
-            }
-            
-            while (result.next()){
-                ArrayList<String> resultItems = new ArrayList<>();
-                for (String columnName : columnNames){
-                    resultItems.add(result.getString(columnName));
-                }
-                dataListClone.add(resultItems); //dataListClone is used instead of direct assignment due to an object reference error
-            }
-            result.close();
-        }
-        catch(SQLException e){
-            System.out.println(e);
-        }
-        
-        dataList = dataListClone;
+    //Method that handle of retrieving data from Database
+    ArrayList<ArrayList<String>> retrivedDetails(PreparedStatement statement) throws SQLException{
+         ArrayList<ArrayList<String>> data = new ArrayList<>();
+          data = databaseManager.getData(statement);
+          return data;
     }
     
-    void retrivedUserDetails (int userID, String sql){
+    //Methods that handle for inserting data to Database
+    Boolean addDetailsToDatabase(PreparedStatement statement) throws SQLException{
+        Boolean isSuccessfulyAdded = false;
+        int rowsInserted = statement.executeUpdate();
+        if (rowsInserted > 0) {
+            isSuccessfulyAdded = true;
+        }      
+        return isSuccessfulyAdded; 
+    }
+        
+    void userDetails (int userID, String sql){
            ArrayList<ArrayList<String>> data = new ArrayList<>();
           try{   
               PreparedStatement statement = conn.prepareStatement(sql);
               statement.setInt(1, userID);
                data = databaseManager.getData(statement);
-                System.out.println("Data is: "+data);
-                System.out.println("Data ID: "+data.get(0).get(0));
                 this.employeeID = Integer.parseInt(data.get(0).get(0));
                 this.firstName = data.get(0).get(1);
                 this.lastName = data.get(0).get(2);
@@ -126,49 +111,11 @@ public class AccountDetails extends DatabaseConnection{
                 this.position = data.get(0).get(18);
                 this.status = data.get(0).get(19);
                
-            } catch(SQLException e){
-                System.out.println(e);
+            } catch(SQLException ex){
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
      
-//    void userDetails(String id){
-//        this.employeeID = id;
-//        for(ArrayList<String> data : dataList){
-//            if(data.get(0).equals(String.valueOf(getEmployeeID()))){
-//                this.lastName = data.get(6);
-//                this.firstName = data.get(5); 
-//                this.birthday = data.get(7);
-//                this.phoneNumber = data.get(8);
-//                this.status = db.readEmployeeStatus(employeeID);
-//                this.position = db.readEmployeePosition(employeeID);
-//                this.supervisor = data.get(3);
-////                this.semiBasicSalary = Double.parseDouble(data.get(17)); //TODO
-//                
-//                
-//                for(String item : db.readEmployeeAddress(employeeID)){ //assigning this.address from address columns in database
-//                    this.address += item;
-//                }
-//                
-//                Double[] compensationDetails = db.readCompensationDetails(employeeID);
-//                this.basicSalary = compensationDetails[0];
-//                this.riceSubsidy = compensationDetails[1];
-//                this.phoneAllowance = compensationDetails[2];
-//                this.clothingAllowance = compensationDetails[3];
-//                this.hourlyRate = compensationDetails[4];
-//                
-//                String[] governmentDetails = db.readGovernmentDetails(employeeID);
-//                this.sssNumber = governmentDetails[0];
-//                this.philHealthNumber = governmentDetails[1];
-//                this.tinNumber = governmentDetails[2];
-//                this.pagibigNumber = governmentDetails[3];
-//
-//                if (!this.lastName.isBlank() || !this.lastName.isEmpty()){
-//                    break;
-//                }
-//            }
-//        }
-//    }
-    
     void addDetailsCSV(){
         try(BufferedWriter writer = new BufferedWriter (new FileWriter (getFilePath()))){
                 for(int i=0; i<getDataList().size(); i++){
@@ -186,84 +133,86 @@ public class AccountDetails extends DatabaseConnection{
     }
     
     //To get the id of the column table in the database
-    int getConnectionKey (String query) throws SQLException{
-        int requestID = 0;
-     
-        PreparedStatement getStatement =  conn.prepareStatement(query);
-        ResultSet resultSet = getStatement.executeQuery();
-        requestID = resultSet.getInt("request_status_id");
-        
-        return requestID;
-    }
+//    int getConnectionKey (String query) throws SQLException{
+//        int requestID = 0;
+//     
+//        PreparedStatement getStatement =  conn.prepareStatement(query);
+//        ResultSet resultSet = getStatement.executeQuery();
+//        requestID = resultSet.getInt("request_status_id");
+//        
+//        return requestID;
+//    }
+    
+
     
     //Implementation of CSV to DATABASE FOR OVERTIME REQUEST
-    Boolean addOvertimeToDatabase(int employee_id, Date overtime_from, Date overtime_to, int number_of_days, String reason) throws SQLException, ParseException{
-        Boolean isSuccessfulyAdded = false;
-        Date date = new Date();
-        java.sql.Date sqldate = new java.sql.Date(date.getTime());
-        if(conn != null){
-            int requestID = 0;
-            String getSQL = "SELECT request_status_id FROM request_status WHERE status = 'Pending' ";
-            PreparedStatement getStatement = conn.prepareStatement(getSQL);
-            ResultSet resultSet = getStatement.executeQuery();
-            while (resultSet.next()) {
-                requestID = resultSet.getInt("request_status_id");
-            }
-            
-            if(requestID != 0){
-                String insertSQL = "INSERT INTO overtime_requests (employee_id, date_filed, overtime_from, overtime_to, number_of_days, reason, request_status_id) VALUES (?,?,?,?,?,?,?)";
-                PreparedStatement statement = conn.prepareStatement(insertSQL);
-                statement.setInt(1, employee_id);
-                statement.setDate(2, sqldate);
-                statement.setDate(3, new java.sql.Date(overtime_from.getTime()));
-                statement.setDate(4, new java.sql.Date(overtime_to.getTime()));
-                statement.setInt(5, number_of_days);
-                statement.setString(6, reason);
-                statement.setInt(7, requestID);
-
-                int rowsInserted = statement.executeUpdate();
-                if (rowsInserted > 0) {
-                    isSuccessfulyAdded = true;
-                }       
-            }
-        }
-        return isSuccessfulyAdded;
-    }
+//    Boolean addOvertimeToDatabase(int employee_id, Date overtime_from, Date overtime_to, int number_of_days, String reason) throws SQLException, ParseException{
+//        Boolean isSuccessfulyAdded = false;
+//        Date date = new Date();
+//        java.sql.Date sqldate = new java.sql.Date(date.getTime());
+//        if(conn != null){
+//            int requestID = 0;
+//            String getSQL = "SELECT request_status_id FROM request_status WHERE status = 'Pending' ";
+//            PreparedStatement getStatement = conn.prepareStatement(getSQL);
+//            ResultSet resultSet = getStatement.executeQuery();
+//            while (resultSet.next()) {
+//                requestID = resultSet.getInt("request_status_id");
+//            }
+//            
+//            if(requestID != 0){
+//                String insertSQL = "INSERT INTO overtime_requests (employee_id, date_filed, overtime_from, overtime_to, number_of_days, reason, request_status_id) VALUES (?,?,?,?,?,?,?)";
+//                PreparedStatement statement = conn.prepareStatement(insertSQL);
+//                statement.setInt(1, employee_id);
+//                statement.setDate(2, sqldate);
+//                statement.setDate(3, new java.sql.Date(overtime_from.getTime()));
+//                statement.setDate(4, new java.sql.Date(overtime_to.getTime()));
+//                statement.setInt(5, number_of_days);
+//                statement.setString(6, reason);
+//                statement.setInt(7, requestID);
+//
+//                int rowsInserted = statement.executeUpdate();
+//                if (rowsInserted > 0) {
+//                    isSuccessfulyAdded = true;
+//                }       
+//            }
+//        }
+//        return isSuccessfulyAdded;
+//    }
     
-    Boolean userLogin(int employeeID) throws SQLException{
-        Boolean isSuccessfulyAdded = false;
-          java.sql.Date dateNow = new java.sql.Date(System.currentTimeMillis());
-          Timestamp timeNow = new Timestamp(System.currentTimeMillis());
-        if(conn != null){
-            int requestID = 0;
-            String getSQL = "SELECT * FROM attendance_records WHERE employee_id = ? AND attendance_date = ?";
-            PreparedStatement getStatement = conn.prepareStatement(getSQL);
-            getStatement.setInt(1, employeeID);
-            getStatement.setDate(2, dateNow);
-            ResultSet resultSet = getStatement.executeQuery();
-            while (resultSet.next()) {
-                requestID = resultSet.getInt("employee_id");
-            }
-            
-            if(requestID == 0){
-                String insertSQL = "INSERT INTO attendance_records (employee_id, attendance_date, login, submitted_supervisor, submitted_payroll_staff) VALUES (?,?,?,?,?)";
-                PreparedStatement statement = conn.prepareStatement(insertSQL);
-                statement.setInt(1, employeeID);
-                statement.setDate(2, dateNow);
-                statement.setTimestamp(3, timeNow);
-                statement.setString(4, "No");
-                statement.setString(5, "No");
-               
-                int rowsInserted = statement.executeUpdate();
-                if (rowsInserted > 0) {
-                    isSuccessfulyAdded = true;
-                }       
-            }else{
-                JOptionPane.showMessageDialog(null, "You already time in!");
-            }
-        }    
-        return isSuccessfulyAdded;
-    }
+//    Boolean userLogin(int employeeID) throws SQLException{
+//        Boolean isSuccessfulyAdded = false;
+//          java.sql.Date dateNow = new java.sql.Date(System.currentTimeMillis());
+//          Timestamp timeNow = new Timestamp(System.currentTimeMillis());
+//        if(conn != null){
+//            int requestID = 0;
+//            String getSQL = "SELECT * FROM attendance_records WHERE employee_id = ? AND attendance_date = ?";
+//            PreparedStatement getStatement = conn.prepareStatement(getSQL);
+//            getStatement.setInt(1, employeeID);
+//            getStatement.setDate(2, dateNow);
+//            ResultSet resultSet = getStatement.executeQuery();
+//            while (resultSet.next()) {
+//                requestID = resultSet.getInt("employee_id");
+//            }
+//            
+//            if(requestID == 0){
+//                String insertSQL = "INSERT INTO attendance_records (employee_id, attendance_date, login, submitted_supervisor, submitted_payroll_staff) VALUES (?,?,?,?,?)";
+//                PreparedStatement statement = conn.prepareStatement(insertSQL);
+//                statement.setInt(1, employeeID);
+//                statement.setDate(2, dateNow);
+//                statement.setTimestamp(3, timeNow);
+//                statement.setString(4, "No");
+//                statement.setString(5, "No");
+//               
+//                int rowsInserted = statement.executeUpdate();
+//                if (rowsInserted > 0) {
+//                    isSuccessfulyAdded = true;
+//                }       
+//            }else{
+//                JOptionPane.showMessageDialog(null, "You already time in!");
+//            }
+//        }    
+//        return isSuccessfulyAdded;
+//    }
     
     Boolean userLogout(int employeeID) throws SQLException{
         Boolean isSuccessfulyAdded = false;
@@ -391,11 +340,11 @@ public class AccountDetails extends DatabaseConnection{
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public String getStreet() {

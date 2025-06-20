@@ -29,7 +29,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane8" alignment="0" pref="860" max="32767" attributes="0"/>
+          <Component id="jScrollPane8" alignment="0" pref="899" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -112,7 +112,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="0" y="100" width="-1" height="760"/>
+                  <AbsoluteConstraints x="0" y="100" width="-1" height="800"/>
                 </Constraint>
               </Constraints>
 
@@ -178,7 +178,7 @@
                                       <Component id="btnPersonalDetails" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
                                       <Component id="btnRequestPort" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
                                       <Component id="btnDTR" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
-                                      <Component id="btnLeaveLedger" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                                      <Component id="btnLeave" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
                                       <Component id="btnLeaveLedger1" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -224,7 +224,7 @@
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Component id="btnDTR" min="-2" pref="36" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="btnLeaveLedger" min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="btnLeave" min="-2" pref="36" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnLeaveLedger1" min="-2" pref="36" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
@@ -248,12 +248,12 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
                               <Component id="jSeparator13" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="614" max="32767" attributes="0"/>
+                              <EmptySpace pref="639" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="435" max="32767" attributes="0"/>
+                              <EmptySpace pref="460" max="32767" attributes="0"/>
                               <Component id="jSeparator15" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="337" max="-2" attributes="0"/>
                           </Group>
@@ -370,12 +370,12 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDTRActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnLeaveLedger">
+                <Component class="javax.swing.JButton" name="btnLeave">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="LEAVE LEDGER"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLeaveLedgerActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLeaveActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnLeaveLedger1">
@@ -484,9 +484,9 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="93" max="32767" attributes="0"/>
+                              <EmptySpace pref="128" max="32767" attributes="0"/>
                               <Component id="panelPersonalDetails1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                               <Component id="panelPersonalDetails" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                               <Component id="panelPersonalDetails2" min="-2" max="-2" attributes="0"/>
@@ -559,12 +559,12 @@
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="lblEmpID6" min="-2" pref="88" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="txtID1" pref="164" max="32767" attributes="0"/>
+                                                      <Component id="txtID" pref="164" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="lblFName1" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                                                      <Component id="txtFName1" max="32767" attributes="0"/>
+                                                      <Component id="txtFName" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -578,32 +578,32 @@
                                                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
                                                           <Component id="jScrollPane7" alignment="0" pref="0" max="32767" attributes="0"/>
-                                                          <Component id="txtLName1" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="txtBDay1" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="txtPhoneNum1" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="txtLName" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="txtBDay" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="txtPhoneNum" alignment="0" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="lblZipCode1" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                                      <Component id="txtZipCode1" max="32767" attributes="0"/>
+                                                      <Component id="txtZipCode" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="lblBrgy1" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                                      <Component id="txtBrgy1" max="32767" attributes="0"/>
+                                                      <Component id="txtBrgy" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="lblCity1" min="-2" pref="47" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                                                      <Component id="txtCity1" max="32767" attributes="0"/>
+                                                      <Component id="txtCity" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lblProvince1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                              <Component id="txtProvince1" max="32767" attributes="0"/>
+                                              <Component id="txtProvince" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -616,27 +616,27 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblEmpID6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtID1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtID" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblFName1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtFName1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtFName" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblLName1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtLName1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtLName" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblBDay1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtBDay1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtBDay" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="lblPhoneNum1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtPhoneNum1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtPhoneNum" alignment="1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -646,22 +646,22 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblBrgy1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtBrgy1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtBrgy" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblCity1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtCity1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCity" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblProvince1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtProvince1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtProvince" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblZipCode1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtZipCode1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtZipCode" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="11" max="32767" attributes="0"/>
                                   </Group>
@@ -717,7 +717,7 @@
                                 <Property name="text" type="java.lang.String" value="Phone No."/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtID1">
+                            <Component class="javax.swing.JTextField" name="txtID">
                               <Properties>
                                 <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -725,7 +725,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtFName1">
+                            <Component class="javax.swing.JTextField" name="txtFName">
                               <Properties>
                                 <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -733,7 +733,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtLName1">
+                            <Component class="javax.swing.JTextField" name="txtLName">
                               <Properties>
                                 <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -741,7 +741,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtBDay1">
+                            <Component class="javax.swing.JTextField" name="txtBDay">
                               <Properties>
                                 <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -749,7 +749,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtPhoneNum1">
+                            <Component class="javax.swing.JTextField" name="txtPhoneNum">
                               <Properties>
                                 <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -805,7 +805,7 @@
                                 <Property name="text" type="java.lang.String" value="Zip Code:"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtBrgy1">
+                            <Component class="javax.swing.JTextField" name="txtBrgy">
                               <Properties>
                                 <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -813,7 +813,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtCity1">
+                            <Component class="javax.swing.JTextField" name="txtCity">
                               <Properties>
                                 <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -821,7 +821,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtProvince1">
+                            <Component class="javax.swing.JTextField" name="txtProvince">
                               <Properties>
                                 <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -829,7 +829,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtZipCode1">
+                            <Component class="javax.swing.JTextField" name="txtZipCode">
                               <Properties>
                                 <Property name="editable" type="boolean" value="false"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -2316,23 +2316,15 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jSeparator7" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                          <Component id="btnSubmitToSepervisor" min="-2" pref="85" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblEmpID3" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                              <Component id="lblName2" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblID2" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                              <Component id="lblMyName4" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="lblEmpID3" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <Component id="lblName2" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblID2" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <Component id="lblMyName4" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -2399,9 +2391,7 @@
                                   <Component id="tableDTR" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jSeparator7" min="-2" pref="3" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnSubmitToSepervisor" min="-2" pref="39" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -2420,13 +2410,36 @@
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                  <Table columnCount="5" rowCount="0">
+                                  <Table columnCount="4" rowCount="0">
                                     <Column editable="false" title="DATE" type="java.lang.Object"/>
                                     <Column editable="false" title="LOGIN" type="java.lang.Object"/>
                                     <Column editable="false" title="LOGOUT" type="java.lang.Object"/>
-                                    <Column editable="false" title="SUBMITTED TO SUPERVISOR" type="java.lang.Object"/>
                                     <Column editable="false" title="REMARKS" type="java.lang.Object"/>
                                   </Table>
+                                </Property>
+                                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                                  <TableColumnModel selectionModel="2">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                  </TableColumnModel>
                                 </Property>
                                 <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                                 <Property name="rowHeight" type="int" value="25"/>
@@ -2483,14 +2496,6 @@
                               <Color blue="99" green="cc" red="ff" type="rgb"/>
                             </Property>
                           </Properties>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="btnSubmitToSepervisor">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="SUBMIT"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubmitToSepervisorActionPerformed"/>
-                          </Events>
                         </Component>
                         <Component class="javax.swing.JSeparator" name="jSeparator8">
                           <Properties>

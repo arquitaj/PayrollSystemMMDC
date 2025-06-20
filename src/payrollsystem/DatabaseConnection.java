@@ -28,11 +28,11 @@ public class DatabaseConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace(); 
         }
     }
  
     public Connection getDBConnection(){
-        return connection;
+        return this.connection; 
     }
-    
 }
