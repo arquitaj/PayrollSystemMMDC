@@ -26,19 +26,18 @@ import javax.swing.table.DefaultTableModel;
 public class PayrollStaffGUI extends javax.swing.JFrame {
     String id, name, role;
     PayrollStaff payrollStaff;
+    Employee employee;
     ArrayList<String> data = new ArrayList<>(); //To hold as storage
     SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
     
     public PayrollStaffGUI(ArrayList<ArrayList<String>> userDetails) {
         initComponents();
-        this.id = userDetails.get(0).get(0).toString();
-        this.name = userDetails.get(0).get(1);
-        this.role = userDetails.get(0).get(3);
+        lblIDSidebar.setText(userDetails.get(0).get(0));
+        lblNameSidebar.setText(userDetails.get(0).get(1));
         
-        lblNameSidebar.setText(name);
-        lblIDSidebar.setText(id);
-        payrollStaff = new PayrollStaff(lblIDSidebar.getText().toString());
-        payrollStaff.viewPersonalDetails(lblIDSidebar.getText());
+        payrollStaff = new PayrollStaff(userDetails.get(0).get(0));
+        employee = new Employee(userDetails.get(0).get(0));
+        employee.viewPersonalDetails();
         setClockText();
     }
 
@@ -1516,11 +1515,11 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "DATE", "LOGIN", "LOGOUT", "SUBMITTED TO SUPERVISOR", "REMARKS"
+                "DATE", "LOGIN", "LOGOUT", "REMARKS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1531,6 +1530,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         jTableAllDTR.setRowHeight(25);
         jTableAllDTR.getTableHeader().setReorderingAllowed(false);
         tableDTR.setViewportView(jTableAllDTR);
+        jTableAllDTR.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         dateFrom2.setBackground(new java.awt.Color(255, 255, 255));
         dateFrom2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "From", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 51)))); // NOI18N
@@ -2394,25 +2394,27 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        try {
-            if(payrollStaff.accountDetails.userLogin(payrollStaff.accountDetails.getEmployeeID())){
-                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            if(payrollStaff.accountDetails.userLogin(payrollStaff.accountDetails.getEmployeeID())){
+//                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        employee.userLogout();
         
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-         try {
-            if(payrollStaff.accountDetails.userLogout(payrollStaff.accountDetails.getEmployeeID())){
-                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//         try {
+//            if(payrollStaff.accountDetails.userLogout(payrollStaff.accountDetails.getEmployeeID())){
+//                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        employee.userLogin();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLeaveLedger2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger2ActionPerformed
@@ -2501,31 +2503,30 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
-        // TODO add your handling code here:
         mainTabbed.setSelectedIndex(1);
-        txtID.setText(String.valueOf(payrollStaff.accountDetails.getEmployeeID()));
-        txtFName.setText(payrollStaff.accountDetails.getFirstName());
-        txtLName.setText(payrollStaff.accountDetails.getLastName());
-        txtBDay.setText(payrollStaff.accountDetails.getBirthday());
-        txtPhoneNum.setText(payrollStaff.accountDetails.getPhoneNumber());
-        textAreaStreet.setText(payrollStaff.accountDetails.getStreet());
-        txtBrgy.setText(payrollStaff.accountDetails.getBarangay());
-        txtCity.setText(payrollStaff.accountDetails.getCity());
-        txtProvince.setText(payrollStaff.accountDetails.getProvince());
-        txtZipCode.setText(payrollStaff.accountDetails.getZipCode());
-        txtBasicSalary.setText(String.valueOf(payrollStaff.accountDetails.getBasicSalary()));
-        txtBiMonthlyRate.setText(String.valueOf(payrollStaff.accountDetails.getSemiBasicSalary()));
-        txtHourlyRate.setText(String.valueOf(payrollStaff.accountDetails.getHourlyRate()));
-        txtRiceSubsidy.setText(String.valueOf(payrollStaff.accountDetails.getRiceSubsidy()));
-        txtPhoneAllowance.setText(String.valueOf(payrollStaff.accountDetails.getRiceSubsidy()));
-        txtClothingAllowance.setText(String.valueOf(payrollStaff.accountDetails.getClothingAllowance()));
-        txtPhilNum.setText(payrollStaff.accountDetails.getPhilHealthNumber());
-        txtSSSNum.setText(payrollStaff.accountDetails.getPhilHealthNumber());
-        txtTINNum.setText(payrollStaff.accountDetails.getTinNumber());
-        txtPagIbigNum.setText(payrollStaff.accountDetails.getPagibigNumber());
-        txtPosition.setText(payrollStaff.accountDetails.getPosition());
-        txtStatus.setText(payrollStaff.accountDetails.getStatus());
-        txtSupervisor.setText(payrollStaff.accountDetails.getSupervisor());
+        txtID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        txtFName.setText(employee.accountDetails.getFirstName());
+        txtLName.setText(employee.accountDetails.getLastName());
+        txtBDay.setText(employee.accountDetails.getBirthday());
+        txtPhoneNum.setText(employee.accountDetails.getPhoneNumber());
+        textAreaStreet.setText(employee.accountDetails.getStreet());
+        txtBrgy.setText(employee.accountDetails.getBarangay());
+        txtCity.setText(employee.accountDetails.getCity());
+        txtProvince.setText(employee.accountDetails.getProvince());
+        txtZipCode.setText(employee.accountDetails.getZipCode());
+        txtBasicSalary.setText(String.valueOf(employee.accountDetails.getBasicSalary()));
+        txtBiMonthlyRate.setText(String.valueOf(employee.accountDetails.getSemiBasicSalary()));
+        txtHourlyRate.setText(String.valueOf(employee.accountDetails.getHourlyRate()));
+        txtRiceSubsidy.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
+        txtPhoneAllowance.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
+        txtClothingAllowance.setText(String.valueOf(employee.accountDetails.getClothingAllowance()));
+        txtPhilNum.setText(employee.accountDetails.getPhilHealthNumber());
+        txtSSSNum.setText(employee.accountDetails.getPhilHealthNumber());
+        txtTINNum.setText(employee.accountDetails.getTinNumber());
+        txtPagIbigNum.setText(employee.accountDetails.getPagibigNumber());
+        txtPosition.setText(employee.accountDetails.getPosition());
+        txtStatus.setText(employee.accountDetails.getStatus());
+        txtSupervisor.setText(employee.accountDetails.getSupervisor());
     }//GEN-LAST:event_btnPersonalDetailsActionPerformed
 
     private void btnRequestPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestPortActionPerformed
@@ -2537,9 +2538,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         tabbedInsideRequest.setSelectedIndex(0);
 
         // Display all requests in the table
-        payrollStaff.setTableData(payrollStaff.getDataAllRequests());
-        payrollStaff.setTableSize(7);
-        payrollStaff.displayDataTable(jTableAllRequest);
+        employee.setTableData(employee.getDataAllRequests());
+        employee.setTableSize(7);
+        employee.displayDataTable(jTableAllRequest);
     }//GEN-LAST:event_btnRequestPortActionPerformed
 
     private void btnDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTRActionPerformed
@@ -2547,9 +2548,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         mainTabbed.setSelectedIndex(3);
 
         // Set employee details in the DTR panel
-        payrollStaff.viewPersonalDetails(lblIDSidebar.getText());
-        lblID2.setText(String.valueOf(payrollStaff.accountDetails.getEmployeeID()));
-        lblMyName4.setText(payrollStaff.accountDetails.getEmployeeCompleteName());
+        employee.viewPersonalDetails();
+        lblID2.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        lblMyName4.setText(employee.accountDetails.getEmployeeCompleteName());
 
         // Get current date
         Calendar today = Calendar.getInstance();
@@ -2590,16 +2591,16 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         mainTabbed.setSelectedIndex(4);
 
         // Set employee details in the Leave Ledger panel
-        payrollStaff.viewPersonalDetails(lblIDSidebar.getText());
-        lblID3.setText(String.valueOf(payrollStaff.accountDetails.getEmployeeID()));
-        lblMyName5.setText(payrollStaff.accountDetails.getEmployeeCompleteName());
+        employee.viewPersonalDetails();
+        lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
 
         // Update leave balance labels
-        payrollStaff.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
+        employee.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
 
-        payrollStaff.setTableData(payrollStaff.allApprovedPersonalLeaveLedger());
-        payrollStaff.setTableSize(7);
-        payrollStaff.displayDataTable(jTableAllRequest3);
+        employee.setTableData(employee.allApprovedPersonalLeaveLedger());
+        employee.setTableSize(7);
+        employee.displayDataTable(jTableAllRequest3);
     }//GEN-LAST:event_btnLeaveLedgerActionPerformed
 
     private void btnLeaveLedger1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger1ActionPerformed
@@ -2649,7 +2650,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
             }
         }
         if(jTableAllDTR.getSelectedRow() != -1 && !tempData.isEmpty()){
-            payrollStaff.forwardDTRToSupervisor(tempData);
+            //payrollStaff.forwardDTRToSupervisor(tempData);
             payrollStaff.setTableData(payrollStaff.getDataAllDTR(dateFrom2.getDate(), dateTo2.getDate()));
             payrollStaff.setTableSize(5);
             payrollStaff.displayDataTable(jTableAllDTR);
@@ -2821,31 +2822,51 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_dateToOvertimePropertyChange
 
     private void btnSubmit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmit1ActionPerformed
-        // TODO add your handling code here:
-                if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
-             if(payrollStaff.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
-                 try {
-                     Boolean isSuccessfulyAdded = payrollStaff.accountDetails.addOvertimeToDatabase(
-                             payrollStaff.accountDetails.getEmployeeID(),
-                             dateFromOvertime.getDate(),
-                             dateToOvertime.getDate(),
-                             Integer.parseInt(txtDaysNumber1.getText()),
-                             txtReasonOvertime.getText() 
-                        );
-                     if(isSuccessfulyAdded){
-                        dateFromOvertime.setDate(null);
-                        dateToOvertime.setDate(null);
-                        txtDaysNumber1.setText(null);
-                        txtReasonOvertime.setText(null);
-                        payrollStaff.setNumberOfDaysLeave();
-                        JOptionPane.showMessageDialog(null, "Successfuly File An Overtime Request!");
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Error Overtime Request!");
-                    }
-                 } catch (SQLException ex) {
-                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-                 } catch (ParseException ex) {
-                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+//        // TODO add your handling code here:
+//                if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
+//             if(payrollStaff.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
+//                 try {
+//                     Boolean isSuccessfulyAdded = payrollStaff.accountDetails.addOvertimeToDatabase(
+//                             payrollStaff.accountDetails.getEmployeeID(),
+//                             dateFromOvertime.getDate(),
+//                             dateToOvertime.getDate(),
+//                             Integer.parseInt(txtDaysNumber1.getText()),
+//                             txtReasonOvertime.getText() 
+//                        );
+//                     if(isSuccessfulyAdded){
+//                        dateFromOvertime.setDate(null);
+//                        dateToOvertime.setDate(null);
+//                        txtDaysNumber1.setText(null);
+//                        txtReasonOvertime.setText(null);
+//                        payrollStaff.setNumberOfDaysLeave();
+//                        JOptionPane.showMessageDialog(null, "Successfuly File An Overtime Request!");
+//                    }else{
+//                        JOptionPane.showMessageDialog(null, "Error Overtime Request!");
+//                    }
+//                 } catch (SQLException ex) {
+//                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+//                 } catch (ParseException ex) {
+//                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+//                 }
+//             } 
+//        } else{
+//           JOptionPane.showMessageDialog(null, "Provide all the neccessary details for overtime!!");
+//        }
+        if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
+             if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
+                 Boolean isSuccessfulyAdded = employee.fileOvertimeRequest(
+                         employee.accountDetails.getEmployeeID(),
+                         dateFromOvertime.getDate(),
+                         dateToOvertime.getDate(),
+                         Integer.parseInt(txtDaysNumber1.getText()),
+                         txtReasonOvertime.getText()
+                 );
+                 if(isSuccessfulyAdded){
+                     dateFromOvertime.setDate(null);
+                     dateToOvertime.setDate(null);
+                     txtDaysNumber1.setText(null);
+                     txtReasonOvertime.setText(null);
+                     employee.setNumberOfDaysLeave();
                  }
              } 
         } else{
