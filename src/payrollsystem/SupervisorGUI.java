@@ -4,18 +4,10 @@
  */
 package payrollsystem;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.*;
+import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
@@ -497,15 +489,15 @@ public class SupervisorGUI extends javax.swing.JFrame {
                 .addGroup(sideBarPanelLayout.createSequentialGroup()
                     .addGap(158, 158, 158)
                     .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(639, Short.MAX_VALUE)))
+                    .addContainerGap(659, Short.MAX_VALUE)))
             .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createSequentialGroup()
-                    .addContainerGap(460, Short.MAX_VALUE)
+                    .addContainerGap(480, Short.MAX_VALUE)
                     .addComponent(jSeparator15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(337, 337, 337)))
         );
 
-        jPanel1.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 800));
+        jPanel1.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 820));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/supervisorPortal.jpg"))); // NOI18N
 
@@ -2382,7 +2374,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 899, Short.MAX_VALUE)
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 917, Short.MAX_VALUE)
         );
 
         pack();
@@ -2405,7 +2397,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
         supervisor.setTableData(supervisor.employeeRequest(comboTypeRequest1.getSelectedItem().toString()));
         supervisor.setTableSize(9);
         supervisor.displayDataTable(jTableAllRequest1);
-//        supervisor.TableData(jTableAllRequest1, comboTypeRequest1.getSelectedItem().toString());
     }//GEN-LAST:event_btnLeaveLedger2ActionPerformed
 
     private void btnLeaveLedger3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger3ActionPerformed
@@ -2433,13 +2424,15 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
     private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
         // TODO add your handling code here:
+        ArrayList <String> rowData = new ArrayList<>();
         int row = jTableAllRequest1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)jTableAllRequest1.getModel();
         if(jTableAllRequest1.getSelectedRow() != -1){
             for(int i=0; i<9; i++){
-                supervisor.list.add(model.getValueAt(row, i).toString());
+                rowData.add(model.getValueAt(row, i).toString());
             }
-            supervisor.approvedEmployeeRequest(btnUpdate1.getText());
+            
+            supervisor.approvedEmployeeRequest(rowData);
             supervisor.setTableData(supervisor.employeeRequest(comboTypeRequest1.getSelectedItem().toString()));
             supervisor.setTableSize(9);
             supervisor.displayDataTable(jTableAllRequest1);
@@ -2451,19 +2444,21 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
     private void btnCancel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel3ActionPerformed
         // TODO add your handling code here:
+        ArrayList <String> rowData = new ArrayList<>();
         int row = jTableAllRequest1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)jTableAllRequest1.getModel();
         if(jTableAllRequest1.getSelectedRow() != -1){
             for(int i=0; i<9; i++){
-                supervisor.list.add(model.getValueAt(row, i).toString());
+                rowData.add(model.getValueAt(row, i).toString());
             }
-            supervisor.approvedEmployeeRequest(btnCancel3.getText());
+            supervisor.disapprovedEmployeeRequest(rowData);
             supervisor.setTableData(supervisor.employeeRequest(comboTypeRequest1.getSelectedItem().toString()));
             supervisor.setTableSize(9);
             supervisor.displayDataTable(jTableAllRequest1);
         }else{
             JOptionPane.showMessageDialog(null, "Please Select A Request First!");
         }
+        supervisor.getDataList().clear();
     }//GEN-LAST:event_btnCancel3ActionPerformed
 
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
@@ -2592,8 +2587,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
         lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
 
         // Update leave balance labels
-        employee.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
-        
         employee.setTableData(employee.viewPersonalLeaveLedger());
         employee.setTableSize(7);
         employee.displayDataTable(jTableAllRequest3);
@@ -2646,8 +2639,8 @@ public class SupervisorGUI extends javax.swing.JFrame {
             employee.leaveBalancesInformation();
             lblID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
             lblMyName.setText(employee.accountDetails.getEmployeeCompleteName());
-            lblVLBalance.setText(employee.getBalanceVL());
-            lblSLBalance.setText(employee.getBalanceSL());
+            lblVLBalance.setText(employee.accountDetails.getVLBalance());
+            lblSLBalance.setText(employee.accountDetails.getSLBalance());
 
         } else {
             tabbedInsideRequest.setSelectedIndex(2);
@@ -2773,38 +2766,38 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
-        ArrayList<ArrayList<String>> tempData = employee.viewPersonalPayslip(dateFrom3.getDate(), dateTo3.getDate(), lblIDSidebar.getText());
-        if(tempData.isEmpty()){
-            JOptionPane.showMessageDialog(null, "No Payroll Found!");
-            lblID4.setText("N/A");
-            lblMyName6.setText("N/A");
-            lblPayrollPeriod.setText("N/A");
-            lblPositon.setText("N/A");
-            lblGross.setText("0.00");
-            lblBenefits.setText("0.00");
-            lblOvertime.setText("0.00");
-            lblUndertime.setText("0.00");
-            lblSSS.setText("0.00");
-            lblPhilHealth.setText("0.00");
-            lblPagIbig.setText("0.00");
-            lblTax.setText("0.00");
-            lblNetPay.setText("0.00");
-        }else{
-            lblID4.setText(tempData.get(0).get(0));
-            lblMyName6.setText(tempData.get(0).get(1));
-            lblPayrollPeriod.setText(tempData.get(0).get(2));
-            lblPositon.setText(tempData.get(0).get(3));
-            lblGross.setText(tempData.get(0).get(4));
-            lblBenefits.setText(tempData.get(0).get(5));
-            lblOvertime.setText(tempData.get(0).get(6));
-            lblUndertime.setText(tempData.get(0).get(7));
-            lblSSS.setText(tempData.get(0).get(8));
-            lblPhilHealth.setText(tempData.get(0).get(9));
-            lblPagIbig.setText(tempData.get(0).get(10));
-            lblTax.setText(tempData.get(0).get(11));
-            lblNetPay.setText(tempData.get(0).get(12));
-        }
-        tempData.clear();
+//        ArrayList<ArrayList<String>> tempData = employee.viewPersonalPayslip(dateFrom3.getDate(), dateTo3.getDate(), lblIDSidebar.getText());
+//        if(tempData.isEmpty()){
+//            JOptionPane.showMessageDialog(null, "No Payroll Found!");
+//            lblID4.setText("N/A");
+//            lblMyName6.setText("N/A");
+//            lblPayrollPeriod.setText("N/A");
+//            lblPositon.setText("N/A");
+//            lblGross.setText("0.00");
+//            lblBenefits.setText("0.00");
+//            lblOvertime.setText("0.00");
+//            lblUndertime.setText("0.00");
+//            lblSSS.setText("0.00");
+//            lblPhilHealth.setText("0.00");
+//            lblPagIbig.setText("0.00");
+//            lblTax.setText("0.00");
+//            lblNetPay.setText("0.00");
+//        }else{
+//            lblID4.setText(tempData.get(0).get(0));
+//            lblMyName6.setText(tempData.get(0).get(1));
+//            lblPayrollPeriod.setText(tempData.get(0).get(2));
+//            lblPositon.setText(tempData.get(0).get(3));
+//            lblGross.setText(tempData.get(0).get(4));
+//            lblBenefits.setText(tempData.get(0).get(5));
+//            lblOvertime.setText(tempData.get(0).get(6));
+//            lblUndertime.setText(tempData.get(0).get(7));
+//            lblSSS.setText(tempData.get(0).get(8));
+//            lblPhilHealth.setText(tempData.get(0).get(9));
+//            lblPagIbig.setText(tempData.get(0).get(10));
+//            lblTax.setText(tempData.get(0).get(11));
+//            lblNetPay.setText(tempData.get(0).get(12));
+//        }
+//        tempData.clear();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
@@ -2820,20 +2813,18 @@ public class SupervisorGUI extends javax.swing.JFrame {
 
     private void btnLeaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveActionPerformed
         // TODO add your handling code here:
-         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(4);
 
-        // Set employee details in the Leave Ledger panel
-        employee.viewPersonalDetails();
+        employee.leaveBalancesInformation();
         lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
         lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
+        lblVLBalance1.setText(employee.accountDetails.getVLBalance());
+        lblSLBalance1.setText(employee.accountDetails.getSLBalance());
 
-        // Update leave balance labels
-        employee.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
-        
-        employee.setTableData(employee.allApprovedPersonalLeaveLedger());
+        employee.setTableData(employee.viewPersonalLeaveLedger());
         employee.setTableSize(7);
         employee.displayDataTable(jTableAllRequest3);
+  
     }//GEN-LAST:event_btnLeaveActionPerformed
 
     private void setClockText(){ //code for realtime date & time updates to the dashboard

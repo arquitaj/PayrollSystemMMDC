@@ -30,7 +30,7 @@ public class Login extends Credentials {
     ArrayList<ArrayList<String>> checkCredentials() {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
-            String sql = "SELECT e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, c.role AS role " +
+            String sql = "SELECT e.employee_id, CONCAT(e.last_name, ', ', e.first_name) AS full_name, c.role AS role " +
                     "FROM employees e " +
                     "JOIN credentials c ON e.employee_id = c.employee_id " +
                     "WHERE c.employee_id = ? AND c.employee_password = ?";

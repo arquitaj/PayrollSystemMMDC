@@ -4,32 +4,19 @@
  */
 package payrollsystem;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import java.time.*;
+import java.util.*;
+import java.util.logging.*;
+import javax.swing.*;
+import javax.swing.table.*;
 
 /**
  *
  * @author Paul
  */
 public class Supervisor extends Employee{
-    private String employeeID;
-    Employee employee = new Employee(this.employeeID);
-    private ArrayList<ArrayList<String>> data = new ArrayList<>();
-    ArrayList<String> list = new ArrayList<>();
-    private String selectedName;
-    private ArrayList <String> fullName = new ArrayList<>();
+    private final String employeeID;
   
     Supervisor(String employeeID){
         this.employeeID = employeeID;
@@ -135,171 +122,114 @@ public class Supervisor extends Employee{
     }
     
      
+     void approvedEmployeeRequest(ArrayList<String> rowData){
+        if(rowData.get(3).equals("Overtime")){
+            try {
+                String sql = "UPDATE overtime_requests orq JOIN request_status rs ON rs.status = ? "
+                        + "SET orq.request_status_id = rs.request_status_id WHERE orq.employee_id = ? "
+                        + "AND orq.overtime_from = ? AND orq.overtime_to = ? ";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setString(1, "Approved");
+                statement.setInt(2, Integer.parseInt(rowData.get(0)));
+                statement.setDate(3, java.sql.Date.valueOf(rowData.get(4)));
+                statement.setDate(4, java.sql.Date.valueOf(rowData.get(5)));
+                int update = statement.executeUpdate();
+                if(update > 0){
+                     JOptionPane.showMessageDialog(null, "Successfuly Approved Overtime Request!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }else{
+            try {
+                String updateBalanceSql = "UPDATE leave_balances lb JOIN leave_type lt ON lb.leave_type_id = lt.leave_type_id "
+                                           + "SET lb.balance = lb.balance - ? WHERE lb.employee_id = ? AND lt.leave_type = ? AND lb.balance >= ?";
 
-   //Hereunder Codes are not yet modified  
+                String updateStatusSql = "UPDATE leave_ledger lr JOIN request_status rs ON rs.status = ? JOIN leave_type lt ON lr.leave_type_id = lt.leave_type_id " +
+                                        "SET lr.request_status_id = rs.request_status_id WHERE lr.employee_id = ? AND lt.leave_type = ? AND lr.leave_from = ? " +
+                                        "AND lr.leave_to = ? AND lr.request_status_id != rs.request_status_id";
+
+                PreparedStatement balanceStmt = conn.prepareStatement(updateBalanceSql);
+                balanceStmt.setDouble(1, Double.parseDouble(rowData.get(6)));
+                balanceStmt.setInt(2, Integer.parseInt(rowData.get(0)));
+                balanceStmt.setString(3, rowData.get(3));
+                balanceStmt.setDouble(4, Double.parseDouble(rowData.get(6)));
+
+                 int rowsAffected = balanceStmt.executeUpdate();
+                 if (rowsAffected > 0) {
+                        PreparedStatement statusStmt = conn.prepareStatement(updateStatusSql);
+                        statusStmt.setString(1, "Approved");
+                        statusStmt.setInt(2, Integer.parseInt(rowData.get(0)));
+                        statusStmt.setString(3, rowData.get(3));
+                        statusStmt.setDate(4, java.sql.Date.valueOf(rowData.get(4)));
+                        statusStmt.setDate(5, java.sql.Date.valueOf(rowData.get(5)));
+
+                        statusStmt.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Successfuly Approved Leave Request!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Insufficient leave balance!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+     }
      
-    void updateEmployeeRequestRecord(String command){
-        employee.retrivedDetails();
-        for(int i=1; i<employee.getDataList().size(); i++){
-            if(employee.getDataList().get(i).get(0).equals(list.get(0)) && employee.getDataList().get(i).get(1).equals(list.get(1)) &&
-               employee.getDataList().get(i).get(2).equals(list.get(2)) && employee.getDataList().get(i).get(3).equals(list.get(3)) &&
-               employee.getDataList().get(i).get(4).equals(list.get(4)) && employee.getDataList().get(i).get(5).equals(list.get(5)) &&
-               employee.getDataList().get(i).get(6).equals(list.get(6))){
-                  if(command.equals("APPROVED")){
-                        employee.getDataList().get(i).set(8, "Approved");
-                        JOptionPane.showMessageDialog(null, "Successfuly Approved Request!");
-                  } else{
-                        employee.getDataList().get(i).set(8, "Disapproved");
-                        JOptionPane.showMessageDialog(null, "Successfuly Disapproved Request!");
-                  }
-            return;
-            }
-        }
-    }
-    
-    void updateAttendanceForRequest(String request){
-        ArrayList<String> row = new ArrayList<>();
-        employee.getDataList().clear();
-        getData().clear();
-        
-        employee.setFilePath("CSVFiles//AttendanceDatabase.csv");
-        
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate dateFrom = LocalDate.parse(list.get(4), dateFormat);  // Parse the input date strings into LocalDate objects
-        LocalDate dateTo = LocalDate.parse(list.get(5), dateFormat);    
-        List<LocalDate> dates = new ArrayList<>();
-        
-        for (LocalDate date = dateFrom; !date.isAfter(dateTo); date = date.plusDays(1)) {
-            dates.add(date);
-        }
-        if(request.equals("Leave")){
-            for (LocalDate date : dates) {
-                employee.retrivedDetails();
-                DayOfWeek dayOfWeek = date.getDayOfWeek();
-                if(!dayOfWeek.toString().equals("SUNDAY")){
-                      String [] newAttendanceForLeave = {list.get(0),list.get(1),dateFormat.format(date)," "," ","No","No","With Approved Leave"};
-                      row.addAll(Arrays.asList(newAttendanceForLeave));
-                      employee.getDataList().add(row);
-                      employee.addDetailsCSV();
-                      row.clear();
-                      employee.getDataList().clear();
-                }
-                employee.getDataList().clear();
-            }
-        }else if(request.equals("Overtime")){
-            employee.retrivedDetails();
-            for(LocalDate date : dates){
-                boolean isFound = false;
-                if(!date.getDayOfWeek().toString().equals("SUNDAY")){
-                    for(int i=1; i<employee.getDataList().size(); i++){
-                        if(list.get(0).equals(employee.getDataList().get(i).get(0)) && dateFormat.format(date).equals(employee.getDataList().get(i).get(2))){
-                            employee.getDataList().get(i).set(7, "With Approved Overtime");
-                            isFound = true;
-                            break;
-                        }
-                    }
-                    if(!isFound){
-                         String [] newOvertime = {list.get(0),list.get(1),dateFormat.format(date)," "," ","No","No","With Approved Overtime"};
-                         row.addAll(Arrays.asList(newOvertime));
-                         employee.getDataList().add(row);
-                         row.clear();
-                    }      
-                }
-            }
-             employee.addDetailsCSV();
-        }
-        employee.getDataList().clear();
-    }
-    
-    void forwardDTR(ArrayList<ArrayList <String>> tempData){
-        employee.getDataList().clear();
-        employee.setFilePath("CSVFiles//AttendanceDatabase.csv");
-        employee.retrivedDetails();
-        for(int i=0; i<tempData.size(); i++){
-            for(int j=0; j<employee.getDataList().size(); j++){
-                if(tempData.get(i).get(0).equals(employee.getDataList().get(j).get(0)) && tempData.get(i).get(1).equals(employee.getDataList().get(j).get(1)) &&
-                        tempData.get(i).get(2).equals(employee.getDataList().get(j).get(2)) && tempData.get(i).get(3).equals(employee.getDataList().get(j).get(3)) &&
-                        tempData.get(i).get(4).equals(employee.getDataList().get(j).get(4))){
-                    employee.getDataList().get(j).set(6, "Yes");
-                    break;
-                }
-            }
-        }
-        employee.addDetailsCSV();
-    }
-    
-    void approvedEmployeeRequest(String command){
-        employee.getDataList().clear();
-        switch (list.get(3)){
-            case "Overtime":
-                employee.setFilePath("CSVFiles//OvertimeRequest.csv");
-                updateEmployeeRequestRecord(command);
-                employee.addDetailsCSV();
-                updateAttendanceForRequest("Overtime");
-                employee.getDataList().clear();
-                list.clear();
-                break;
-            default:
-                int numberOfLeave = Integer.parseInt(String.valueOf(list.get(6)));
-                int leaveBalance = 0;
-                boolean canLeave = false;
-                if(command.equals("APPROVED")){
-                    employee.setFilePath("CSVFiles//LeaveBalances.csv");
-                    employee.retrivedDetails();
-                    for(int i=1; i<employee.getDataList().size(); i++){
-                        if(list.get(0).equals(employee.getDataList().get(i).get(0))){
-                            if(list.get(3).equals("Vacation Leave")){
-                                leaveBalance = Integer.parseInt(employee.getDataList().get(i).get(1));
-                                if(leaveBalance >= numberOfLeave){
-                                    employee.getDataList().get(i).set(1, String.valueOf(leaveBalance-numberOfLeave));
-                                    employee.addDetailsCSV();
-                                    canLeave = true;
-                                    updateAttendanceForRequest("Leave");
-                                }else{
-                                    JOptionPane.showMessageDialog(null, "Insufficient Leave Balance!" );
-                                }
-                                break; 
-                            }else{
-                                leaveBalance = Integer.parseInt(employee.getDataList().get(i).get(2));
-                                if(leaveBalance >= numberOfLeave){
-                                    employee.getDataList().get(i).set(2, String.valueOf(leaveBalance-numberOfLeave));
-                                    employee.addDetailsCSV();
-                                    canLeave = true;
-                                    updateAttendanceForRequest("Leave");
-                                 }else{
-                                    JOptionPane.showMessageDialog(null, "Insufficient Leave Balance!" );
-                                }
-                                break;
-                            }
-                        }
-                    } 
-                }else{
-                    canLeave = true;
-                }
-                
-                if(canLeave){
-                    employee.setFilePath("CSVFiles//LeaveRequests.csv");
-                    updateEmployeeRequestRecord(command);
-                    employee.addDetailsCSV();
-                    employee.getDataList().clear();
-                    list.clear();
-                }
-                break;
-        }
-    }
-    
 
-   ArrayList<ArrayList<String>> getData(){
-       return this.data;
-   }
-   void setData(){
-       this.data.clear();
-   }
-
+      void disapprovedEmployeeRequest(ArrayList<String> rowData){
+          String sql;
+        try {
+            
+            if(rowData.get(3).equals("Overtime")){
+                sql = "UPDATE overtime_requests eo JOIN request_status rs ON rs.status = ? " +
+                        "SET eo.request_status_id = rs.request_status_id WHERE eo.employee_id = ? "+
+                        "AND eo.overtime_from = ? AND eo.overtime_to = ? AND eo.request_status_id != rs.request_status_id";
+            }else{
+               
+                sql = "UPDATE leave_ledger ll JOIN request_status rs ON rs.status = ? " +
+                        "SET ll.request_status_id = rs.request_status_id WHERE ll.employee_id = ? "+
+                        "AND ll.leave_from = ? AND ll.leave_to = ? AND ll.request_status_id != rs.request_status_id";
+            }
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, "Disapproved");
+            statement.setInt(2, Integer.parseInt(rowData.get(0)));
+            statement.setDate(3, java.sql.Date.valueOf(rowData.get(4)));
+            statement.setDate(4, java.sql.Date.valueOf(rowData.get(5)));
+            int update = statement.executeUpdate();
+            if(update > 0){
+                JOptionPane.showMessageDialog(null, "Successfuly Disapproved Request!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+      
+    void forwardDTR(ArrayList<ArrayList <String>> rowData){
+        int update = 0;
+        try {
+            String sql = "UPDATE attendance_records ar JOIN request_status rs ON rs.status = ? SET ar.request_status_id = rs.request_status_id " +
+                    "WHERE ar.request_status_id != rs.request_status_id AND ar.attendance_date = ? AND ar.employee_id = ?";
+            
+            PreparedStatement statement = conn.prepareStatement(sql);
+            for(int i=0; i<rowData.size(); i++){
+                statement.setString(1, "Approved");
+                statement.setDate(2, java.sql.Date.valueOf(rowData.get(i).get(2)));
+                statement.setInt(3, Integer.parseInt(rowData.get(i).get(0)));
+                update = statement.executeUpdate();
+            }
+            if(update>0){
+                JOptionPane.showMessageDialog(null, "Successfuly Forwarded DTR to Payroll Section!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+      
    void setSelectedName(String selectedName){
-       this.selectedName = selectedName;
+       
    }
-   String getSelectedName(){
-       return this.selectedName;
-   }
+
 }

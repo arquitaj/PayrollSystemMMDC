@@ -4,17 +4,10 @@
  */
 package payrollsystem;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.*;
+import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
@@ -24,15 +17,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Paul
  */
 public class PayrollStaffGUI extends javax.swing.JFrame {
-    String id, name, role;
     PayrollStaff payrollStaff;
     Employee employee;
-    ArrayList<String> data = new ArrayList<>(); //To hold as storage
-    SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("MM/dd/yyyy");
-    
+
     public PayrollStaffGUI(ArrayList<ArrayList<String>> userDetails) {
         initComponents();
-        lblIDSidebar.setText(userDetails.get(0).get(0));
+       lblIDSidebar.setText(userDetails.get(0).get(0));
         lblNameSidebar.setText(userDetails.get(0).get(1));
         
         payrollStaff = new PayrollStaff(userDetails.get(0).get(0));
@@ -70,7 +60,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         jSeparator14 = new javax.swing.JSeparator();
         jSeparator15 = new javax.swing.JSeparator();
         btnLeaveLedger2 = new javax.swing.JButton();
-        btnLeaveLedger3 = new javax.swing.JButton();
+        btnAllEmployeeDTR = new javax.swing.JButton();
         lblNameSidebar = new javax.swing.JLabel();
         lblName5 = new javax.swing.JLabel();
         lblIDSidebar = new javax.swing.JLabel();
@@ -343,10 +333,10 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
             }
         });
 
-        btnLeaveLedger3.setText(">>EMPLOYEE DTR");
-        btnLeaveLedger3.addActionListener(new java.awt.event.ActionListener() {
+        btnAllEmployeeDTR.setText(">>EMPLOYEE DTR");
+        btnAllEmployeeDTR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLeaveLedger3ActionPerformed(evt);
+                btnAllEmployeeDTRActionPerformed(evt);
             }
         });
 
@@ -428,28 +418,25 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                             .addGroup(sideBarPanelLayout.createSequentialGroup()
                                 .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnLeaveLedger2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnLeaveLedger3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnAllEmployeeDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createSequentialGroup()
-                .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sideBarPanelLayout.createSequentialGroup()
+                .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(sideBarPanelLayout.createSequentialGroup()
-                        .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(sideBarPanelLayout.createSequentialGroup()
-                                .addGap(66, 66, 66)
-                                .addComponent(lblName5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblIDSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnPersonalDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnRequestPort, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnLeaveLedger, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnLeaveLedger1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(66, 66, 66)
+                        .addComponent(lblName5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblIDSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnPersonalDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRequestPort, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLeaveLedger, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLeaveLedger1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblNameSidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(sideBarPanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -485,7 +472,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnLeaveLedger2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLeaveLedger3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAllEmployeeDTR, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
                 .addComponent(jSeparator14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1025,9 +1012,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         tabbedPersonalDetailsLayout.setHorizontalGroup(
             tabbedPersonalDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabbedPersonalDetailsLayout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
+                .addContainerGap(135, Short.MAX_VALUE)
                 .addComponent(panelPersonalDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addGap(28, 28, 28)
                 .addComponent(panelPersonalDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58)
                 .addComponent(panelPersonalDetails2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1038,14 +1025,14 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         tabbedPersonalDetailsLayout.setVerticalGroup(
             tabbedPersonalDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabbedPersonalDetailsLayout.createSequentialGroup()
-                .addGap(152, 152, 152)
+                .addGap(68, 68, 68)
                 .addGroup(tabbedPersonalDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabbedPersonalDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(panelPersonalDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(panelPersonalDetails2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(panelPersonalDetails3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelPersonalDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("Personal Details", tabbedPersonalDetails);
@@ -1296,10 +1283,13 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                             .addComponent(lblSL))))
                 .addGap(15, 15, 15)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(panelLeaveRequestDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboLeaveType, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDaysNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
+                .addGroup(panelLeaveRequestDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLeaveRequestDetailsLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(txtDaysNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLeaveRequestDetailsLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(comboLeaveType, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblMyName1)
                 .addGap(9, 9, 9)
@@ -2277,7 +2267,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         panelAllRequest2.setBackground(new java.awt.Color(255, 255, 255));
 
         lblAllRequest2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblAllRequest2.setText("ALL REQUEST");
+        lblAllRequest2.setText("DAILY TIME RECORDS");
 
         jTableDTR.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTableDTR.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -2318,7 +2308,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
             .addGroup(panelAllRequest2Layout.createSequentialGroup()
                 .addGap(486, 486, 486)
-                .addComponent(lblAllRequest2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblAllRequest2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAllRequest2Layout.setVerticalGroup(
@@ -2385,7 +2375,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -2394,97 +2386,78 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-//        try {
-//            if(payrollStaff.accountDetails.userLogin(payrollStaff.accountDetails.getEmployeeID())){
-//                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         employee.userLogout();
         
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-//         try {
-//            if(payrollStaff.accountDetails.userLogout(payrollStaff.accountDetails.getEmployeeID())){
-//                JOptionPane.showMessageDialog(null, "Your Time-in is being recorded!");
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         employee.userLogin();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLeaveLedger2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger2ActionPerformed
         // TODO add your handling code here:
-        jDateFrom.setDate(null);
-        jDateTo.setDate(null);
-        mainTabbed.setSelectedIndex(6);
-        btnReleased.setEnabled(true);
-        String payrollRange = payrollStaff.computePayroll();
-        System.out.println("Somnething");
-        payrollStaff.setTableData(payrollStaff.getDataForPayrollTable());
-        payrollStaff.setTableSize(14);
-        payrollStaff.displayDataTable(jTablePayroll);
-        lblPayrollPeriod.setText("Payroll from "+payrollRange);
+//        jDateFrom.setDate(null);
+//        jDateTo.setDate(null);
+//        mainTabbed.setSelectedIndex(6);
+//        btnReleased.setEnabled(true);
+//        String payrollRange = payrollStaff.computePayroll();
+//        System.out.println("Somnething");
+//        payrollStaff.setTableData(payrollStaff.getDataForPayrollTable());
+//        payrollStaff.setTableSize(14);
+//        payrollStaff.displayDataTable(jTablePayroll);
+//        lblPayrollPeriod.setText("Payroll from "+payrollRange);
     }//GEN-LAST:event_btnLeaveLedger2ActionPerformed
 
-    private void btnLeaveLedger3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger3ActionPerformed
+    private void btnAllEmployeeDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllEmployeeDTRActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(7);
-        comboEmployeeName.removeAllItems();
-        comboEmployeeName.addItem("");
-        String employeeName = payrollStaff.accountDetails.getLastName()+", "+payrollStaff.accountDetails.getFirstName();
-        payrollStaff.getEmployeeNames();
-          for (ArrayList<String> row : payrollStaff.getNewData()) {
-            for (String item : row) {
-                if(!item.equals(payrollStaff.accountDetails.getLastName()+", "+payrollStaff.accountDetails.getFirstName()))
-                    comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
-            }
+      
+        if(comboEmployeeName.getItemCount() == 0){
+                payrollStaff.employeeNames().forEach(row -> {
+                   for (String item : row) {
+                       comboEmployeeName.addItem(item);  // Add each element of the 2D ArrayList
+                   }
+                });
            }
-          System.out.println("Name :"+employeeName);
-          payrollStaff.getNewData().clear();
-    }//GEN-LAST:event_btnLeaveLedger3ActionPerformed
+        payrollStaff.setTableData(payrollStaff.getDataForDTRTable(comboEmployeeName.getSelectedItem().toString()));
+        payrollStaff.setTableSize(6);
+        payrollStaff.displayDataTable(jTableDTR);
+        payrollStaff.setTableData();
+    }//GEN-LAST:event_btnAllEmployeeDTRActionPerformed
 
     private void btnReleasedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReleasedActionPerformed
         // TODO add your handling code here:
-        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-        int[] row = jTablePayroll.getSelectedRows();
-        DefaultTableModel model = (DefaultTableModel)jTablePayroll.getModel();
-        for(int r : row){
-            ArrayList <String> rowData = new ArrayList<>();
-            rowData.add(model.getValueAt(r, 0).toString());  //ID
-            rowData.add(model.getValueAt(r, 1).toString());  //NAME
-            rowData.add(model.getValueAt(r, 2).toString());  //PAYROLL PERIOD
-            rowData.add(model.getValueAt(r, 13).toString()); //STATUS
-            tempData.add(rowData);
-        }
-        if(jTablePayroll.getSelectedRow() != -1){
-            payrollStaff.releasedPayroll(tempData);
-            String payrollRange = payrollStaff.computePayroll();
-            payrollStaff.setTableData(payrollStaff.getDataForPayrollTable());
-            payrollStaff.setTableSize(14);
-            payrollStaff.displayDataTable(jTablePayroll);
-            lblPayrollPeriod.setText("Payroll from "+payrollRange);
-            payrollStaff.setTableData();
-            JOptionPane.showMessageDialog(null, "Successfuly Released Payroll!");
-        }else{
-            JOptionPane.showMessageDialog(null, "Select Payroll First!");
-        }
+//        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
+//        int[] row = jTablePayroll.getSelectedRows();
+//        DefaultTableModel model = (DefaultTableModel)jTablePayroll.getModel();
+//        for(int r : row){
+//            ArrayList <String> rowData = new ArrayList<>();
+//            rowData.add(model.getValueAt(r, 0).toString());  //ID
+//            rowData.add(model.getValueAt(r, 1).toString());  //NAME
+//            rowData.add(model.getValueAt(r, 2).toString());  //PAYROLL PERIOD
+//            rowData.add(model.getValueAt(r, 13).toString()); //STATUS
+//            tempData.add(rowData);
+//        }
+//        if(jTablePayroll.getSelectedRow() != -1){
+//            payrollStaff.releasedPayroll(tempData);
+//            String payrollRange = payrollStaff.computePayroll();
+//            payrollStaff.setTableData(payrollStaff.getDataForPayrollTable());
+//            payrollStaff.setTableSize(14);
+//            payrollStaff.displayDataTable(jTablePayroll);
+//            lblPayrollPeriod.setText("Payroll from "+payrollRange);
+//            payrollStaff.setTableData();
+//            JOptionPane.showMessageDialog(null, "Successfuly Released Payroll!");
+//        }else{
+//            JOptionPane.showMessageDialog(null, "Select Payroll First!");
+//        }
     }//GEN-LAST:event_btnReleasedActionPerformed
 
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
         // TODO add your handling code here:
-        String selectedItem;
-        if(comboEmployeeName.getSelectedItem() == null)
-            selectedItem = "";
-        else
-            selectedItem = comboEmployeeName.getSelectedItem().toString();
-        
-        payrollStaff.setSelectedName(selectedItem);
-        payrollStaff.setTableData(payrollStaff.getDataForDTRTable());
+        System.out.println("I am click!");
+        payrollStaff.setSelectedName(comboEmployeeName.getSelectedItem().toString());
+        payrollStaff.setTableData(payrollStaff.getDataForDTRTable(comboEmployeeName.getSelectedItem().toString()));
         payrollStaff.setTableSize(6);
         payrollStaff.displayDataTable(jTableDTR);
         payrollStaff.setTableData();
@@ -2493,7 +2466,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         btnReleased.setEnabled(false);
-        payrollStaff.setTableData(payrollStaff.getApprovedDataForPayrollTable(jDateFrom.getDate(), jDateTo.getDate()));
         payrollStaff.setTableSize(14);
         payrollStaff.displayDataTable(jTablePayroll);
         String startFormatted = new SimpleDateFormat("MMM d").format(jDateFrom.getDate());
@@ -2545,7 +2517,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void btnDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTRActionPerformed
         // TODO add your handling code here:
-        mainTabbed.setSelectedIndex(3);
+       mainTabbed.setSelectedIndex(3);
 
         // Set employee details in the DTR panel
         employee.viewPersonalDetails();
@@ -2574,31 +2546,27 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         dateFrom2.setDate(startCal.getTime());
         dateTo2.setDate(endCal.getTime());
 
+       // Set the date fields to show the current period
+        dateFrom2.setDate(startCal.getTime());
+        dateTo2.setDate(endCal.getTime());
+
         // Load and display the attendance records for the current period
-        try {
-            // Load and display the attendance records for the current period
-         payrollStaff.setTableData(payrollStaff.getDataAllDTRFromDatabase(payrollStaff.accountDetails.getEmployeeID(), startCal.getTime(), endCal.getTime()));
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        payrollStaff.setTableSize(5);
-        payrollStaff.displayDataTable(jTableAllDTR);
+        employee.setTableData(employee.getDTR(startCal.getTime(), endCal.getTime()));
+        employee.setTableSize(4);
+        employee.displayDataTable(jTableAllDTR);
     }//GEN-LAST:event_btnDTRActionPerformed
 
     private void btnLeaveLedgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedgerActionPerformed
         // TODO add your handling code here:
-        // Switch to the Leave Ledger tab
-        mainTabbed.setSelectedIndex(4);
+         mainTabbed.setSelectedIndex(4);
 
-        // Set employee details in the Leave Ledger panel
-        employee.viewPersonalDetails();
+        employee.leaveBalancesInformation();
         lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
         lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
+        lblVLBalance1.setText(employee.accountDetails.getVLBalance());
+        lblSLBalance1.setText(employee.accountDetails.getSLBalance());
 
-        // Update leave balance labels
-        employee.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
-
-        employee.setTableData(employee.allApprovedPersonalLeaveLedger());
+        employee.setTableData(employee.viewPersonalLeaveLedger());
         employee.setTableSize(7);
         employee.displayDataTable(jTableAllRequest3);
     }//GEN-LAST:event_btnLeaveLedgerActionPerformed
@@ -2650,8 +2618,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
             }
         }
         if(jTableAllDTR.getSelectedRow() != -1 && !tempData.isEmpty()){
-            //payrollStaff.forwardDTRToSupervisor(tempData);
-            payrollStaff.setTableData(payrollStaff.getDataAllDTR(dateFrom2.getDate(), dateTo2.getDate()));
             payrollStaff.setTableSize(5);
             payrollStaff.displayDataTable(jTableAllDTR);
             JOptionPane.showMessageDialog(null, "Successfuly Submitted the "+tempData.size()+" DTR to Your Supervisor!");
@@ -2662,76 +2628,75 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
-
-        payrollStaff.setTableData(payrollStaff.getDataAllDTR(dateFrom2.getDate(), dateTo2.getDate()));
-        payrollStaff.setTableSize(5);
-        payrollStaff.displayDataTable(jTableAllDTR);
+        employee.setTableData(employee.getDTR(dateFrom2.getDate(), dateTo2.getDate()));
+        employee.setTableSize(4);
+        employee.displayDataTable(jTableAllDTR);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
-        ArrayList<ArrayList<String>> tempData = payrollStaff.viewPersonalPayslip(dateFrom3.getDate(), dateTo3.getDate(), lblIDSidebar.getText());
-        if(tempData.isEmpty()){
-            JOptionPane.showMessageDialog(null, "No Payroll Found!");
-            lblID4.setText("N/A");
-            lblMyName6.setText("N/A");
-            lblPayrollPeriod.setText("N/A");
-            lblPositon.setText("N/A");
-            lblGross.setText("0.00");
-            lblBenefits.setText("0.00");
-            lblOvertime.setText("0.00");
-            lblUndertime.setText("0.00");
-            lblSSS.setText("0.00");
-            lblPhilHealth.setText("0.00");
-            lblPagIbig.setText("0.00");
-            lblTax.setText("0.00");
-            lblNetPay.setText("0.00");
-        }else{
-            lblID4.setText(tempData.get(0).get(0));
-            lblMyName6.setText(tempData.get(0).get(1));
-            lblPayrollPeriod.setText(tempData.get(0).get(2));
-            lblPositon.setText(tempData.get(0).get(3));
-            lblGross.setText(tempData.get(0).get(4));
-            lblBenefits.setText(tempData.get(0).get(5));
-            lblOvertime.setText(tempData.get(0).get(6));
-            lblUndertime.setText(tempData.get(0).get(7));
-            lblSSS.setText(tempData.get(0).get(8));
-            lblPhilHealth.setText(tempData.get(0).get(9));
-            lblPagIbig.setText(tempData.get(0).get(10));
-            lblTax.setText(tempData.get(0).get(11));
-            lblNetPay.setText(tempData.get(0).get(12));
-        }
-        tempData.clear();
+//        ArrayList<ArrayList<String>> tempData = payrollStaff.viewPersonalPayslip(dateFrom3.getDate(), dateTo3.getDate(), lblIDSidebar.getText());
+//        if(tempData.isEmpty()){
+//            JOptionPane.showMessageDialog(null, "No Payroll Found!");
+//            lblID4.setText("N/A");
+//            lblMyName6.setText("N/A");
+//            lblPayrollPeriod.setText("N/A");
+//            lblPositon.setText("N/A");
+//            lblGross.setText("0.00");
+//            lblBenefits.setText("0.00");
+//            lblOvertime.setText("0.00");
+//            lblUndertime.setText("0.00");
+//            lblSSS.setText("0.00");
+//            lblPhilHealth.setText("0.00");
+//            lblPagIbig.setText("0.00");
+//            lblTax.setText("0.00");
+//            lblNetPay.setText("0.00");
+//        }else{
+//            lblID4.setText(tempData.get(0).get(0));
+//            lblMyName6.setText(tempData.get(0).get(1));
+//            lblPayrollPeriod.setText(tempData.get(0).get(2));
+//            lblPositon.setText(tempData.get(0).get(3));
+//            lblGross.setText(tempData.get(0).get(4));
+//            lblBenefits.setText(tempData.get(0).get(5));
+//            lblOvertime.setText(tempData.get(0).get(6));
+//            lblUndertime.setText(tempData.get(0).get(7));
+//            lblSSS.setText(tempData.get(0).get(8));
+//            lblPhilHealth.setText(tempData.get(0).get(9));
+//            lblPagIbig.setText(tempData.get(0).get(10));
+//            lblTax.setText(tempData.get(0).get(11));
+//            lblNetPay.setText(tempData.get(0).get(12));
+//        }
+//        tempData.clear();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void comboTypeRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTypeRequestActionPerformed
         // TODO add your handling code here:
-        String selectedItem = comboTypeRequest.getSelectedItem().toString();
+         String selectedItem = comboTypeRequest.getSelectedItem().toString();
 
         if(selectedItem.equals("All Request")) {
             tabbedInsideRequest.setSelectedIndex(0);
             // Display all requests in the table
-            payrollStaff.setTableData(payrollStaff.getDataAllRequests());
-            payrollStaff.setTableSize(7);
-            payrollStaff.displayDataTable(jTableAllRequest);
-
+            employee.setTableData(employee.getDataAllRequests());
+            employee.setTableSize(7);
+            employee.displayDataTable(jTableAllRequest);
+            
         } else if(selectedItem.equals("Leave Application")) {
             tabbedInsideRequest.setSelectedIndex(1);
 
-            payrollStaff.leaveBalancesInformation();
-            lblID.setText(String.valueOf(payrollStaff.accountDetails.getEmployeeID()));
-            lblMyName.setText(payrollStaff.accountDetails.getEmployeeCompleteName());
-            lblVLBalance.setText(payrollStaff.getBalanceVL());
-            lblSLBalance.setText(payrollStaff.getBalanceSL());
+            employee.leaveBalancesInformation();
+            lblID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+            lblMyName.setText(employee.accountDetails.getEmployeeCompleteName());
+            lblVLBalance.setText(employee.accountDetails.getVLBalance());
+            lblSLBalance.setText(employee.accountDetails.getSLBalance());
 
         } else {
             tabbedInsideRequest.setSelectedIndex(2);
-            lblID1.setText(String.valueOf(payrollStaff.accountDetails.getEmployeeID()));
-            lblMyName2.setText(payrollStaff.accountDetails.getEmployeeCompleteName());
+            lblID1.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+            lblMyName2.setText(employee.accountDetails.getEmployeeCompleteName());
             // Display all requests in the table
-            payrollStaff.setTableData(payrollStaff.getDataAllRequests());
-            payrollStaff.setTableSize(7);
-            payrollStaff.displayDataTable(jTableAllRequest);
+            employee.setTableData(employee.getDataAllRequests());
+            employee.setTableSize(3);
+            employee.displayDataTable(jTableAllRequest);
         }
     }//GEN-LAST:event_comboTypeRequestActionPerformed
 
@@ -2767,32 +2732,22 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
 
-        if (comboLeaveType.getSelectedIndex() == 0 || dateFrom.getDate() == null || dateTo.getDate() == null || txtReason.getText().trim().isEmpty()) {
+         if (comboLeaveType.getSelectedIndex() == 0 || dateFrom.getDate() == null || dateTo.getDate() == null || txtReason.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide all the necessary details for filing of Leave Request!");
             return;
         }else if(txtDaysNumber.getText().equals("0")){
             JOptionPane.showMessageDialog(null, "Error date of leave!");
             return;
         }
-
-        data.add(String.valueOf(payrollStaff.accountDetails.getEmployeeID()));
-        data.add(payrollStaff.accountDetails.getEmployeeCompleteName());
-        data.add(comboLeaveType.getSelectedItem().toString());
-        data.add(dateFormat.format(dateFrom.getDate()));
-        data.add(dateFormat.format(dateTo.getDate()));
-        data.add(txtDaysNumber.getText());
-        data.add(txtReason.getText());
-
-        if(payrollStaff.fileLeaveRequest(data)){
+        if(employee.fileLeaveRequest(dateFrom.getDate(), dateTo.getDate(), comboLeaveType.getSelectedItem().toString(),
+                txtDaysNumber.getText(), txtReason.getText())){
             txtDaysNumber.setText(null);
             comboLeaveType.setSelectedIndex(0);
             dateFrom.setDate(null);
             dateTo.setDate(null);
             txtReason.setText(null);
-            JOptionPane.showMessageDialog(null, "Successfuly File A Leave Request!");
-        }else{
-            JOptionPane.showMessageDialog(null, "Error Leave Request!");
         }
+        
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void dateFromOvertimePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateFromOvertimePropertyChange
@@ -2822,36 +2777,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_dateToOvertimePropertyChange
 
     private void btnSubmit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmit1ActionPerformed
-//        // TODO add your handling code here:
-//                if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
-//             if(payrollStaff.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
-//                 try {
-//                     Boolean isSuccessfulyAdded = payrollStaff.accountDetails.addOvertimeToDatabase(
-//                             payrollStaff.accountDetails.getEmployeeID(),
-//                             dateFromOvertime.getDate(),
-//                             dateToOvertime.getDate(),
-//                             Integer.parseInt(txtDaysNumber1.getText()),
-//                             txtReasonOvertime.getText() 
-//                        );
-//                     if(isSuccessfulyAdded){
-//                        dateFromOvertime.setDate(null);
-//                        dateToOvertime.setDate(null);
-//                        txtDaysNumber1.setText(null);
-//                        txtReasonOvertime.setText(null);
-//                        payrollStaff.setNumberOfDaysLeave();
-//                        JOptionPane.showMessageDialog(null, "Successfuly File An Overtime Request!");
-//                    }else{
-//                        JOptionPane.showMessageDialog(null, "Error Overtime Request!");
-//                    }
-//                 } catch (SQLException ex) {
-//                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-//                 } catch (ParseException ex) {
-//                     Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-//                 }
-//             } 
-//        } else{
-//           JOptionPane.showMessageDialog(null, "Provide all the neccessary details for overtime!!");
-//        }
+        // TODO add your handling code here:
         if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
              if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
                  Boolean isSuccessfulyAdded = employee.fileOvertimeRequest(
@@ -2939,12 +2865,12 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAllEmployeeDTR;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDTR;
     private javax.swing.JButton btnLeaveLedger;
     private javax.swing.JButton btnLeaveLedger1;
     private javax.swing.JButton btnLeaveLedger2;
-    private javax.swing.JButton btnLeaveLedger3;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPersonalDetails;

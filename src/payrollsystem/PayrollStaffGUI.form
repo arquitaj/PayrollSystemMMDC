@@ -28,7 +28,10 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane7" alignment="0" pref="860" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jScrollPane7" min="-2" pref="870" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -153,7 +156,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="btnLeaveLedger2" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
-                                              <Component id="btnLeaveLedger3" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                                              <Component id="btnAllEmployeeDTR" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
@@ -162,30 +165,25 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-                                          <Component id="lblName5" min="-2" pref="31" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="lblIDSidebar" min="-2" pref="59" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                          <Component id="btnPersonalDetails" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
-                                          <Component id="btnRequestPort" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
-                                          <Component id="btnDTR" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
-                                          <Component id="btnLeaveLedger" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
-                                          <Component id="btnLeaveLedger1" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace pref="10" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                                  <Component id="lblName5" min="-2" pref="31" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblIDSidebar" min="-2" pref="59" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="lblNameSidebar" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="btnPersonalDetails" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                                  <Component id="btnRequestPort" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                                  <Component id="btnDTR" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                                  <Component id="btnLeaveLedger" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                                  <Component id="btnLeaveLedger1" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="lblNameSidebar" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -228,7 +226,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnLeaveLedger2" min="-2" pref="36" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnLeaveLedger3" min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="btnAllEmployeeDTR" min="-2" pref="36" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                           <Component id="jSeparator14" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -336,12 +334,12 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLeaveLedger2ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnLeaveLedger3">
+                <Component class="javax.swing.JButton" name="btnAllEmployeeDTR">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&gt;&gt;EMPLOYEE DTR"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLeaveLedger3ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAllEmployeeDTRActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblNameSidebar">
@@ -482,9 +480,9 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="93" max="32767" attributes="0"/>
+                              <EmptySpace pref="135" max="32767" attributes="0"/>
                               <Component id="panelPersonalDetails1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                               <Component id="panelPersonalDetails" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                               <Component id="panelPersonalDetails2" min="-2" max="-2" attributes="0"/>
@@ -497,7 +495,7 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="panelPersonalDetails" alignment="0" max="32767" attributes="0"/>
@@ -506,7 +504,7 @@
                                   </Group>
                                   <Component id="panelPersonalDetails1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="124" max="32767" attributes="0"/>
+                              <EmptySpace pref="208" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1729,10 +1727,15 @@
                                           </Group>
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                           <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="comboLeaveType" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
-                                              <Component id="txtDaysNumber" alignment="0" pref="58" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                                                  <Component id="txtDaysNumber" min="-2" pref="58" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="comboLeaveType" min="-2" pref="66" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="lblMyName1" min="-2" max="-2" attributes="0"/>
@@ -3876,7 +3879,7 @@
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="486" max="-2" attributes="0"/>
-                                          <Component id="lblAllRequest2" min="-2" pref="128" max="-2" attributes="0"/>
+                                          <Component id="lblAllRequest2" min="-2" pref="209" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -3901,7 +3904,7 @@
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                       <Font name="Segoe UI" size="18" style="1"/>
                                     </Property>
-                                    <Property name="text" type="java.lang.String" value="ALL REQUEST"/>
+                                    <Property name="text" type="java.lang.String" value="DAILY TIME RECORDS"/>
                                   </Properties>
                                 </Component>
                                 <Container class="javax.swing.JScrollPane" name="jScrollPane6">

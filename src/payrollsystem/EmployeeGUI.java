@@ -2165,15 +2165,13 @@ public class EmployeeGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Switch to the Leave Ledger tab
         mainTabbed.setSelectedIndex(4);
-
-        // Set employee details in the Leave Ledger panel
-        employee.viewPersonalDetails();
+    
+        employee.leaveBalancesInformation();
         lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
         lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
+        lblVLBalance1.setText(employee.accountDetails.getVLBalance());
+        lblSLBalance1.setText(employee.accountDetails.getSLBalance());
 
-        // Update leave balance labels
-        employee.updateLeaveBalanceLabels(lblVLBalance1, lblSLBalance1);
-        
         employee.setTableData(employee.viewPersonalLeaveLedger());
         employee.setTableSize(7);
         employee.displayDataTable(jTableAllRequest3);
@@ -2187,38 +2185,38 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
-        ArrayList<ArrayList<String>> tempData = employee.viewPersonalPayslip(dateFrom3.getDate(), dateTo3.getDate(), lblIDSidebar.getText());
-        if(tempData.isEmpty()){
-            JOptionPane.showMessageDialog(null, "No Payroll Found!");
-            lblID4.setText("N/A");
-            lblMyName6.setText("N/A");
-            lblPayrollPeriod.setText("N/A");
-            lblPositon.setText("N/A");
-            lblGross.setText("0.00");
-            lblBenefits.setText("0.00");
-            lblOvertime.setText("0.00");
-            lblUndertime.setText("0.00");
-            lblSSS.setText("0.00");
-            lblPhilHealth.setText("0.00");
-            lblPagIbig.setText("0.00");
-            lblTax.setText("0.00");
-            lblNetPay.setText("0.00");
-        }else{
-            lblID4.setText(tempData.get(0).get(0));
-            lblMyName6.setText(tempData.get(0).get(1));
-            lblPayrollPeriod.setText(tempData.get(0).get(2));
-            lblPositon.setText(tempData.get(0).get(3));
-            lblGross.setText(tempData.get(0).get(4));
-            lblBenefits.setText(tempData.get(0).get(5));
-            lblOvertime.setText(tempData.get(0).get(6));
-            lblUndertime.setText(tempData.get(0).get(7));
-            lblSSS.setText(tempData.get(0).get(8));
-            lblPhilHealth.setText(tempData.get(0).get(9));
-            lblPagIbig.setText(tempData.get(0).get(10));
-            lblTax.setText(tempData.get(0).get(11));
-            lblNetPay.setText(tempData.get(0).get(12));
-        }
-        tempData.clear();
+//        ArrayList<ArrayList<String>> tempData = employee.viewPersonalPayslip(dateFrom3.getDate(), dateTo3.getDate(), lblIDSidebar.getText());
+//        if(tempData.isEmpty()){
+//            JOptionPane.showMessageDialog(null, "No Payroll Found!");
+//            lblID4.setText("N/A");
+//            lblMyName6.setText("N/A");
+//            lblPayrollPeriod.setText("N/A");
+//            lblPositon.setText("N/A");
+//            lblGross.setText("0.00");
+//            lblBenefits.setText("0.00");
+//            lblOvertime.setText("0.00");
+//            lblUndertime.setText("0.00");
+//            lblSSS.setText("0.00");
+//            lblPhilHealth.setText("0.00");
+//            lblPagIbig.setText("0.00");
+//            lblTax.setText("0.00");
+//            lblNetPay.setText("0.00");
+//        }else{
+//            lblID4.setText(tempData.get(0).get(0));
+//            lblMyName6.setText(tempData.get(0).get(1));
+//            lblPayrollPeriod.setText(tempData.get(0).get(2));
+//            lblPositon.setText(tempData.get(0).get(3));
+//            lblGross.setText(tempData.get(0).get(4));
+//            lblBenefits.setText(tempData.get(0).get(5));
+//            lblOvertime.setText(tempData.get(0).get(6));
+//            lblUndertime.setText(tempData.get(0).get(7));
+//            lblSSS.setText(tempData.get(0).get(8));
+//            lblPhilHealth.setText(tempData.get(0).get(9));
+//            lblPagIbig.setText(tempData.get(0).get(10));
+//            lblTax.setText(tempData.get(0).get(11));
+//            lblNetPay.setText(tempData.get(0).get(12));
+//        }
+//        tempData.clear();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void txtDaysNumber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDaysNumber1ActionPerformed
@@ -2343,8 +2341,8 @@ public class EmployeeGUI extends javax.swing.JFrame {
             employee.leaveBalancesInformation();
             lblID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
             lblMyName.setText(employee.accountDetails.getEmployeeCompleteName());
-            lblVLBalance.setText(employee.getBalanceVL());
-            lblSLBalance.setText(employee.getBalanceSL());
+            lblVLBalance.setText(employee.accountDetails.getVLBalance());
+            lblSLBalance.setText(employee.accountDetails.getSLBalance());
 
         } else {
             tabbedInsideRequest.setSelectedIndex(2);
