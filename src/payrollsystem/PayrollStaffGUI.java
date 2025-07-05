@@ -2104,11 +2104,11 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NAME", "PAYROLL PERIOD", "POSITION", "GROSS INCOME", "BENEFITS", "OVERTIME", "LATE/UNDERTIME", "SSS CONT.", "PHILHEALTH CONT.", "PAGIBIG CONT.", "TAX CONT.", "NET PAY", "STATUS"
+                "Payslip Number", "Employee ID", "Full Name", "Position", "Period From", "Period To", "Monthly Salary", "Daily Rate", "Days Worked", "Total Overtime", "Gross Income", "Rice Subsidy", "Phone Allowance", "Clothing Allowance", "Total Allowance", "SSS", "Pag-Ibig", "Philhealth", "Withholding Tax", "Take-home Amount"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -2166,7 +2166,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblAllRequest3)
-                                .addGap(0, 889, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jSeparator16)
                             .addComponent(jScrollPane5)))
                     .addGroup(panelAllRequest1Layout.createSequentialGroup()
@@ -2177,7 +2177,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                             .addGroup(panelAllRequest1Layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addComponent(btnReleased, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 581, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelAllRequest1Layout.setVerticalGroup(
@@ -2397,9 +2397,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void btnLeaveLedger2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger2ActionPerformed
         // TODO add your handling code here:
-//        jDateFrom.setDate(null);
-//        jDateTo.setDate(null);
-//        mainTabbed.setSelectedIndex(6);
+        jDateFrom.setDate(null);
+        jDateTo.setDate(null);
+        mainTabbed.setSelectedIndex(6);
 //        btnReleased.setEnabled(true);
 //        String payrollRange = payrollStaff.computePayroll();
 //        System.out.println("Somnething");
@@ -2451,6 +2451,13 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 //        }else{
 //            JOptionPane.showMessageDialog(null, "Select Payroll First!");
 //        }
+
+        PdfGenerator generator = new PdfGenerator();
+        int employeeCount = employee.getEmployeeCount();
+        
+        for (int i = 1; i <= employeeCount; i++){
+            generator.generatePayslipPDF(String.valueOf(10000 + i), jDateFrom.getDate(), jDateTo.getDate());
+        }
     }//GEN-LAST:event_btnReleasedActionPerformed
 
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
@@ -2461,6 +2468,8 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         payrollStaff.setTableSize(6);
         payrollStaff.displayDataTable(jTableDTR);
         payrollStaff.setTableData();
+        
+        
     }//GEN-LAST:event_comboEmployeeNameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -2472,6 +2481,14 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         String endFormatted = new SimpleDateFormat("d").format(jDateTo.getDate());
         String dateRange = startFormatted + "-" + endFormatted + ", 2025";
         lblPayrollPeriod.setText("Payroll from "+dateRange);
+        
+        DefaultTableModel model = (DefaultTableModel)jTablePayroll.getModel();
+        model.setRowCount(0);
+        for(Object[] item : getPayrollData()){
+            model.addRow(item);
+        }
+        
+        btnReleased.setEnabled(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
@@ -2827,6 +2844,17 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         timer.setCoalesce(true);
         timer.setInitialDelay(0);
         timer.start();
+    }
+    
+    private ArrayList<Object[]> getPayrollData(){
+        ArrayList<Object[]> payrollData = new ArrayList<Object[]>();
+        int employeeCount = employee.getEmployeeCount();
+        PdfGenerator generator = new PdfGenerator();
+        
+        for (int i = 1; i <= employeeCount; i++){
+            payrollData.add(generator.readEmployeeDetailsFromDB(String.valueOf(10000 + i), jDateFrom.getDate(), jDateTo.getDate()));
+        }
+        return payrollData;
     }
     
     /**

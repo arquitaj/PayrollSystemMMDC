@@ -2942,7 +2942,7 @@
                                                               <Component id="lblName16" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
-                                                      <Group type="102" attributes="0">
+                                                      <Group type="102" alignment="0" attributes="0">
                                                           <Component id="lblName19" min="-2" pref="35" max="-2" attributes="0"/>
                                                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -2954,11 +2954,15 @@
                                                               <Component id="lblName21" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
                                                           </Group>
                                                           <Group type="103" groupAlignment="0" attributes="0">
-                                                              <Group type="102" attributes="0">
+                                                              <Group type="102" alignment="0" attributes="0">
+                                                                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                                                                  <Component id="jSeparator19" min="-2" pref="167" max="-2" attributes="0"/>
+                                                                  <EmptySpace min="0" pref="267" max="32767" attributes="0"/>
+                                                              </Group>
+                                                              <Group type="102" alignment="1" attributes="0">
                                                                   <EmptySpace max="32767" attributes="0"/>
                                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                                      <Group type="102" alignment="0" attributes="0">
-                                                                          <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                                                                      <Group type="102" alignment="1" attributes="0">
                                                                           <Group type="103" groupAlignment="1" attributes="0">
                                                                               <Component id="lblUndertime" alignment="1" min="-2" pref="111" max="-2" attributes="0"/>
                                                                               <Component id="lblSSS" alignment="1" min="-2" pref="111" max="-2" attributes="0"/>
@@ -2969,18 +2973,13 @@
                                                                               <Component id="lblBenefits" alignment="1" min="-2" pref="111" max="-2" attributes="0"/>
                                                                               <Component id="lblGross" alignment="1" min="-2" pref="111" max="-2" attributes="0"/>
                                                                           </Group>
+                                                                          <EmptySpace min="-2" pref="295" max="-2" attributes="0"/>
                                                                       </Group>
-                                                                      <Group type="102" alignment="0" attributes="0">
-                                                                          <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                                                                      <Group type="102" alignment="1" attributes="0">
                                                                           <Component id="lblNetPay" min="-2" pref="111" max="-2" attributes="0"/>
+                                                                          <EmptySpace min="-2" pref="312" max="-2" attributes="0"/>
                                                                       </Group>
                                                                   </Group>
-                                                                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <Group type="102" alignment="0" attributes="0">
-                                                                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                                                                  <Component id="jSeparator19" min="-2" pref="167" max="-2" attributes="0"/>
-                                                                  <EmptySpace min="0" pref="33" max="32767" attributes="0"/>
                                                               </Group>
                                                           </Group>
                                                       </Group>
@@ -2989,20 +2988,20 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="168" max="32767" attributes="0"/>
+                                  <EmptySpace pref="164" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                                  <EmptySpace pref="23" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="dateTo3" alignment="1" max="32767" attributes="0"/>
                                       <Component id="dateFrom3" alignment="1" max="32767" attributes="0"/>
                                       <Component id="btnReport" alignment="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                                  <EmptySpace pref="23" max="32767" attributes="0"/>
                                   <Component id="jSeparator12" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
@@ -3021,7 +3020,7 @@
                                       <Component id="lblName6" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblPayrollPeriod" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                                  <EmptySpace pref="22" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="lblName7" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblPositon" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -3077,7 +3076,7 @@
                                           <Component id="lblNetPay" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>

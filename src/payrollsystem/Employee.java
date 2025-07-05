@@ -41,7 +41,7 @@ public class Employee extends AccountDetails {
     protected int indexAttendance;
     private String filePath;
     private String leaveDays;
-    private int numberOfDaysLeave = 0;
+    private int numberOfDaysLeave, daysWorked, overtimeDays = 0;
     private String balanceVL, balanceSL;
     
   
@@ -289,6 +289,36 @@ public class Employee extends AccountDetails {
             return false;
         }
         return true;
+    }
+    
+    int getDaysWorked(){
+        try{
+            String query = "SELECT * FROM payroll_system_db.attendance_records WHERE employee_id = ?;";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, this.employeeID);
+            
+            daysWorked = accountDetails.retrivedDetails(statement).size();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        
+        return daysWorked;
+    }
+    
+    int getOvertime(){
+        try{
+            String query = "SELECT * FROM payroll_system_db.overtime_requests WHERE employee_id = ? AND request_status_id = 2;";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, this.employeeID);
+            
+            overtimeDays = accountDetails.retrivedDetails(statement).size();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        
+        return overtimeDays;
     }
     
  //    void forwardDTRToSupervisor(ArrayList<String> rowData){

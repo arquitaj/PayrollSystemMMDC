@@ -132,12 +132,27 @@ public class AccountDetails extends DatabaseConnection{
         this.vlBalance = data.get(0).get(0); //To get VL Balance
         this.slBalance = data.get(1).get(0); //To get SL Balance
     }
- 
+    
     public ArrayList<ArrayList<String>> getDataList() {
         return dataList;
     }
-   
-
+    
+    public int getEmployeeCount(){
+        int count = 0;
+        try{
+            String query = "SELECT COUNT(employee_id) FROM employees;";
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            while(result.next()){
+                count = result.getInt(1);
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return count;
+    }
+    
     String getEmployeeCompleteName(){
         return getLastName()+", "+getFirstName();
     }

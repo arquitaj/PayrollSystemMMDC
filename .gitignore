@@ -1,3 +1,7 @@
 
 /nbproject/private/
 /build/
+*.csv
+nbproject/project.properties
+src/payrollsystem/SupervisorGUI.java
+*.sql
