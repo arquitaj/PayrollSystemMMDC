@@ -16,10 +16,14 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import java.sql.*;
 import javax.sql.rowset.serial.SerialBlob;
+import javax.swing.JOptionPane;
 
 public class PdfGenerator extends DatabaseConnection{
-    public void generatePayslipPDF(String employeeID, java.util.Date startDate, java.util.Date endDate){
+    
+    boolean generatePayslipPDF(String employeeID, java.util.Date startDate, java.util.Date endDate){
+        boolean isSuccess = false;
         String filenameJrxml = System.getProperty("user.dir") + "\\src\\files\\PayrollSlip.jrxml";
+        String imgLogo = System.getProperty("user.dir") + "\\src\\Images\\logo_payslip.png";
         String exportDirectory = System.getProperty("user.dir") + String.format("\\src\\temp\\%s_%s-%s.pdf", employeeID, startDate, endDate);
         try{
             JasperDesign jasperDesign = JRXmlLoader.load(filenameJrxml);
@@ -27,10 +31,6 @@ public class PdfGenerator extends DatabaseConnection{
             
             HashMap<String, Object> details = new HashMap<String, Object>();
             Object[] data = readEmployeeDetailsFromDB(employeeID, startDate, endDate);
-//            for(int i = 0; i < data.length; i++){
-//                System.out.println(i+1 + " " + data[i]);
-//            }
-            
             details.put("EMPLOYEE_ID", data[1]);
             details.put("EMPLOYEE_NAME", data[2].toString());
             details.put("POSITION", data[3].toString());
@@ -55,18 +55,19 @@ public class PdfGenerator extends DatabaseConnection{
             details.put("TAX", data[18]);
             details.put("TOTAL_DEDUCTIONS", (double)data[15] + (double)data[16] + (double)data[17] + (double)data[18]);
             details.put("TOTAL_NET_INCOME", data[19]);
-
+            details.put("IMAGE_DIRECTORY", imgLogo);
             
             JasperPrint jprint = (JasperPrint) JasperFillManager.fillReport(jasperReport, details, new JREmptyDataSource());
-            insertPdfToDB(JasperExportManager.exportReportToPdf(jprint), startDate, endDate, Integer.parseInt(employeeID));
+            isSuccess = insertPdfToDB(JasperExportManager.exportReportToPdf(jprint), startDate, endDate, Integer.parseInt(employeeID));
         }
         catch(Exception e){
             System.out.println(e);
         }
+        return isSuccess;
     }
     
     public Object[] readEmployeeDetailsFromDB(String employeeID, java.util.Date startDate, java.util.Date endDate){
-        Object[] data = new Object[20];
+        Object[] data = null;
         try{
             java.sql.Connection conn = this.getDBConnection();
             String query = "CALL generate_payslip_report(?, ?, ?);";
@@ -77,6 +78,8 @@ public class PdfGenerator extends DatabaseConnection{
             ResultSet result = statement.executeQuery();
             ResultSetMetaData metaData = result.getMetaData();
             while (result.next()) {
+                data = new Object[20];  // Only initialize if there's actual data
+
                 data[0] = result.getString("Payslip Number");
                 data[1] = result.getInt("Employee ID");
                 data[2] = result.getString("Full Name");
@@ -105,7 +108,8 @@ public class PdfGenerator extends DatabaseConnection{
         return data;
     }
     
-    private void insertPdfToDB(byte[] file, java.util.Date startDate, java.util.Date endDate, int employeeID){
+    private boolean insertPdfToDB(byte[] file, java.util.Date startDate, java.util.Date endDate, int employeeID){
+        boolean isSuccess = false;
         try{
             String query = "INSERT INTO payroll_system_db.payslip(employee_id, period_id, payslip_file) VALUES (?, (SELECT period_id FROM payroll_period WHERE period_from = ? AND period_to = ?), ?)";
             java.sql.Connection conn = this.getDBConnection();
@@ -115,9 +119,10 @@ public class PdfGenerator extends DatabaseConnection{
             statement.setDate(3, new java.sql.Date(endDate.getTime()));
             statement.setBlob(4, new SerialBlob(file));
             statement.execute();
-        }
-        catch(Exception e){
+            isSuccess = true;
+        }catch(Exception e){
             System.out.println(e);
         }
+        return isSuccess;
     }
 }

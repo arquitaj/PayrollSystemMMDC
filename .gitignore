@@ -5,3 +5,4 @@
 nbproject/project.properties
 src/payrollsystem/SupervisorGUI.java
 *.sql
+/dist/

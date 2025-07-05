@@ -21,13 +21,13 @@ public class Login extends Credentials {
     Connection conn = connection.getDBConnection();
     
     
-    Login(int id, String password){
+    public Login(int id, String password){
         this.employeeID = id;
         this.password = password;
     }
     
     @Override
-    ArrayList<ArrayList<String>> checkCredentials() {
+    public ArrayList<ArrayList<String>> checkCredentials() {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, CONCAT(e.last_name, ', ', e.first_name) AS full_name, c.role AS role " +

@@ -16,5 +16,5 @@ import java.util.ArrayList;
  * @author Paul
  */
 abstract class Credentials extends AccountDetails {
-    abstract ArrayList<ArrayList<String>> checkCredentials() throws SQLException;
+    abstract public ArrayList<ArrayList<String>> checkCredentials() throws SQLException;
 }

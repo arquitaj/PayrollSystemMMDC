@@ -9,7 +9,11 @@ import java.sql.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -321,198 +325,56 @@ public class Employee extends AccountDetails {
         return overtimeDays;
     }
     
- //    void forwardDTRToSupervisor(ArrayList<String> rowData){
-        
-//        for(int i=0; i<rowData.size(); i++){
-//            System.out.print(rowData.get(i));
-//            String sql = "UPDATE "
-//        }
-//        accountDetails.getDataList().clear();
-//        accountDetails.setFilePath("CSVFiles//AttendanceDatabase.csv");
-//        accountDetails.retrivedDetails();
-//        for(int i=0; i<tempData.size(); i++){
-//            for(int j=0; j<accountDetails.getDataList().size(); j++){
-//                if(accountDetails.getDataList().get(j).get(0).equals(accountDetails.getEmployeeID()) && tempData.get(i).get(0).equals(accountDetails.getDataList().get(j).get(2)) &&
-//                       tempData.get(i).get(1).equals(accountDetails.getDataList().get(j).get(5)) ){
-//                    accountDetails.getDataList().get(j).set(5, "Yes");
-//                    break;
-//                }
-//            }
-//        }
-//        accountDetails.addDetailsCSV();
-//    }
     
-    //To view
-//     void viewPersonalOvertime(){
-//        overtime.setFilePath("CSVFiles//OvertimeRequest.csv");
-//        overtime.retrivedDetails();
-//    }
-    
-    
-//    boolean fileOvertimeRequest(ArrayList<String> data) {
-//        localDateTimeNow();
-//        viewPersonalOvertime();
-//        
-//        data.add(2, getDateToday());
-//        data.add(3, "Overtime");
-//        data.add("Pending");
-//        overtime.getDataList().add(data);
-//        overtime.addDetailsCSV();
-//       
-//        data.clear();
-//        overtime.getDataList().clear();
-//        return true;
-//    }
-    
-//    ArrayList<ArrayList<String>> getDataAllRequests() {
-//        accountDetails.getDataList().clear();
-//        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-//        accountDetails.setFilePath("CSVFiles//LeaveRequests.csv");
-//        accountDetails.retrivedDetails("employees");
-//        for(int i=0; i<accountDetails.getDataList().size(); i++){
-//            if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Pending")){
-//                ArrayList<String> data = new ArrayList<>();
-//                data.add(accountDetails.getDataList().get(i).get(2)); // Date Filed
-//                data.add(accountDetails.getDataList().get(i).get(3)); // Type of Request (Leave Type)
-//                data.add(accountDetails.getDataList().get(i).get(4)); // Period From
-//                data.add(accountDetails.getDataList().get(i).get(5)); // Period To
-//                data.add(accountDetails.getDataList().get(i).get(6)); // Number of days
-//                data.add(accountDetails.getDataList().get(i).get(7)); // Reason
-//                data.add(accountDetails.getDataList().get(i).get(8)); // Status
-//                tempData.add(data);
-//            }
-//        }
-//
-//        accountDetails.getDataList().clear();
-//        accountDetails.setFilePath("CSVFiles//OvertimeRequest.csv");
-//        accountDetails.retrivedDetails();
-//        for(int i=0; i<accountDetails.getDataList().size(); i++){
-//            if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Pending")){
-//                ArrayList<String> data = new ArrayList<>();
-//                data.add(accountDetails.getDataList().get(i).get(2)); // Date Filed
-//                data.add(accountDetails.getDataList().get(i).get(3)); // Type of Request (Leave Type)
-//                data.add(accountDetails.getDataList().get(i).get(4)); // Period From
-//                data.add(accountDetails.getDataList().get(i).get(5)); // Period To
-//                data.add(accountDetails.getDataList().get(i).get(6)); // Number of days
-//                data.add(accountDetails.getDataList().get(i).get(7)); // Reason
-//                data.add(accountDetails.getDataList().get(i).get(8)); // Status
-//                tempData.add(data);
-//            }
-//        }
-//        return tempData;
-//    }
-    
-//    void viewPersonalDTR(Date dateFrom, Date dateTo){
-//         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-// 
-//        Calendar startDate = Calendar.getInstance();
-//        Calendar endDate = Calendar.getInstance();
-//        startDate.setTime(dateFrom);
-//        endDate.setTime(dateTo);
-//        while(!startDate.after(endDate)){
-//            Date currentDate = startDate.getTime();
-//            if (startDate.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-//                String formattedDate = formatter.format(currentDate);
-//            }
-//            // Move to the next day
-//            startDate.add(Calendar.DATE, 1);
-//        }
-//    }
-//    
-//    ArrayList<ArrayList<String>> getDataAllDTR(Date fromDate, Date toDate) {
-//        accountDetails.getDataList().clear();
-//        accountDetails.setFilePath("CSVFiles//AttendanceDatabase.csv");
-//        accountDetails.retrivedDetails();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-//        Calendar start = Calendar.getInstance();
-//        start.setTime(fromDate);
-//        
-//        Calendar end = Calendar.getInstance();
-//        end.setTime(toDate);
-//        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-//        // Loop through each day from fromDate to toDate
-//        while (!start.after(end)) {
-//            // Print the current date in your desired format (e.g., "MMM d, yyyy")
-//            for(int i=1; i<accountDetails.getDataList().size(); i++){
-//                if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) 
-//                        && accountDetails.getDataList().get(i).get(2).equals(dateFormat.format(start.getTime()))){
-//                    ArrayList<String> data = new ArrayList<>();
-//                    data.add(accountDetails.getDataList().get(i).get(2));
-//                    data.add(accountDetails.getDataList().get(i).get(3));
-//                    data.add(accountDetails.getDataList().get(i).get(4));
-//                    data.add(accountDetails.getDataList().get(i).get(5));
-//                    data.add(accountDetails.getDataList().get(i).get(7));
-//                    tempData.add(data);
-//                    break;
-//                }
-//            }
-//            // Increment the day by one
-//            start.add(Calendar.DAY_OF_MONTH, 1);
-//        }
-//        
-//        
-//        
-//        return tempData;
-//}
-//    ArrayList<ArrayList<String>> allApprovedPersonalLeaveLedger() {
-//        //load personal details to ensure we have the employee ID
-//        accountDetails.getDataList().clear();
-//        accountDetails.setFilePath("CSVFiles//LeaveRequests.csv");
-//        accountDetails.retrivedDetails();
-//        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-//        for(int i=1; i<accountDetails.getDataList().size(); i++){
-//
-//            if(accountDetails.getDataList().get(i).get(0).equals(accountDetails.getEmployeeID()) && accountDetails.getDataList().get(i).get(8).equals("Approved")){
-//                String [] list = {accountDetails.getDataList().get(i).get(2), accountDetails.getDataList().get(i).get(3),accountDetails.getDataList().get(i).get(4),
-//                        accountDetails.getDataList().get(i).get(5),accountDetails.getDataList().get(i).get(6), accountDetails.getDataList().get(i).get(7), 
-//                        accountDetails.getDataList().get(i).get(8)
-//                };
-//                ArrayList<String> row = new ArrayList<>();
-//                row.addAll(Arrays.asList(list));
-//                tempData.add(row);
-//            }
-//        }
-//    return tempData;
-//}
-//
-//    public void updateLeaveBalanceLabels(javax.swing.JLabel lblVL, javax.swing.JLabel lblSL) {
-//        // Load personal details to ensure we have the employee ID
-//    
-//        // Load leave balances
-//        leaveBalancesInformation();
-//
-//        // Update the labels with current balances
-//        lblVL.setText(getBalanceVL());
-//        lblSL.setText(getBalanceSL());
-//}
-//    ArrayList<ArrayList<String>> viewPersonalPayslip(Date dateFrom, Date dateTo, String id){
-//        accountDetails.getDataList().clear();
-//        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-//        if(dateFrom == null || dateTo == null){
-//            JOptionPane.showMessageDialog(null, "Please Provide Payroll Period!");
-//        }else{
-//            String fromFormatted = new SimpleDateFormat("MM/dd/yyyy").format(dateFrom);
-//            String toFormatted = new SimpleDateFormat("MM/dd/yyyy").format(dateTo);
-//            String datePeriod = fromFormatted + " to " + toFormatted;
-//            int date = dateFrom.compareTo(dateTo);
-//            if(date > 0){
-//                JOptionPane.showMessageDialog(null, "Invalid Payroll Period");
-//            }else{
-//                accountDetails.setFilePath("CSVFiles//Payroll.csv");
-//                accountDetails.retrivedDetails();
-//                for(int i=0; i<accountDetails.getDataList().size(); i++){
-//                    if(accountDetails.getDataList().get(i).get(0).equals(id) && accountDetails.getDataList().get(i).get(2).equals(datePeriod) && accountDetails.getDataList().get(i).get(13).equals("Approved")){
-//                        tempData.add(accountDetails.getDataList().get(i));
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//        return tempData;
-//    }    
-//    
-    
-        
+    boolean downloadPayslip(Date date_from, Date date_to) {
+        boolean isSuccess = false;
+        if (date_from == null || date_to == null) {
+            JOptionPane.showMessageDialog(null, "Error: date_from or date_to is null.", "Error", JOptionPane.ERROR_MESSAGE);
+            return isSuccess;
+        }
+        try{
+            String sql = "SELECT payslip_file FROM payslip p " +
+                    "JOIN payroll_period per ON p.period_id = per.period_id " +
+                    "WHERE employee_id = ? AND period_from = ? AND period_to = ? ";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, this.employeeID);
+            statement.setDate(2, new java.sql.Date(date_from.getTime()));
+            statement.setDate(3, new java.sql.Date(date_to.getTime()));
+            ResultSet result = statement.executeQuery();
+            try{
+                boolean fileFound = false;
+                while (result.next()) {
+                    Blob blob = result.getBlob("payslip_file");
+                if (blob != null) {
+                    InputStream inputStream = blob.getBinaryStream();
+                    String folderPath = "DownloadFiles";
+                    Files.createDirectories(Paths.get(folderPath)); // Create the folder if it doesn't exist
+
+                    String filename = folderPath + "/" + this.employeeID + "_payslip.pdf";
+
+                    try {
+                        Files.copy(inputStream, Paths.get(filename), StandardCopyOption.REPLACE_EXISTING);
+                        JOptionPane.showMessageDialog(null, "Payslip downloaded: " + filename, "Success", JOptionPane.INFORMATION_MESSAGE);
+                        isSuccess = true;
+                        fileFound = true;
+                    } catch (IOException ex) {
+                        Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, "IO error during file copy", ex);
+                }
+            }
+            }
+                if (!fileFound) {
+                    JOptionPane.showMessageDialog(null, "No payslip record found for the given period.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return isSuccess;
+                }
+            }catch (Exception e){
+                System.out.println(e); 
+            }
+        }catch (SQLException ex){
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null,ex); 
+        }
+        return isSuccess; 
+    }
+      
     public void updateLeaveRequest() {
     
     }

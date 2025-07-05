@@ -23,6 +23,7 @@
 	<parameter name="TOTAL_DEDUCTIONS" class="java.lang.Double"/>
 	<parameter name="PERIOD_FROM" class="java.sql.Date"/>
 	<parameter name="PERIOD_TO" class="java.sql.Date"/>
+	<parameter name="IMAGE_DIRECTORY" class="java.lang.String"/>
 	<query language="sql"><![CDATA[]]></query>
 	<background splitType="Stretch"/>
 	<detail>
@@ -31,7 +32,7 @@
 				<pen lineWidth="2.0" lineColor="#CFCFCF"/>
 			</element>
 			<element kind="image" uuid="b74440b9-383e-4473-953e-b391891ff0d2" x="10" y="10" width="530" height="89">
-				<expression><![CDATA["C:/Users/tarug/Documents/Screenshots/firefox_nwrpJg09U9.png"]]></expression>
+				<expression><![CDATA[$P{IMAGE_DIRECTORY}]]></expression>
 			</element>
 			<element kind="line" uuid="8cd9200d-fe2b-4f2e-92d1-ceb6d88abb17" x="31" y="150" width="489" height="1">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>

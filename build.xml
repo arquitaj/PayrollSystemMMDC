@@ -70,4 +70,21 @@
     nbproject/build-impl.xml file. 
 
     -->
+   <mkdir dir="build/test-results" /> 
+  <target name="run-junit5-tests" depends="compile-test">
+    <!-- Test classpath setup -->
+    <path id="test.classpath">
+        <pathelement location="build/classes"/>
+        <pathelement location="build/test/classes"/>
+    </path>
+
+    <!-- JUnit 5 test launcher -->
+    <junitlauncher printsummary="true" haltonfailure="false">
+        <classpath refid="test.classpath"/>
+        <testclasses outputdir="build/test-results">
+            <fileset dir="build/test/classes" includes="**/*Test.class"/>
+        </testclasses>
+    </junitlauncher>
+   </target>
 </project>
+

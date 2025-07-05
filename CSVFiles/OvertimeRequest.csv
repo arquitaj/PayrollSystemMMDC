@@ -1,8 +1,0 @@
-Employee ID, Name, Date Filed, Type Request, From, To, Number of Days, Reason, Status,
-10001,Garcia Manuel III,03/14/2025,Overtime,03/05/2025,03/06/2025,2,First Overtime,Approved,
-10002,Lim Antonio,03/14/2025,Overtime,03/05/2025,03/06/2025,2,First Overtime,Approved,
-10003,Aquino Bianca Sofia,03/14/2025,Overtime,03/05/2025,03/06/2025,2,First Overtime,Approved,
-10004,Reyes Isabella,03/14/2025,Overtime,03/05/2025,03/06/2025,2,First Overtime,Approved,
-10003,Aquino Bianca Sofia,06/10/2025,Overtime,06/11/2025,06/12/2025,2,To prepare payroll,Pending,
-10003,Aquino Bianca Sofia,06/10/2025,Overtime,06/19/2025,06/20/2025,2,Overtime Lang,Pending,
-10003,Aquino Bianca Sofia,06/10/2025,Overtime,06/29/2025,06/30/2025,1,Something,Pending,
