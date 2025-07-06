@@ -2317,23 +2317,15 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jSeparator7" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                          <Component id="btnSubmitToSepervisor" min="-2" pref="85" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblEmpID3" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                              <Component id="lblName2" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblID2" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                              <Component id="lblMyName4" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="lblEmpID3" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <Component id="lblName2" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblID2" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <Component id="lblMyName4" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -2400,9 +2392,7 @@
                                   <Component id="tableDTR" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jSeparator7" min="-2" pref="3" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnSubmitToSepervisor" min="-2" pref="39" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -2507,14 +2497,6 @@
                               <Color blue="99" green="cc" red="ff" type="rgb"/>
                             </Property>
                           </Properties>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="btnSubmitToSepervisor">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="SUBMIT"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubmitToSepervisorActionPerformed"/>
-                          </Events>
                         </Component>
                         <Component class="javax.swing.JSeparator" name="jSeparator8">
                           <Properties>

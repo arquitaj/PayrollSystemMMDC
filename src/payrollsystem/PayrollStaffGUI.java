@@ -184,7 +184,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         dateTo2 = new com.toedter.calendar.JDateChooser();
         lblPeriod = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
-        btnSubmitToSepervisor = new javax.swing.JButton();
         jSeparator8 = new javax.swing.JSeparator();
         lblName2 = new javax.swing.JLabel();
         lblMyName4 = new javax.swing.JLabel();
@@ -1506,13 +1505,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
         jSeparator7.setBackground(new java.awt.Color(255, 204, 153));
 
-        btnSubmitToSepervisor.setText("SUBMIT");
-        btnSubmitToSepervisor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitToSepervisorActionPerformed(evt);
-            }
-        });
-
         jSeparator8.setBackground(new java.awt.Color(255, 204, 153));
         jSeparator8.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -1541,19 +1533,14 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
             panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator7)
             .addGroup(panelDTRLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
                 .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelDTRLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(btnSubmitToSepervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelDTRLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblEmpID3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblName2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblID2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMyName4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(lblEmpID3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblName2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelDTRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblID2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMyName4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(panelDTRLayout.createSequentialGroup()
                 .addContainerGap()
@@ -1604,9 +1591,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                 .addComponent(tableDTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSubmitToSepervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(67, 67, 67))
         );
 
         javax.swing.GroupLayout tabbedDTRLayout = new javax.swing.GroupLayout(tabbedDTR);
@@ -2357,32 +2342,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupervisorActionPerformed
 
-    private void btnSubmitToSepervisorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitToSepervisorActionPerformed
-        // TODO add your handling code here:
-        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-        int[] row = jTableAllDTR.getSelectedRows();
-        DefaultTableModel model = (DefaultTableModel)jTableAllDTR.getModel();
-        for(int r : row){
-            if(model.getValueAt(r, 3).toString().equals("Yes")){
-                JOptionPane.showMessageDialog(null, "You Have Selectetd A DTR That Was Already Forwarded To Supervisor!");
-                btnSubmitToSepervisor.enable(false);
-            }else{
-                btnSubmitToSepervisor.enable(true);
-                ArrayList <String> rowData = new ArrayList<>();
-                rowData.add(model.getValueAt(r, 0).toString());
-                rowData.add(model.getValueAt(r, 3).toString());
-                tempData.add(rowData);
-            }
-        }
-        if(jTableAllDTR.getSelectedRow() != -1 && !tempData.isEmpty()){
-            payrollStaff.setTableSize(5);
-            payrollStaff.displayDataTable(jTableAllDTR);
-            JOptionPane.showMessageDialog(null, "Successfuly Submitted the "+tempData.size()+" DTR to Your Supervisor!");
-        }else if(jTableAllDTR.getSelectedRow() == -1){
-            JOptionPane.showMessageDialog(null, "Select DTR First!");
-        }
-    }//GEN-LAST:event_btnSubmitToSepervisorActionPerformed
-
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
         employee.setTableData(employee.getDTR(dateFrom2.getDate(), dateTo2.getDate()));
@@ -2618,7 +2577,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRequestPort;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnSubmit1;
-    private javax.swing.JButton btnSubmitToSepervisor;
     private javax.swing.JComboBox<String> comboEmployeeName;
     private javax.swing.JComboBox<String> comboLeaveType;
     private javax.swing.JComboBox<String> comboTypeRequest;
