@@ -34,6 +34,7 @@ public class Login extends Credentials {
                     "FROM employees e " +
                     "JOIN credentials c ON e.employee_id = c.employee_id " +
                     "WHERE c.employee_id = ? AND c.employee_password = ?";
+            
             PreparedStatement statement = statement = conn.prepareStatement(sql);
             statement.setInt(1, this.employeeID);
             statement.setString(2, this.password);
