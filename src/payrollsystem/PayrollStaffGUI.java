@@ -2364,14 +2364,14 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
             tabbedInsideRequest.setSelectedIndex(1);
 
             employee.leaveBalancesInformation();
-            lblID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+            lblID.setText(employee.getEmployee_id());
             lblMyName.setText(employee.getEmployeeCompleteName());
             lblVLBalance.setText(employee.accountDetails.getVLBalance());
             lblSLBalance.setText(employee.accountDetails.getSLBalance());
 
         } else {
             tabbedInsideRequest.setSelectedIndex(2);
-            lblID1.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+            lblID1.setText(employee.getEmployee_id());
             lblMyName2.setText(employee.getEmployeeCompleteName());
             // Display all requests in the table
             employee.setTableData(employee.getDataAllRequests());
