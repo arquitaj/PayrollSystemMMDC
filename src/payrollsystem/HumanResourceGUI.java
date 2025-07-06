@@ -3150,6 +3150,8 @@ public class HumanResourceGUI extends javax.swing.JFrame {
 
     private void textBasicSalaryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBasicSalaryKeyTyped
         // TODO add your handling code here:
+        commaConstraints(evt);   //To call method for comma constraints
+        
     }//GEN-LAST:event_textBasicSalaryKeyTyped
 
     private void comboStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboStatusActionPerformed

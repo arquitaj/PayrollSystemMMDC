@@ -178,10 +178,9 @@ public class Employee extends AccountDetails {
                     "FROM leave_ledger l " +
                     "JOIN leave_type t ON t.leave_type_id = l.leave_type_id " +
                     "JOIN request_status s ON s.request_status_id = l.request_status_id " +
-                    "WHERE l.employee_id = ? AND status  = ? ";
+                    "WHERE l.employee_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, this.employeeID);
-            statement.setString(2, "Approved");
             data = accountDetails.retrivedDetails(statement);
             
         } catch (SQLException ex) {

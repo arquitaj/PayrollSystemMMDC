@@ -2202,15 +2202,22 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         btnReleased.setEnabled(false);
         payrollStaff.setTableSize(14);
         payrollStaff.displayDataTable(jTablePayroll);
-        String startFormatted = new SimpleDateFormat("MMM d").format(jDateFrom.getDate());
-        String endFormatted = new SimpleDateFormat("d").format(jDateTo.getDate());
-        String dateRange = startFormatted + "-" + endFormatted + ", 2025";
-        lblPayrollPeriod.setText("Payroll from "+dateRange);
         
-        DefaultTableModel model = (DefaultTableModel)jTablePayroll.getModel();
-        model.setRowCount(0);
-        for(Object[] item : getPayrollData()){
-            model.addRow(item);
+        
+        if (!(jDateTo.getDate().after(jDateFrom.getDate()))){
+            JOptionPane.showMessageDialog(null, "Error: Invalid date!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            String startFormatted = new SimpleDateFormat("MMM d").format(jDateFrom.getDate());
+            String endFormatted = new SimpleDateFormat("d").format(jDateTo.getDate());
+            String dateRange = startFormatted + "-" + endFormatted + ", 2024";    
+            lblPayrollPeriod.setText("Payroll from "+dateRange);
+            
+            DefaultTableModel model = (DefaultTableModel)jTablePayroll.getModel();
+            model.setRowCount(0);
+            for(Object[] item : getPayrollData()){
+                model.addRow(item);
+            }
         }
         
         btnReleased.setEnabled(true);
@@ -2303,7 +2310,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
          mainTabbed.setSelectedIndex(4);
 
         employee.leaveBalancesInformation();
-        lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
+        lblID3.setText(employee.getEmployee_id());
         lblMyName5.setText(employee.getEmployeeCompleteName());
         lblVLBalance1.setText(employee.accountDetails.getVLBalance());
         lblSLBalance1.setText(employee.accountDetails.getSLBalance());
