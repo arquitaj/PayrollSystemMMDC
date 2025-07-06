@@ -25,7 +25,7 @@ public class PayrollStaff extends Employee implements Payroll{
     private double perHour, perMonth, riceSubsidy, phoneAllowance, clothingAllowance, grossPay;
     private double totalTaxContribution, totalSSSContribution, totalPagibigContribution, totalPhilhealthContribution;
     
-    PayrollStaff(String employeeID){
+    public PayrollStaff(String employeeID){
         super();
         this.employeeID = employeeID;
     }
@@ -38,7 +38,6 @@ public class PayrollStaff extends Employee implements Payroll{
             String sql = "SELECT employee_id FROM employees ORDER BY employee_id";
             PreparedStatement statement = conn.prepareStatement(sql);
             data = accountDetails.retrivedDetails(statement);
-            System.out.println("Data : "+data);
         } catch (SQLException ex) {
             Logger.getLogger(PayrollStaff.class.getName()).log(Level.SEVERE, null, ex);
         }

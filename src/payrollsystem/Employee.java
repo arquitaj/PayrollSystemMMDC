@@ -47,7 +47,9 @@ public class Employee extends AccountDetails {
     private String leaveDays;
     private int numberOfDaysLeave, daysWorked, overtimeDays = 0;
     private String balanceVL, balanceSL;
-    
+    private String employee_id, firstName, lastName, birthday, phoneNumber, street, barangay, city, province, zipcode, sssNumber, philHealthNumber, tinNumber, 
+            pagibigNumber, status, position, supervisor, dateToday, timeNow;
+    private double basicSalary, riceSubsidy, phoneAllowance, clothingAllowance, semiBasicSalary, hourlyRate;
   
     java.sql.Connection conn = dbConnection.getDBConnection();
     
@@ -55,7 +57,7 @@ public class Employee extends AccountDetails {
         
     }
     
-    Employee(String employeeID){
+    public Employee(String employeeID){
         this.employeeID = Integer.parseInt(employeeID);
         super();
     }
@@ -77,7 +79,9 @@ public class Employee extends AccountDetails {
             
             return timeNow;
     }
-    void viewPersonalDetails(){
+    
+    public void viewPersonalDetails(){
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, e.first_name, e.last_name, e.birthdate, e.phone_number,ad.street, ad.barangay, ad.city, ad.province, "
                     + "ad.zipcode,sal.basic_salary, sal.rice_subsidy, sal.phone_allowance, sal.clothing_allowance,id.philhealth_number, id.sss_number, "
@@ -89,13 +93,36 @@ public class Employee extends AccountDetails {
                     + "JOIN employee_statuses s ON e.status_id = s.status_id WHERE e.employee_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, this.employeeID);
-            accountDetails.userDetails(statement);
+            data = accountDetails.retrivedDetails(statement);
+            this.employee_id = data.get(0).get(0);
+            this.firstName = data.get(0).get(1);
+            this.lastName = data.get(0).get(2);
+            this.birthday = data.get(0).get(3);
+            this.phoneNumber = data.get(0).get(4); 
+            this.street = data.get(0).get(5);
+            this.barangay = data.get(0).get(6);
+            this.city = data.get(0).get(7);
+            this.province = data.get(0).get(8);
+            this.zipcode = data.get(0).get(9);
+            this.basicSalary = Double.parseDouble(data.get(0).get(10));
+            this.semiBasicSalary = this.basicSalary / 2; 
+            this.hourlyRate = Math.round(((this.semiBasicSalary / 21.0) / 8.0) * 100.0) / 100.0;
+            this.riceSubsidy = Double.parseDouble(data.get(0).get(11));
+            this.phoneAllowance = Double.parseDouble(data.get(0).get(12));
+            this.clothingAllowance = Double.parseDouble(data.get(0).get(13));
+            this.philHealthNumber = data.get(0).get(14);
+            this.sssNumber = data.get(0).get(15);
+            this.tinNumber = data.get(0).get(16);
+            this.pagibigNumber = data.get(0).get(17);
+            this.position = data.get(0).get(18);
+            this.status = data.get(0).get(19);
+            this.supervisor = data.get(0).get(20);
         } catch (SQLException ex) {
             Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    ArrayList<ArrayList<String>> getDataAllRequests(){
+    public ArrayList<ArrayList<String>> getDataAllRequests(){
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT o.date_filed, 'Overtime' AS request_type, " +
@@ -123,7 +150,7 @@ public class Employee extends AccountDetails {
            return data;
     }
     
-    ArrayList<ArrayList<String>> getDTR(Date dateFrom, Date dateTo){
+    public ArrayList<ArrayList<String>> getDTR(Date dateFrom, Date dateTo){
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql =  "SELECT ar.attendance_date, ar.login, ar.logout, rs.status AS request_status " +
@@ -143,7 +170,7 @@ public class Employee extends AccountDetails {
         return data;
     }
     
-    ArrayList<ArrayList<String>> viewPersonalLeaveLedger() {
+    public ArrayList<ArrayList<String>> viewPersonalLeaveLedger() {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT l.date_filed, t.leave_type, l.leave_from, l.leave_to, " +
@@ -163,7 +190,7 @@ public class Employee extends AccountDetails {
         return data;
     }
     
-    Boolean fileOvertimeRequest(int employee_id, Date overtime_from, Date overtime_to, int number_of_days, String reason){
+    public Boolean fileOvertimeRequest(Date overtime_from, Date overtime_to, int number_of_days, String reason){
         try {
             String sql =  "INSERT INTO overtime_requests (" +
                     "employee_id, date_filed, overtime_from, overtime_to, " +
@@ -171,7 +198,7 @@ public class Employee extends AccountDetails {
                     ") VALUES (?, ?, ?, ?, ?, ?, " +
                     "(SELECT request_status_id FROM request_status WHERE status = 'Pending' LIMIT 1))";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, employee_id);
+            statement.setInt(1, this.employeeID);
             statement.setDate(2, getDateNow());
             statement.setDate(3, new java.sql.Date(overtime_from.getTime()));
             statement.setDate(4, new java.sql.Date(overtime_to.getTime()));
@@ -191,7 +218,7 @@ public class Employee extends AccountDetails {
     }
     
     //Method for filing a request
-    Boolean fileLeaveRequest(Date leaveFrom, Date leaveTo, String leaveType, String numDays, String reason){
+    public Boolean fileLeaveRequest(Date leaveFrom, Date leaveTo, String leaveType, int numDays, String reason){
         try {
             String sql = "INSERT INTO payroll_system_db.leave_ledger " +
                     "(employee_id, date_filed, leave_type_id, leave_from, leave_to, number_of_days, reason, request_status_id) " +
@@ -204,7 +231,7 @@ public class Employee extends AccountDetails {
             statement.setString(3, leaveType); //leave type
             statement.setDate(4, new java.sql.Date(leaveFrom.getTime())); //leave_from
             statement.setDate(5, new java.sql.Date(leaveTo.getTime())); //leave_end
-            statement.setFloat(6, Float.parseFloat(numDays)); //number_of_days
+            statement.setInt(6, numDays); //number_of_days
             statement.setString(7, reason); //reason
             if(accountDetails.addDetailsToDatabase(statement)){
                 JOptionPane.showMessageDialog(null, "Successfuly File A Leave Request!", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -220,7 +247,7 @@ public class Employee extends AccountDetails {
     }
     
     //Method for Timein button
-    void userLogin(){
+    public void userLogin(){
         try {
             String sql = "INSERT INTO attendance_records (employee_id, attendance_date, login, request_status_id) " +
                     "SELECT ?, ?, ?, (SELECT request_status_id FROM request_status WHERE status = 'Pending' LIMIT 1) FROM DUAL " +
@@ -244,7 +271,7 @@ public class Employee extends AccountDetails {
     }
     
     //Method for Time-out button
-    void userLogout(){
+    public void userLogout(){
         try {
             String sql = "INSERT INTO attendance_records (employee_id, attendance_date, logout, request_status_id) " +
                     "VALUES (?, ?, ?, (SELECT request_status_id FROM request_status WHERE status = 'Pending' LIMIT 1)) " +
@@ -265,7 +292,7 @@ public class Employee extends AccountDetails {
     
 
 
-     void leaveBalancesInformation(){
+    public void leaveBalancesInformation(){
         try {
             String sql = "SELECT balance FROM leave_balances WHERE employee_id = ? ";
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -276,7 +303,7 @@ public class Employee extends AccountDetails {
         }
      }
      
-    boolean countNumberOfDays(Date dateFrom, Date dateTo){ // New method to count the days for leave
+    public boolean countNumberOfDays(Date dateFrom, Date dateTo){ // New method to count the days for leave
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         startDate.setTime(dateFrom);
@@ -295,7 +322,7 @@ public class Employee extends AccountDetails {
         return true;
     }
     
-    int getDaysWorked(){
+    public int getDaysWorked(){
         try{
             String query = "SELECT * FROM payroll_system_db.attendance_records WHERE employee_id = ?;";
             PreparedStatement statement = conn.prepareStatement(query);
@@ -310,7 +337,7 @@ public class Employee extends AccountDetails {
         return daysWorked;
     }
     
-    int getOvertime(){
+    public int getOvertime(){
         try{
             String query = "SELECT * FROM payroll_system_db.overtime_requests WHERE employee_id = ? AND request_status_id = 2;";
             PreparedStatement statement = conn.prepareStatement(query);
@@ -326,7 +353,7 @@ public class Employee extends AccountDetails {
     }
     
     
-    boolean downloadPayslip(Date date_from, Date date_to) {
+    public boolean downloadPayslip(Date date_from, Date date_to) {
         boolean isSuccess = false;
         if (date_from == null || date_to == null) {
             JOptionPane.showMessageDialog(null, "Error: date_from or date_to is null.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -398,4 +425,94 @@ public class Employee extends AccountDetails {
         this.numberOfDaysLeave = 0;
     }
     
+    //To getters and setters for viewing of persnal details
+    public String getEmployee_id() {
+        return this.employee_id;
+    }
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+    public String getBarangay() {
+        return barangay;
+    }
+    public String getCity() {
+        return city;
+    }
+    public String getProvince() {
+        return province;
+    }
+    public String getZipCode() {
+        return zipcode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getSssNumber() {
+        return sssNumber;
+    }
+
+    public String getPhilHealthNumber() {
+        return philHealthNumber;
+    }
+
+    public String getTinNumber() {
+        return tinNumber;
+    }
+
+    public String getPagibigNumber() {
+        return pagibigNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public double getBasicSalary() {
+        return basicSalary;
+    }
+
+    public double getRiceSubsidy() {
+        return riceSubsidy;
+    }
+
+    public double getPhoneAllowance() {
+        return phoneAllowance;
+    }
+
+    public double getClothingAllowance() {
+        return clothingAllowance;
+    }
+
+    public double getSemiBasicSalary() {
+        return semiBasicSalary;
+    }
+
+    public double getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+    String getEmployeeCompleteName(){
+        return getLastName()+", "+getFirstName();
+    }
 }

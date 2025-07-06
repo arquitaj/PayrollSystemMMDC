@@ -2259,29 +2259,29 @@ public class SupervisorGUI extends javax.swing.JFrame {
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(1);
-        txtID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-        txtFName.setText(employee.accountDetails.getFirstName());
-        txtLName.setText(employee.accountDetails.getLastName());
-        txtBDay.setText(employee.accountDetails.getBirthday());
-        txtPhoneNum.setText(employee.accountDetails.getPhoneNumber());
-        textAreaStreet.setText(employee.accountDetails.getStreet());
-        txtBrgy.setText(employee.accountDetails.getBarangay());
-        txtCity.setText(employee.accountDetails.getCity());
-        txtProvince.setText(employee.accountDetails.getProvince());
-        txtZipCode.setText(employee.accountDetails.getZipCode());
-        txtBasicSalary.setText(String.valueOf(employee.accountDetails.getBasicSalary()));
-        txtBiMonthlyRate.setText(String.valueOf(employee.accountDetails.getSemiBasicSalary()));
-        txtHourlyRate.setText(String.valueOf(employee.accountDetails.getHourlyRate()));
-        txtRiceSubsidy.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
-        txtPhoneAllowance.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
-        txtClothingAllowance.setText(String.valueOf(employee.accountDetails.getClothingAllowance()));
-        txtPhilNum.setText(employee.accountDetails.getPhilHealthNumber());
-        txtSSSNum.setText(employee.accountDetails.getPhilHealthNumber());
-        txtTINNum.setText(employee.accountDetails.getTinNumber());
-        txtPagIbigNum.setText(employee.accountDetails.getPagibigNumber());
-        txtPosition.setText(employee.accountDetails.getPosition());
-        txtStatus.setText(employee.accountDetails.getStatus());
-        txtSupervisor.setText(employee.accountDetails.getSupervisor());
+        txtID.setText(employee.getEmployee_id());
+        txtFName.setText(employee.getFirstName());
+        txtLName.setText(employee.getLastName());
+        txtBDay.setText(employee.getBirthday());
+        txtPhoneNum.setText(employee.getPhoneNumber());
+        textAreaStreet.setText(employee.getStreet());
+        txtBrgy.setText(employee.getBarangay());
+        txtCity.setText(employee.getCity());
+        txtProvince.setText(employee.getProvince());
+        txtZipCode.setText(employee.getZipCode());
+        txtBasicSalary.setText(String.valueOf(employee.getBasicSalary()));
+        txtBiMonthlyRate.setText(String.valueOf(employee.getSemiBasicSalary()));
+        txtHourlyRate.setText(String.valueOf(employee.getHourlyRate()));
+        txtRiceSubsidy.setText(String.valueOf(employee.getRiceSubsidy()));
+        txtPhoneAllowance.setText(String.valueOf(employee.getRiceSubsidy()));
+        txtClothingAllowance.setText(String.valueOf(employee.getClothingAllowance()));
+        txtPhilNum.setText(employee.getPhilHealthNumber());
+        txtSSSNum.setText(employee.getPhilHealthNumber());
+        txtTINNum.setText(employee.getTinNumber());
+        txtPagIbigNum.setText(employee.getPagibigNumber());
+        txtPosition.setText(employee.getPosition());
+        txtStatus.setText(employee.getStatus());
+        txtSupervisor.setText(employee.getSupervisor());
     }//GEN-LAST:event_btnPersonalDetailsActionPerformed
 
     private void btnRequestPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestPortActionPerformed
@@ -2305,8 +2305,8 @@ public class SupervisorGUI extends javax.swing.JFrame {
     
         // Set employee details in the DTR panel
         employee.viewPersonalDetails();
-        lblID2.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-        lblMyName4.setText(employee.accountDetails.getEmployeeCompleteName());
+        lblID2.setText(employee.getEmployee_id());
+        lblMyName4.setText(employee.getEmployeeCompleteName());
 
         // Get current date
         Calendar today = Calendar.getInstance();
@@ -2316,15 +2316,9 @@ public class SupervisorGUI extends javax.swing.JFrame {
         Calendar startCal = Calendar.getInstance();
         Calendar endCal = Calendar.getInstance();
 
-        if (currentDay <= 15) {
-            // First half of the month (1-15)
-            startCal.set(Calendar.DAY_OF_MONTH, 1);
-            endCal.set(Calendar.DAY_OF_MONTH, 15);
-        } else {
-            // Second half of the month (16-end)
-            startCal.set(Calendar.DAY_OF_MONTH, 16);
-            endCal.set(Calendar.DAY_OF_MONTH, endCal.getActualMaximum(Calendar.DAY_OF_MONTH));
-        }
+
+        startCal.set(Calendar.DAY_OF_MONTH, 1);
+        endCal.set(Calendar.DAY_OF_MONTH, endCal.getActualMaximum(Calendar.DAY_OF_MONTH));
     
         // Set the date fields to show the current period
         dateFrom2.setDate(startCal.getTime());
@@ -2344,7 +2338,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         // Set employee details in the Leave Ledger panel
         employee.viewPersonalDetails();
         lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-        lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
+        lblMyName5.setText(employee.getEmployeeCompleteName());
 
         // Update leave balance labels
         employee.setTableData(employee.viewPersonalLeaveLedger());
@@ -2397,15 +2391,15 @@ public class SupervisorGUI extends javax.swing.JFrame {
             tabbedInsideRequest.setSelectedIndex(1);
 
             employee.leaveBalancesInformation();
-            lblID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-            lblMyName.setText(employee.accountDetails.getEmployeeCompleteName());
+            lblID.setText(employee.getEmployee_id());
+            lblMyName.setText(employee.getEmployeeCompleteName());
             lblVLBalance.setText(employee.accountDetails.getVLBalance());
             lblSLBalance.setText(employee.accountDetails.getSLBalance());
 
         } else {
             tabbedInsideRequest.setSelectedIndex(2);
-            lblID1.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-            lblMyName2.setText(employee.accountDetails.getEmployeeCompleteName());
+            lblID1.setText(employee.getEmployee_id());
+            lblMyName2.setText(employee.getEmployeeCompleteName());
             // Display all requests in the table
             employee.setTableData(employee.getDataAllRequests());
             employee.setTableSize(7);
@@ -2453,7 +2447,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
             return;
         }
         if(employee.fileLeaveRequest(dateFrom.getDate(), dateTo.getDate(), comboLeaveType.getSelectedItem().toString(),
-                txtDaysNumber.getText(), txtReason.getText())){
+                Integer.parseInt(txtDaysNumber.getText()), txtReason.getText())){
             txtDaysNumber.setText(null);
             comboLeaveType.setSelectedIndex(0);
             dateFrom.setDate(null);
@@ -2493,7 +2487,6 @@ public class SupervisorGUI extends javax.swing.JFrame {
         if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
              if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
                  Boolean isSuccessfulyAdded = employee.fileOvertimeRequest(
-                         employee.accountDetails.getEmployeeID(),
                          dateFromOvertime.getDate(),
                          dateToOvertime.getDate(),
                          Integer.parseInt(txtDaysNumber1.getText()),
@@ -2540,8 +2533,8 @@ public class SupervisorGUI extends javax.swing.JFrame {
         mainTabbed.setSelectedIndex(4);
 
         employee.leaveBalancesInformation();
-        lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-        lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
+        lblID3.setText(employee.getEmployee_id());
+        lblMyName5.setText(employee.getEmployeeCompleteName());
         lblVLBalance1.setText(employee.accountDetails.getVLBalance());
         lblSLBalance1.setText(employee.accountDetails.getSLBalance());
 

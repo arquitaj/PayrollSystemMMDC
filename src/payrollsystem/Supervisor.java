@@ -18,12 +18,12 @@ import javax.swing.table.*;
 public class Supervisor extends Employee{
     private final String employeeID;
   
-    Supervisor(String employeeID){
+    public Supervisor(String employeeID){
         this.employeeID = employeeID;
         super();  
     }
     
-   ArrayList<ArrayList<String>> employeeRequest(String selectedItem){
+   public ArrayList<ArrayList<String>> employeeRequest(String selectedItem){
        ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sqlForLeave = "SELECT e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, ll.date_filed, " +
@@ -86,7 +86,7 @@ public class Supervisor extends Employee{
    }  
     
 
-    ArrayList<ArrayList<String>> employeeNames(){  
+    public ArrayList<ArrayList<String>> employeeNames(){  
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT CONCAT(last_name, ', ',first_name) AS full_name FROM employees WHERE immediate_supervisor = ? ORDER BY full_name";
@@ -101,7 +101,7 @@ public class Supervisor extends Employee{
     }
        
     
-     ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){
+    public ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, CONCAT(e.last_name, ' ', e.first_name) AS full_name, " +
@@ -122,7 +122,7 @@ public class Supervisor extends Employee{
     }
     
      
-     void approvedEmployeeRequest(ArrayList<String> rowData){
+    public void approvedEmployeeRequest(ArrayList<String> rowData){
         if(rowData.get(3).equals("Overtime")){
             try {
                 String sql = "UPDATE overtime_requests orq JOIN request_status rs ON rs.status = ? "
@@ -179,7 +179,7 @@ public class Supervisor extends Employee{
      }
      
 
-      void disapprovedEmployeeRequest(ArrayList<String> rowData){
+    public void disapprovedEmployeeRequest(ArrayList<String> rowData){
           String sql;
         try {
             
@@ -207,7 +207,7 @@ public class Supervisor extends Employee{
         }
       }
       
-    void forwardDTR(ArrayList<ArrayList <String>> rowData){
+    public void forwardDTR(ArrayList<ArrayList <String>> rowData){
         int update = 0;
         try {
             String sql = "UPDATE attendance_records ar JOIN request_status rs ON rs.status = ? SET ar.request_status_id = rs.request_status_id " +
@@ -228,7 +228,7 @@ public class Supervisor extends Employee{
         }
     }
       
-   void setSelectedName(String selectedName){
+   public void setSelectedName(String selectedName){
        
    }
 

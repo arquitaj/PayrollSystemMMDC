@@ -23,12 +23,12 @@ public class HumanResource extends Employee{
     private String employeeID, selectedName;
     private ArrayList <String> fullName = new ArrayList<>();
     
-    HumanResource(String employeeID){
+    public HumanResource(String employeeID){
         super();
         this.employeeID = employeeID;
     }
     
-    ArrayList<ArrayList<String>> displayAllDetails(){
+    public ArrayList<ArrayList<String>> displayAllDetails(){
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, e.last_name, e.first_name, e.birthdate, ad.street, ad.barangay, ad.municipality, ad.city, ad.province, ad.zipcode, \n" +
@@ -59,7 +59,7 @@ public class HumanResource extends Employee{
         }
     }
     
-    ArrayList<ArrayList<String>> nextEmployeeID(){
+    public ArrayList<ArrayList<String>> nextEmployeeID(){
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT MAX(employee_id + 1) AS greatest_employee_id FROM employees";
@@ -71,7 +71,7 @@ public class HumanResource extends Employee{
         return data;
     }
     
-    Boolean addEmployeeDetails(ArrayList<String> data){
+    public Boolean addEmployeeDetails(ArrayList<String> data){
         boolean isSuccess = false;
         try {
             // 1. Insert into employee_address
@@ -132,9 +132,9 @@ public class HumanResource extends Employee{
                             try (PreparedStatement psGov = conn.prepareStatement(insertGov)) {
                                 psGov.setInt(1, employeeId);
                                 psGov.setString(2, data.get(15));
-                                psGov.setInt(3, Integer.parseInt(data.get(16)));
+                                psGov.setString(3, data.get(16));
                                 psGov.setString(4, data.get(17));
-                                psGov.setInt(5, Integer.parseInt(data.get(18)) );
+                                psGov.setString(5, data.get(18));
                                 psGov.executeUpdate();
                             }
                         }
@@ -148,7 +148,7 @@ public class HumanResource extends Employee{
         return isSuccess;
     }
     
-     ArrayList<ArrayList<String>> retrievedEmploymentStatus(String request){
+    public  ArrayList<ArrayList<String>> retrievedEmploymentStatus(String request){
             ArrayList<ArrayList<String>> data = new ArrayList<>();
             String sql;
         try {
@@ -167,7 +167,7 @@ public class HumanResource extends Employee{
         return data;
      }
      
-     ArrayList<ArrayList<String>> retrievedAllCredentials(){
+    public ArrayList<ArrayList<String>> retrievedAllCredentials(){
             ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT cr.employee_id, concat(e.last_name, ', ',first_name) as full_name, cr.role " +
@@ -181,7 +181,7 @@ public class HumanResource extends Employee{
         return data;
      }
      
-    Boolean addNewCredentials(ArrayList<String> data){
+    public Boolean addNewCredentials(ArrayList<String> data){
         boolean isSuccess = false;
         try {
             String sql = "INSERT INTO credentials (employee_id, employee_password, role) "
@@ -201,7 +201,7 @@ public class HumanResource extends Employee{
         return isSuccess;
     }
      
-    boolean validateDateBirthday(Date dateBirthday){
+    public boolean validateDateBirthday(Date dateBirthday){
         boolean isValid = true;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateBirthday);
@@ -239,144 +239,8 @@ public class HumanResource extends Employee{
         return isValid;
     }
 
-    
-//    String nextID(){
-//        int tempID = 0;
-//        employee.getDataList().clear();
-//        employee.setFilePath("CSVFiles//EmployeeDatabase.csv");
-//        employee.retrivedDetails();
-//        employee.getDataList();
-//        for(int i=1; i<employee.getDataList().size(); i++){
-//            if(tempID < Integer.parseInt(employee.getDataList().get(i).get(0))){
-//                tempID = Integer.parseInt(employee.getDataList().get(i).get(0));
-//            }
-//        }
-//        return String.valueOf(tempID+1);
-//    }
-    
-//    boolean addDetails(ArrayList<String> tempData){
-//         boolean isComplete = true;
-//        for(String info : tempData){
-//            if(info.equals("")){
-//                JOptionPane.showMessageDialog(null, "Please Complete All The Details!");
-//                isComplete = false;
-//                break;
-//            }
-//        }
-//        if(isComplete){
-//            boolean isValid = true;
-//            employee.getDataList().clear();
-//            employee.setFilePath("CSVFiles//EmployeeDatabase.csv");
-//            employee.retrivedDetails();
-//            for(int i=1; i<employee.getDataList().size(); i++){
-//                if(employee.getDataList().get(i).get(1).equals(tempData.get(2)) && employee.getDataList().get(i).get(2).equals(tempData.get(1))){
-//                    isValid = false;
-//                    isComplete = false;
-//                    JOptionPane.showMessageDialog(null, "Cannot Be Add New Employee Due To Employee Already Exist!");
-//                    break;
-//                }
-//            }
-//            if(isValid){
-//                employee.getDataList().add(tempData);
-//                employee.addDetailsCSV();
-//                JOptionPane.showMessageDialog(null, "Successfuly Added New Employee!");
-//            }
-//        }
-//        return isComplete;
-//    }
-//    
-//    void updateDetails(){
-//        
-//    }
-//    void deleteDetails(){
-//        
-//    }
-//    
-//    ArrayList<ArrayList<String>> allCredentials(){
-//        employee.getDataList().clear();
-//        employee.setFilePath("CSVFiles//CredentialsDatabase.csv");
-//        employee.retrivedDetails();
-//        ArrayList<ArrayList<String>> tempData = new ArrayList<>();
-//        for(int i=1; i<employee.getDataList().size(); i++){
-//            employee.getDataList().get(i).remove(2);
-//            tempData.add(employee.getDataList().get(i));
-//        }
-//        
-//        return tempData;
-//    }
-
-    
-
-
-//    ArrayList<ArrayList<String>> displayAllCredentials(){
-//        employee.getDataList().clear();
-//        employee.setFilePath("CSVFiles//CredentialsDatabase.csv");
-//        employee.retrivedDetails();
-//        employee.getDataList().remove(0);
-//        return employee.getDataList();
-//    }
-//    
-//
-//    void getEmployeeNames(){  
-//        employee.getDataList().clear();
-//        employee.getNewData().clear();
-//        fullName.clear();
-//        employee.setFilePath("CSVFiles//EmployeeDatabase.csv");
-//        employee.retrivedDetails();
-//        for(int i=1; i<employee.getDataList().size(); i++){
-//            ArrayList <String> names = new ArrayList<>();
-//            names.add(employee.getDataList().get(i).get(0));
-//            names.add(employee.getDataList().get(i).get(1) + " "+employee.getDataList().get(i).get(2));
-//            getIdAndNames().add(names);
-//            fullName.add(employee.getDataList().get(i).get(1) + " "+employee.getDataList().get(i).get(2));
-//        }
-//           
-//        Collections.sort(fullName);
-//        getNewData().add(fullName); 
-//    }
-//    
-//    String getID(){
-//        employee.getDataList().clear();
-//        String id = "";
-//        for(ArrayList<String> idName : getIdAndNames()){
-//           if(idName.get(1).equals(getSelectedName())){
-//               id = idName.get(0);
-//           }
-//        }
-//        return id;
-//    }
-//    
-//    boolean addNewCredentials(ArrayList<String> tempData){
-//        boolean isValid = true;
-//        for(String info : tempData){
-//            if(info.equals("")){
-//                isValid = false;
-//                break;
-//            }
-//        }
-//        if(!isValid){
-//            JOptionPane.showMessageDialog(null, "Please Provide All The Necessary Information!");
-//            isValid = false;
-//        }else{
-//            employee.getDataList().clear();
-//            employee.setFilePath("CSVFiles//CredentialsDatabase.csv");
-//            employee.retrivedDetails();
-//            for(int i=1; i<employee.getDataList().size(); i++){
-//                if(tempData.get(0).equals(employee.getDataList().get(i).get(0)) && tempData.get(3).equals(employee.getDataList().get(i).get(3))){
-//                    JOptionPane.showMessageDialog(null, "Cannot Be Add New Credentials Due To Employee Already Exist With The Same Role!");
-//                    isValid = false;
-//                    break;
-//                }
-//            }
-//            if(isValid){
-//                employee.getDataList().add(tempData);
-//                employee.addDetailsCSV();
-//                JOptionPane.showMessageDialog(null, "New Credentials Added!");
-//            }
-//        }
-//        return isValid;
-//    }
-   void setSelectedName(String selectedName){
+ 
+   public void setSelectedName(String selectedName){
        this.selectedName = selectedName;
    }
       

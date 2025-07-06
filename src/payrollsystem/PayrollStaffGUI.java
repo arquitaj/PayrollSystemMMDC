@@ -243,6 +243,8 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -454,20 +456,20 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
                 .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
             .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(sideBarPanelLayout.createSequentialGroup()
                     .addGap(158, 158, 158)
                     .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(599, Short.MAX_VALUE)))
+                    .addContainerGap(629, Short.MAX_VALUE)))
             .addGroup(sideBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarPanelLayout.createSequentialGroup()
-                    .addContainerGap(420, Short.MAX_VALUE)
+                    .addContainerGap(450, Short.MAX_VALUE)
                     .addComponent(jSeparator15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(337, 337, 337)))
         );
 
-        jPanel1.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 760));
+        jPanel1.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, 790));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/payrollPortal.jpg"))); // NOI18N
 
@@ -1998,9 +2000,9 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         tabbedPayrollLayout.setVerticalGroup(
             tabbedPayrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabbedPayrollLayout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addComponent(panelTypeRequest1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addGap(46, 46, 46))
         );
 
         mainTabbed.addTab("tab7", tabbedPayroll);
@@ -2135,9 +2137,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
         );
 
         pack();
@@ -2205,7 +2205,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
         // TODO add your handling code here:
-        System.out.println("I am click!");
         payrollStaff.setSelectedName(comboEmployeeName.getSelectedItem().toString());
         payrollStaff.setTableData(payrollStaff.getDataForDTRTable(comboEmployeeName.getSelectedItem().toString()));
         payrollStaff.setTableSize(6);
@@ -2234,29 +2233,29 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
         mainTabbed.setSelectedIndex(1);
-        txtID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-        txtFName.setText(employee.accountDetails.getFirstName());
-        txtLName.setText(employee.accountDetails.getLastName());
-        txtBDay.setText(employee.accountDetails.getBirthday());
-        txtPhoneNum.setText(employee.accountDetails.getPhoneNumber());
-        textAreaStreet.setText(employee.accountDetails.getStreet());
-        txtBrgy.setText(employee.accountDetails.getBarangay());
-        txtCity.setText(employee.accountDetails.getCity());
-        txtProvince.setText(employee.accountDetails.getProvince());
-        txtZipCode.setText(employee.accountDetails.getZipCode());
-        txtBasicSalary.setText(String.valueOf(employee.accountDetails.getBasicSalary()));
-        txtBiMonthlyRate.setText(String.valueOf(employee.accountDetails.getSemiBasicSalary()));
-        txtHourlyRate.setText(String.valueOf(employee.accountDetails.getHourlyRate()));
-        txtRiceSubsidy.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
-        txtPhoneAllowance.setText(String.valueOf(employee.accountDetails.getRiceSubsidy()));
-        txtClothingAllowance.setText(String.valueOf(employee.accountDetails.getClothingAllowance()));
-        txtPhilNum.setText(employee.accountDetails.getPhilHealthNumber());
-        txtSSSNum.setText(employee.accountDetails.getPhilHealthNumber());
-        txtTINNum.setText(employee.accountDetails.getTinNumber());
-        txtPagIbigNum.setText(employee.accountDetails.getPagibigNumber());
-        txtPosition.setText(employee.accountDetails.getPosition());
-        txtStatus.setText(employee.accountDetails.getStatus());
-        txtSupervisor.setText(employee.accountDetails.getSupervisor());
+        txtID.setText(employee.getEmployee_id());
+        txtFName.setText(employee.getFirstName());
+        txtLName.setText(employee.getLastName());
+        txtBDay.setText(employee.getBirthday());
+        txtPhoneNum.setText(employee.getPhoneNumber());
+        textAreaStreet.setText(employee.getStreet());
+        txtBrgy.setText(employee.getBarangay());
+        txtCity.setText(employee.getCity());
+        txtProvince.setText(employee.getProvince());
+        txtZipCode.setText(employee.getZipCode());
+        txtBasicSalary.setText(String.valueOf(employee.getBasicSalary()));
+        txtBiMonthlyRate.setText(String.valueOf(employee.getSemiBasicSalary()));
+        txtHourlyRate.setText(String.valueOf(employee.getHourlyRate()));
+        txtRiceSubsidy.setText(String.valueOf(employee.getRiceSubsidy()));
+        txtPhoneAllowance.setText(String.valueOf(employee.getRiceSubsidy()));
+        txtClothingAllowance.setText(String.valueOf(employee.getClothingAllowance()));
+        txtPhilNum.setText(employee.getPhilHealthNumber());
+        txtSSSNum.setText(employee.getPhilHealthNumber());
+        txtTINNum.setText(employee.getTinNumber());
+        txtPagIbigNum.setText(employee.getPagibigNumber());
+        txtPosition.setText(employee.getPosition());
+        txtStatus.setText(employee.getStatus());
+        txtSupervisor.setText(employee.getSupervisor());
     }//GEN-LAST:event_btnPersonalDetailsActionPerformed
 
     private void btnRequestPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestPortActionPerformed
@@ -2279,8 +2278,8 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
         // Set employee details in the DTR panel
         employee.viewPersonalDetails();
-        lblID2.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-        lblMyName4.setText(employee.accountDetails.getEmployeeCompleteName());
+        lblID2.setText(employee.getEmployee_id());
+        lblMyName4.setText(employee.getEmployeeCompleteName());
 
         // Get current date
         Calendar today = Calendar.getInstance();
@@ -2320,7 +2319,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
         employee.leaveBalancesInformation();
         lblID3.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-        lblMyName5.setText(employee.accountDetails.getEmployeeCompleteName());
+        lblMyName5.setText(employee.getEmployeeCompleteName());
         lblVLBalance1.setText(employee.accountDetails.getVLBalance());
         lblSLBalance1.setText(employee.accountDetails.getSLBalance());
 
@@ -2407,14 +2406,14 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
 
             employee.leaveBalancesInformation();
             lblID.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-            lblMyName.setText(employee.accountDetails.getEmployeeCompleteName());
+            lblMyName.setText(employee.getEmployeeCompleteName());
             lblVLBalance.setText(employee.accountDetails.getVLBalance());
             lblSLBalance.setText(employee.accountDetails.getSLBalance());
 
         } else {
             tabbedInsideRequest.setSelectedIndex(2);
             lblID1.setText(String.valueOf(employee.accountDetails.getEmployeeID()));
-            lblMyName2.setText(employee.accountDetails.getEmployeeCompleteName());
+            lblMyName2.setText(employee.getEmployeeCompleteName());
             // Display all requests in the table
             employee.setTableData(employee.getDataAllRequests());
             employee.setTableSize(3);
@@ -2462,7 +2461,7 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
             return;
         }
         if(employee.fileLeaveRequest(dateFrom.getDate(), dateTo.getDate(), comboLeaveType.getSelectedItem().toString(),
-                txtDaysNumber.getText(), txtReason.getText())){
+                Integer.parseInt(txtDaysNumber.getText()), txtReason.getText())){
             txtDaysNumber.setText(null);
             comboLeaveType.setSelectedIndex(0);
             dateFrom.setDate(null);
@@ -2503,7 +2502,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
              if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
                  Boolean isSuccessfulyAdded = employee.fileOvertimeRequest(
-                         employee.accountDetails.getEmployeeID(),
                          dateFromOvertime.getDate(),
                          dateToOvertime.getDate(),
                          Integer.parseInt(txtDaysNumber1.getText()),

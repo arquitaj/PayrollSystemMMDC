@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 public class PdfGenerator extends DatabaseConnection{
     
-    boolean generatePayslipPDF(String employeeID, java.util.Date startDate, java.util.Date endDate){
+    public boolean generatePayslipPDF(String employeeID, java.util.Date startDate, java.util.Date endDate){
         boolean isSuccess = false;
         String filenameJrxml = System.getProperty("user.dir") + "\\src\\files\\PayrollSlip.jrxml";
         String imgLogo = System.getProperty("user.dir") + "\\src\\Images\\logo_payslip.png";
@@ -108,7 +108,7 @@ public class PdfGenerator extends DatabaseConnection{
         return data;
     }
     
-    private boolean insertPdfToDB(byte[] file, java.util.Date startDate, java.util.Date endDate, int employeeID){
+    public boolean insertPdfToDB(byte[] file, java.util.Date startDate, java.util.Date endDate, int employeeID){
         boolean isSuccess = false;
         try{
             String query = "INSERT INTO payroll_system_db.payslip(employee_id, period_id, payslip_file) VALUES (?, (SELECT period_id FROM payroll_period WHERE period_from = ? AND period_to = ?), ?)";

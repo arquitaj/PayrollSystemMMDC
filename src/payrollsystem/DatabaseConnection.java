@@ -23,7 +23,7 @@ public class DatabaseConnection {
     private static final String DB_PASSWORD = "Johnpaul090950";
     Connection connection = null;
     
-    DatabaseConnection(){
+    public DatabaseConnection(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
