@@ -172,7 +172,7 @@ CREATE TABLE `credentials` (
 
 LOCK TABLES `credentials` WRITE;
 /*!40000 ALTER TABLE `credentials` DISABLE KEYS */;
-INSERT INTO `credentials` VALUES (1,10001,'10001','Supervisor'),(2,10002,'10002','Payroll Staff'),(3,10003,'10003','Employee'),(4,10004,'10004','Supervisor'),(5,10005,'10005','Employee'),(6,10006,'10006','Employee'),(7,10007,'10007','Supervisor'),(8,10008,'10008','Employee'),(9,10009,'10009','Employee'),(10,10010,'10010','Human Resource'),(11,10011,'10011','Supervisor'),(12,10012,'10012','Employee'),(13,10013,'10013','Employee'),(14,10014,'10014','Payroll Staff'),(15,10015,'10015','Employee'),(16,10016,'10016','Supervisor'),(17,10017,'10017','Employee'),(18,10018,'10018','Human Resource'),(19,10019,'10019','Employee'),(20,10020,'10020','Payroll Staff'),(21,10021,'10021','Employee'),(22,10022,'10022','Supervisor'),(23,10023,'10023','Employee'),(24,10024,'10024','Employee'),(25,10025,'10025','Human Resource'),(26,10026,'10026','Employee'),(27,10027,'10027','Payroll Staff'),(28,10028,'10028','Supervisor'),(29,10029,'10029','Employee'),(30,10030,'10030','Employee'),(31,10031,'10031','Employee'),(32,10032,'10032','Employee'),(33,10033,'10033','Employee'),(34,10034,'10034','Employee');
+INSERT INTO `credentials` VALUES (1,10001,'10001','Supervisor'),(2,10002,'10002','Payroll Staff'),(3,10003,'10003','Supervisor'),(4,10004,'10004','Supervisor'),(5,10005,'10005','Employee'),(6,10006,'10006','Employee'),(7,10007,'10007','Supervisor'),(8,10008,'10008','Employee'),(9,10009,'10009','Employee'),(10,10010,'10010','Human Resource'),(11,10011,'10011','Supervisor'),(12,10012,'10012','Employee'),(13,10013,'10013','Employee'),(14,10014,'10014','Payroll Staff'),(15,10015,'10015','Employee'),(16,10016,'10016','Supervisor'),(17,10017,'10017','Employee'),(18,10018,'10018','Human Resource'),(19,10019,'10019','Employee'),(20,10020,'10020','Payroll Staff'),(21,10021,'10021','Employee'),(22,10022,'10022','Supervisor'),(23,10023,'10023','Employee'),(24,10024,'10024','Employee'),(25,10025,'10025','Human Resource'),(26,10026,'10026','Employee'),(27,10027,'10027','Payroll Staff'),(28,10028,'10028','Supervisor'),(29,10029,'10029','Employee'),(30,10030,'10030','Employee'),(31,10031,'10031','Employee'),(32,10032,'10032','Employee'),(33,10033,'10033','Employee'),(34,10034,'10034','Employee');
 /*!40000 ALTER TABLE `credentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -970,4 +970,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-10  0:28:04
+-- Dump completed on 2025-07-10  1:13:59
