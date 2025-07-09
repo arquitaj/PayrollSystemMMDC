@@ -104,22 +104,6 @@ public class AccountDetails extends DatabaseConnection{
         return dataList;
     }
     
-    public int getEmployeeCount(){
-        int count = 0;
-        try{
-            String query = "SELECT COUNT(employee_id) FROM employees;";
-            Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(query);
-            while(result.next()){
-                count = result.getInt(1);
-            }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return count;
-    }
-    
 
     public String getFilePath() {
         return filePath;

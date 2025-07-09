@@ -5,6 +5,7 @@
 package payrollsystem;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -14,6 +15,7 @@ interface Payroll {
    void generatePayslip();
    ArrayList<ArrayList<String>> employeeNames();
    ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName);
-   int getEmployeeCount();
+   ArrayList<ArrayList<String>> getEmployeeWithAttendance(Date AttendanceFrom, Date AttendanceTo);
    void setSelectedName(String selectedName);
+   
 }

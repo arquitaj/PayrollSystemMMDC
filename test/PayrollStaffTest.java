@@ -30,7 +30,6 @@ public class PayrollStaffTest {
         test.testGeneratePayslip();
         test.testEmployeeNames();
         test.testGetDataForDTRTable();
-        test.testGetEmployeeCount();
         test.testSetSelectedName();
         test.testPdfGenerator();
         
@@ -51,11 +50,7 @@ public class PayrollStaffTest {
         payrollStaff.getDataForDTRTable("Aguilar, Delia");
     }
 
-    @Test
-    public void testGetEmployeeCount() {
-        payrollStaff.getEmployeeCount();
-    }
-
+    
     @Test
     public void testSetSelectedName() {
         payrollStaff.setSelectedName("Aguilar, Delia");

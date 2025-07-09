@@ -13,11 +13,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import payrollsystem.HumanResource;
-
+import payrollsystem.PayrollStaff;
 
 public class HumanResourceTest {
      SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
      HumanResource humanResource = new HumanResource("10010");
+     PayrollStaff payrollStaff = new PayrollStaff("10002");
      
      public static void main(String[] args) throws ParseException {
        HumanResourceTest test = new HumanResourceTest();
@@ -25,6 +26,8 @@ public class HumanResourceTest {
        test.testAddEmployeeDetails();
        test.testRetrievedAllCredentials();
        test.testAddNewCredentials();
+       test.testUpdateEmployeeDetails();
+       test.testGeneratePayslip();
     }
      
     @Test
@@ -64,6 +67,43 @@ public class HumanResourceTest {
         humanResource.addEmployeeDetails(tempData);
     }
     
+    //To update Employee Status Detail for Employee ID nO. 10002 
+    @Test
+    public void testUpdateEmployeeDetails() throws ParseException{
+        //Updating Employee Details
+        String dateStr = formatter.format(formatter.parse("06/19/1998"));
+        ArrayList<String> data = new ArrayList<>();
+            data.add("10002");  //employee ID
+            data.add("Antonio");  //First Name
+            data.add("Lim");  //Last Name
+            data.add(dateStr);  //Birthdate
+            data.add("171-867-411");  //phone number
+            data.add("San Antonio De Padua 2 Block 1 Lot 8 and 2");  //Street
+            data.add(" ");  //Barangay
+            data.add(" ");  //municipality
+            data.add("Dasmarinas");  //city    
+            data.add("Cavite");  //Province
+            data.add("");  //zipcode
+            data.add("60000.00");  //Basic Salary
+            data.add("1500.00");  //rice subsidy
+            data.add("2000.00");  //phone allowance
+            data.add("1000.00");  //clothing allowance
+            data.add("52-2061274-9");  //id sss
+            data.add("331735646338");  //id philhealth
+            data.add("683-102-776-000");  //id tin
+            data.add("663904995411");  //id pagibig
+            data.add("Chief Operating Officer");  //position
+            data.add("Inactive");  //status
+            data.add("10001");  //supervisor id
+        
+            humanResource.updateEmployeeDetails(data);
+    }
+    
+    @Test
+    public void testGeneratePayslip() {
+        payrollStaff.generatePayslip();
+    }
+    
     @Test
     public void testRetrievedAllCredentials(){
         //Viewing of all employee credentials
@@ -79,6 +119,4 @@ public class HumanResourceTest {
         data.add("Employee"); //Employee Role
         humanResource.addNewCredentials(data);
     }
-  
-    
 }

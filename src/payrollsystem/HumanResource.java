@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 
 
@@ -33,7 +34,7 @@ public class HumanResource extends Employee{
         try {
             String sql = "SELECT e.employee_id, e.last_name, e.first_name, e.birthdate, ad.street, ad.barangay, ad.municipality, ad.city, ad.province, ad.zipcode, \n" +
                         "e.phone_number, id.sss_number, id.philhealth_number, id.tin_number, id.pagibig_number, s.status_name, p.position_name, \n" +
-                        "CONCAT(e.last_name, ', ', e.first_name) AS immediate_supervisor,\n" +
+                        "e.immediate_supervisor AS immediate_supervisor,\n" +
                         "sal.basic_salary, sal.rice_subsidy, sal.phone_allowance, sal.clothing_allowance \n" +
                         "FROM employees e JOIN employee_address ad ON e.employee_address_id = ad.employee_address_id \n" +
                         "JOIN compensation_details sal ON e.employee_id = sal.employee_id\n" +
@@ -182,18 +183,31 @@ public class HumanResource extends Employee{
      }
      
     public Boolean addNewCredentials(ArrayList<String> data){
+        ArrayList<ArrayList<String>> credentialData = new ArrayList<>(); //To create new arraylist
         boolean isSuccess = false;
+        
         try {
-            String sql = "INSERT INTO credentials (employee_id, employee_password, role) "
-                    + " VALUES (?,?,?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(data.get(0)));
-            statement.setString(2, data.get(1));
-            statement.setString(3, data.get(2));
-            int update = statement.executeUpdate();
-            if(update > 0){
-                isSuccess = true;
-                JOptionPane.showMessageDialog(null, "Successfuly Added New Credentials!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            //To check if credentials already exist
+            String checkCredentialSQL = "SELECT * FROM credentials WHERE employee_id = ? AND role = ? ";
+            PreparedStatement checkStatement = conn.prepareStatement(checkCredentialSQL);
+            checkStatement.setInt(1, Integer.parseInt(data.get(0)));
+            checkStatement.setString(2, data.get(2));
+            credentialData = accountDetails.retrivedDetails(checkStatement);
+            
+            //To insert new credentials
+            if(credentialData.isEmpty()){  //To check if the arraylist has value retrieved from database
+                String sql = "INSERT INTO credentials (employee_id, employee_password, role) VALUES (?, ?, ?)";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(data.get(0)));
+                statement.setString(2, data.get(1));
+                statement.setString(3, data.get(2));
+                int update = statement.executeUpdate();
+                if(update > 0){
+                    isSuccess = true;
+                    JOptionPane.showMessageDialog(null, "Successfuly Added New Credentials!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }else{
+                 JOptionPane.showMessageDialog(null, "Cannot be Add New Credentials to Employee already exist with the same role!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(HumanResource.class.getName()).log(Level.SEVERE, null, ex);
@@ -239,7 +253,75 @@ public class HumanResource extends Employee{
         return isValid;
     }
 
- 
+    public boolean updateEmployeeDetails(ArrayList<String> data){
+        boolean isSuccess = false;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate parsedDate = LocalDate.parse(data.get(3), formatter);
+        try {
+            String sql = "UPDATE employees e " +
+                            "JOIN employee_address ad ON e.employee_address_id = ad.employee_address_id " +
+                            "JOIN compensation_details sal ON e.employee_id = sal.employee_id " +
+                            "JOIN government_ids id ON e.employee_id = id.employee_id " +
+                            "JOIN positions p ON e.position_id = p.position_id " +
+                            "JOIN employee_statuses s ON e.status_id = s.status_id " +
+                            "SET e.first_name = ?, " +
+                            "e.last_name = ?, " +
+                            "e.birthdate = ?, " +
+                            "e.phone_number = ?, " +
+                            "ad.street = ?, " +
+                            "ad.barangay = ?, " +
+                            "ad.municipality = ?, " +
+                            "ad.city = ?, " +
+                            "ad.province = ?, " +
+                            "ad.zipcode = ?, " +
+                            "sal.basic_salary = ?, " +
+                            "sal.rice_subsidy = ?, " +
+                            "sal.phone_allowance = ?, " +
+                            "sal.clothing_allowance = ?, " +
+                            "id.sss_number = ?, " +
+                            "id.philhealth_number = ?, " +
+                            "id.tin_number = ?, " +
+                            "id.pagibig_number = ?, " +
+                            "e.position_id = (SELECT position_id FROM positions WHERE position_name = ?), " +
+                            "e.status_id = (SELECT status_id FROM employee_statuses WHERE status_name = ?), " +
+                            "e.immediate_supervisor = ? " +
+                            "WHERE e.employee_id = ?";
+            
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, data.get(1));  //First Name
+            statement.setString(2, data.get(2));  //Last Name
+            statement.setDate(3, java.sql.Date.valueOf(parsedDate));  //Birthdate
+            statement.setString(4, data.get(4));  //phone number
+            statement.setString(5, data.get(5));  //Street
+            statement.setString(6, data.get(6));  //Barangay
+            statement.setString(7, data.get(7));  //municipality
+            statement.setString(8, data.get(8));  //city    
+            statement.setString(9, data.get(9));  //Province
+            statement.setString(10, data.get(10));  //zipcode
+            statement.setDouble(11, Double.parseDouble(data.get(11)));  //Basic Salary
+            statement.setDouble(12, Double.parseDouble(data.get(12)));  //rice subsidy
+            statement.setDouble(13, Double.parseDouble(data.get(13)));  //phone allowance
+            statement.setDouble(14, Double.parseDouble(data.get(14)));  //clothing allowance
+            statement.setString(15, data.get(15));  //id sss
+            statement.setString(16, data.get(16));  //id philhealth
+            statement.setString(17, data.get(17));  //id tin
+            statement.setString(18, data.get(18));  //id pagibig
+            statement.setString(19, data.get(19));  //position
+            statement.setString(20, data.get(20));  //status
+            statement.setInt(21, Integer.parseInt(data.get(21)));  //supervisor id
+            statement.setInt(22, Integer.parseInt(data.get(0)));  //employee ID
+            int update = statement.executeUpdate();
+            if(update > 0){
+                isSuccess = true;
+                JOptionPane.showMessageDialog(null, "Successfuly Updated Employee Details!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HumanResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isSuccess;
+    }
+   
    public void setSelectedName(String selectedName){
        this.selectedName = selectedName;
    }

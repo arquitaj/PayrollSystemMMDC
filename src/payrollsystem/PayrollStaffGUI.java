@@ -2145,13 +2145,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         jDateFrom.setDate(null);
         jDateTo.setDate(null);
         mainTabbed.setSelectedIndex(6);
-//        btnReleased.setEnabled(true);
-//        String payrollRange = payrollStaff.computePayroll();
-//        System.out.println("Somnething");
-//        payrollStaff.setTableData(payrollStaff.getDataForPayrollTable());
-//        payrollStaff.setTableSize(14);
-//        payrollStaff.displayDataTable(jTablePayroll);
-//        lblPayrollPeriod.setText("Payroll from "+payrollRange);
     }//GEN-LAST:event_btnLeaveLedger2ActionPerformed
 
     private void btnAllEmployeeDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllEmployeeDTRActionPerformed
@@ -2175,12 +2168,11 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean isSuccess = false;
         PdfGenerator generator = new PdfGenerator();
-        int employeeCount = employee.getEmployeeCount();
+        ArrayList<ArrayList<String>> employeeWithAttendance = payrollStaff.getEmployeeWithAttendance(jDateFrom.getDate(), jDateTo.getDate());
         
-        for (int i = 1; i <= employeeCount; i++){
-            isSuccess = generator.generatePayslipPDF(String.valueOf(10000 + i), jDateFrom.getDate(), jDateTo.getDate());
+        for (int i = 0; i < employeeWithAttendance.size(); i++){
+            isSuccess = generator.generatePayslipPDF(employeeWithAttendance.get(i).get(0), jDateFrom.getDate(), jDateTo.getDate());
         }
- 
         if(isSuccess){
             JOptionPane.showMessageDialog(null, "Successfully Generated Payslip!", "Success", JOptionPane.INFORMATION_MESSAGE);
             DefaultTableModel model = (DefaultTableModel)jTablePayroll.getModel();
@@ -2223,6 +2215,17 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         btnReleased.setEnabled(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private ArrayList<Object[]> getPayrollData(){
+        ArrayList<Object[]> payrollData = new ArrayList<Object[]>();
+        ArrayList<ArrayList<String>> employeeWithAttendance = payrollStaff.getEmployeeWithAttendance(jDateFrom.getDate(), jDateTo.getDate());
+        PdfGenerator generator = new PdfGenerator();
+     
+        for (int i = 0; i < employeeWithAttendance.size(); i++){
+            payrollData.add(generator.readEmployeeDetailsFromDB(employeeWithAttendance.get(i).get(0), jDateFrom.getDate(), jDateTo.getDate()));
+        }
+        return payrollData;
+    }
+        
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
         mainTabbed.setSelectedIndex(1);
         txtID.setText(employee.getEmployee_id());
@@ -2521,17 +2524,6 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
         timer.setCoalesce(true);
         timer.setInitialDelay(0);
         timer.start();
-    }
-    
-    private ArrayList<Object[]> getPayrollData(){
-        ArrayList<Object[]> payrollData = new ArrayList<Object[]>();
-        int employeeCount = employee.getEmployeeCount();
-        PdfGenerator generator = new PdfGenerator();
-        
-        for (int i = 1; i <= employeeCount; i++){
-            payrollData.add(generator.readEmployeeDetailsFromDB(String.valueOf(10000 + i), jDateFrom.getDate(), jDateTo.getDate()));
-        }
-        return payrollData;
     }
     
     /**

@@ -72,7 +72,7 @@ public class PdfGenerator extends DatabaseConnection{
             java.sql.Connection conn = this.getDBConnection();
             String query = "CALL generate_payslip_report(?, ?, ?);";
             CallableStatement statement = conn.prepareCall(query);
-            statement.setInt(1, Integer.valueOf(employeeID));
+            statement.setInt(1, Integer.parseInt(employeeID));
             statement.setDate(2, new java.sql.Date(startDate.getTime()));
             statement.setDate(3, new java.sql.Date(endDate.getTime()));
             ResultSet result = statement.executeQuery();
@@ -118,8 +118,10 @@ public class PdfGenerator extends DatabaseConnection{
             statement.setDate(2, new java.sql.Date(startDate.getTime()));
             statement.setDate(3, new java.sql.Date(endDate.getTime()));
             statement.setBlob(4, new SerialBlob(file));
-            statement.execute();
-            isSuccess = true;
+            int update = statement.executeUpdate();   
+            if(update > 0){
+                isSuccess = true;
+            }
         }catch(Exception e){
             System.out.println(e);
         }
