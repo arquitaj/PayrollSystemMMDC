@@ -29,7 +29,7 @@ public class HumanResource extends Employee{
         this.employeeID = employeeID;
     }
     
-    public ArrayList<ArrayList<String>> displayAllDetails(){
+    public ArrayList<ArrayList<String>> displayAllDetails(){ //queries data for a specified employee; returns arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, e.last_name, e.first_name, e.birthdate, ad.street, ad.barangay, ad.municipality, ad.city, ad.province, ad.zipcode, \n" +
@@ -60,7 +60,7 @@ public class HumanResource extends Employee{
         }
     }
     
-    public ArrayList<ArrayList<String>> nextEmployeeID(){
+    public ArrayList<ArrayList<String>> nextEmployeeID(){ //returns last employee_id + 1; returns arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT MAX(employee_id + 1) AS greatest_employee_id FROM employees";
@@ -149,7 +149,7 @@ public class HumanResource extends Employee{
         return isSuccess;
     }
     
-    public  ArrayList<ArrayList<String>> retrievedEmploymentStatus(String request){
+    public  ArrayList<ArrayList<String>> retrievedEmploymentStatus(String request){ //queries either employee status or position; returns arraylist
             ArrayList<ArrayList<String>> data = new ArrayList<>();
             String sql;
         try {
@@ -168,7 +168,7 @@ public class HumanResource extends Employee{
         return data;
      }
      
-    public ArrayList<ArrayList<String>> retrievedAllCredentials(){
+    public ArrayList<ArrayList<String>> retrievedAllCredentials(){ //queries all entries from credentials table; returns arraylist
             ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT cr.employee_id, concat(e.last_name, ', ',first_name) as full_name, cr.role " +
@@ -182,7 +182,7 @@ public class HumanResource extends Employee{
         return data;
      }
      
-    public Boolean addNewCredentials(ArrayList<String> data){
+    public Boolean addNewCredentials(ArrayList<String> data){ //inserts new credentials to credentials table; returns boolean
         ArrayList<ArrayList<String>> credentialData = new ArrayList<>(); //To create new arraylist
         boolean isSuccess = false;
         
@@ -215,7 +215,7 @@ public class HumanResource extends Employee{
         return isSuccess;
     }
      
-    public boolean validateDateBirthday(Date dateBirthday){
+    public boolean validateDateBirthday(Date dateBirthday){ //validation check for birthday input; returns boolean
         boolean isValid = true;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateBirthday);
@@ -253,7 +253,7 @@ public class HumanResource extends Employee{
         return isValid;
     }
 
-    public boolean updateEmployeeDetails(ArrayList<String> data){
+    public boolean updateEmployeeDetails(ArrayList<String> data){ //update specified employee details; returns boolean
         boolean isSuccess = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate parsedDate = LocalDate.parse(data.get(3), formatter);

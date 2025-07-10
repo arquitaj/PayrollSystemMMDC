@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 public class PdfGenerator extends DatabaseConnection{
     
-    public boolean generatePayslipPDF(String employeeID, java.util.Date startDate, java.util.Date endDate){
+    public boolean generatePayslipPDF(String employeeID, java.util.Date startDate, java.util.Date endDate){ //generates a pdf of a specific employee based on the employeeid parameter
         boolean isSuccess = false;
         String filenameJrxml = System.getProperty("user.dir") + "\\src\\files\\PayrollSlip.jrxml";
         String imgLogo = System.getProperty("user.dir") + "\\src\\Images\\logo_payslip.png";
@@ -57,7 +57,7 @@ public class PdfGenerator extends DatabaseConnection{
             details.put("TOTAL_NET_INCOME", data[19]);
             details.put("IMAGE_DIRECTORY", imgLogo);
             
-            JasperPrint jprint = (JasperPrint) JasperFillManager.fillReport(jasperReport, details, new JREmptyDataSource());
+            JasperPrint jprint = (JasperPrint) JasperFillManager.fillReport(jasperReport, details, new JREmptyDataSource()); //JasperReport library used to generate PDFs
             isSuccess = insertPdfToDB(JasperExportManager.exportReportToPdf(jprint), startDate, endDate, Integer.parseInt(employeeID));
         }
         catch(Exception e){
@@ -66,11 +66,11 @@ public class PdfGenerator extends DatabaseConnection{
         return isSuccess;
     }
     
-    public Object[] readEmployeeDetailsFromDB(String employeeID, java.util.Date startDate, java.util.Date endDate){
+    public Object[] readEmployeeDetailsFromDB(String employeeID, java.util.Date startDate, java.util.Date endDate){ //reads data from database and returns data in relevant formatting
         Object[] data = null;
         try{
             java.sql.Connection conn = this.getDBConnection();
-            String query = "CALL generate_payslip_report(?, ?, ?);";
+            String query = "CALL generate_payslip_report(?, ?, ?);"; //generate_payslip_report is a stored procedure, parameters: (employee_id, date_from, date_to)
             CallableStatement statement = conn.prepareCall(query);
             statement.setInt(1, Integer.parseInt(employeeID));
             statement.setDate(2, new java.sql.Date(startDate.getTime()));
@@ -108,7 +108,7 @@ public class PdfGenerator extends DatabaseConnection{
         return data;
     }
     
-    public boolean insertPdfToDB(byte[] file, java.util.Date startDate, java.util.Date endDate, int employeeID){
+    public boolean insertPdfToDB(byte[] file, java.util.Date startDate, java.util.Date endDate, int employeeID){ //inserts generated pdf to payslip table in the database
         boolean isSuccess = false;
         try{
             String query = "INSERT INTO payroll_system_db.payslip(employee_id, period_id, payslip_file) VALUES (?, (SELECT period_id FROM payroll_period WHERE period_from = ? AND period_to = ?), ?)";
@@ -120,7 +120,7 @@ public class PdfGenerator extends DatabaseConnection{
             statement.setBlob(4, new SerialBlob(file));
             int update = statement.executeUpdate();   
             if(update > 0){
-                isSuccess = true;
+                isSuccess = true; //return true if number of rows affected by INSERT statement is greater than 0
             }
         }catch(Exception e){
             System.out.println(e);

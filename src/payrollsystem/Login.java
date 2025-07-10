@@ -27,7 +27,7 @@ public class Login extends Credentials {
     }
     
     @Override
-    public ArrayList<ArrayList<String>> checkCredentials() {
+    public ArrayList<ArrayList<String>> checkCredentials() { //queries credentials from credentials table; returns true if both credentials match an entry in the table
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, CONCAT(e.last_name, ', ', e.first_name) AS full_name, c.role AS role " +

@@ -23,7 +23,7 @@ public class Supervisor extends Employee{
         super();  
     }
     
-   public ArrayList<ArrayList<String>> employeeRequest(String selectedItem){
+   public ArrayList<ArrayList<String>> employeeRequest(String selectedItem){ //returns an arraylist from specified queries of possible employee requests
        ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sqlForLeave = "SELECT e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, ll.date_filed, " +
@@ -86,7 +86,7 @@ public class Supervisor extends Employee{
    }  
     
 
-    public ArrayList<ArrayList<String>> employeeNames(){  
+    public ArrayList<ArrayList<String>> employeeNames(){  //returns all employee full names as an arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT CONCAT(last_name, ', ',first_name) AS full_name FROM employees WHERE immediate_supervisor = ? ORDER BY full_name";
@@ -101,7 +101,7 @@ public class Supervisor extends Employee{
     }
        
     
-    public ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){
+    public ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){ //returns all dtr data from specified employee where status = pending
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, CONCAT(e.last_name, ' ', e.first_name) AS full_name, " +
@@ -122,7 +122,7 @@ public class Supervisor extends Employee{
     }
     
      
-    public void approvedEmployeeRequest(ArrayList<String> rowData){
+    public void approvedEmployeeRequest(ArrayList<String> rowData){ //updates specified employee request status to 'approved'
         if(rowData.get(3).equals("Overtime")){
             try {
                 String sql = "UPDATE overtime_requests orq JOIN request_status rs ON rs.status = ? "
@@ -179,7 +179,7 @@ public class Supervisor extends Employee{
      }
      
 
-    public void disapprovedEmployeeRequest(ArrayList<String> rowData){
+    public void disapprovedEmployeeRequest(ArrayList<String> rowData){ //updates specified employee request status to 'disapproved'
           String sql;
         try {
             

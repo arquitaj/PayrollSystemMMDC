@@ -1834,7 +1834,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSupervisorActionPerformed
 
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
-        // TODO add your handling code here:
+        // sets personal detail panel label text
         mainTabbed.setSelectedIndex(1);
         txtID.setText(employee.getEmployee_id());
         txtFName.setText(employee.getFirstName());
@@ -1942,7 +1942,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDaysNumber1ActionPerformed
 
     private void btnSubmit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmit1ActionPerformed
-        // TODO add your handling code here:
         if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
              if(employee.countNumberOfDays(dateFromOvertime.getDate(), dateToOvertime.getDate())){
                  Boolean isSuccessfulyAdded = employee.fileOvertimeRequest(

@@ -80,7 +80,7 @@ public class Employee extends AccountDetails {
             return timeNow;
     }
     
-    public void viewPersonalDetails(){
+    public void viewPersonalDetails(){ //assigns queried employee data into relevant variables
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, e.first_name, e.last_name, e.birthdate, e.phone_number,ad.street, ad.barangay, ad.city, ad.province, "
@@ -122,7 +122,7 @@ public class Employee extends AccountDetails {
         }
     }
     
-    public ArrayList<ArrayList<String>> getDataAllRequests(){
+    public ArrayList<ArrayList<String>> getDataAllRequests(){ //returns all overtime requests as an arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT o.date_filed, 'Overtime' AS request_type, " +
@@ -150,7 +150,7 @@ public class Employee extends AccountDetails {
            return data;
     }
     
-    public ArrayList<ArrayList<String>> getDTR(Date dateFrom, Date dateTo){
+    public ArrayList<ArrayList<String>> getDTR(Date dateFrom, Date dateTo){ //return all dtr of specified employee as an arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql =  "SELECT ar.attendance_date, ar.login, ar.logout, rs.status AS request_status " +
@@ -170,7 +170,7 @@ public class Employee extends AccountDetails {
         return data;
     }
     
-    public ArrayList<ArrayList<String>> viewPersonalLeaveLedger() {
+    public ArrayList<ArrayList<String>> viewPersonalLeaveLedger() { //returns leave ledgers of specified employee as an arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT l.date_filed, t.leave_type, l.leave_from, l.leave_to, " +
@@ -189,7 +189,7 @@ public class Employee extends AccountDetails {
         return data;
     }
     
-    public Boolean fileOvertimeRequest(Date overtime_from, Date overtime_to, int number_of_days, String reason){
+    public Boolean fileOvertimeRequest(Date overtime_from, Date overtime_to, int number_of_days, String reason){ //insert new overtime request to overtime_requests table; returns boolean
         try {
             String sql =  "INSERT INTO overtime_requests (" +
                     "employee_id, date_filed, overtime_from, overtime_to, " +
@@ -217,7 +217,7 @@ public class Employee extends AccountDetails {
     }
     
     //Method for filing a request
-    public Boolean fileLeaveRequest(Date leaveFrom, Date leaveTo, String leaveType, int numDays, String reason){
+    public Boolean fileLeaveRequest(Date leaveFrom, Date leaveTo, String leaveType, int numDays, String reason){ // insert new leave request to leave_ledger table; returns boolean
         try {
             String sql = "INSERT INTO payroll_system_db.leave_ledger " +
                     "(employee_id, date_filed, leave_type_id, leave_from, leave_to, number_of_days, reason, request_status_id) " +
@@ -246,7 +246,7 @@ public class Employee extends AccountDetails {
     }
     
     //Method for Timein button
-    public void userLogin(){
+    public void userLogin(){ // inserts new attendance record into attendance_records table on login; returns boolean
         try {
             String sql = "INSERT INTO attendance_records (employee_id, attendance_date, login, request_status_id) " +
                     "SELECT ?, ?, ?, (SELECT request_status_id FROM request_status WHERE status = 'Pending' LIMIT 1) FROM DUAL " +
@@ -270,7 +270,7 @@ public class Employee extends AccountDetails {
     }
     
     //Method for Time-out button
-    public void userLogout(){
+    public void userLogout(){ //insert attendance record into attendance_records table with logout data; returns boolean
         try {
             String sql = "INSERT INTO attendance_records (employee_id, attendance_date, logout, request_status_id) " +
                     "VALUES (?, ?, ?, (SELECT request_status_id FROM request_status WHERE status = 'Pending' LIMIT 1)) " +
@@ -291,7 +291,7 @@ public class Employee extends AccountDetails {
     
 
 
-    public void leaveBalancesInformation(){
+    public void leaveBalancesInformation(){ //queries leave balance information from database and assigns values to accountdetails instance
         try {
             String sql = "SELECT balance FROM leave_balances WHERE employee_id = ? ";
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -321,7 +321,7 @@ public class Employee extends AccountDetails {
         return true;
     }
     
-    public int getDaysWorked(){
+    public int getDaysWorked(){ //returns the number of days worked by a specified employee
         try{
             String query = "SELECT * FROM payroll_system_db.attendance_records WHERE employee_id = ?;";
             PreparedStatement statement = conn.prepareStatement(query);
@@ -336,7 +336,7 @@ public class Employee extends AccountDetails {
         return daysWorked;
     }
     
-    public int getOvertime(){
+    public int getOvertime(){ //returns number of approved overtime days
         try{
             String query = "SELECT * FROM payroll_system_db.overtime_requests WHERE employee_id = ? AND request_status_id = 2;";
             PreparedStatement statement = conn.prepareStatement(query);
@@ -352,7 +352,7 @@ public class Employee extends AccountDetails {
     }
     
     
-    public boolean downloadPayslip(Date date_from, Date date_to) {
+    public boolean downloadPayslip(Date date_from, Date date_to) { //queries specified payslip pdf from database and saves to ./DownloadFiles
         boolean isSuccess = false;
         if (date_from == null || date_to == null) {
             JOptionPane.showMessageDialog(null, "Error: date_from or date_to is null.", "Error", JOptionPane.ERROR_MESSAGE);

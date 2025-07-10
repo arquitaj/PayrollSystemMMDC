@@ -23,7 +23,7 @@ public class DatabaseConnection {
     private static final String DB_PASSWORD = "Johnpaul090950";
     Connection connection = null;
     
-    public DatabaseConnection(){
+    public DatabaseConnection(){ //initializes database connection
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -32,7 +32,7 @@ public class DatabaseConnection {
         }
     }
  
-    public Connection getDBConnection(){
+    public Connection getDBConnection(){ //returns initialized database connection
         return this.connection; 
     }
 }

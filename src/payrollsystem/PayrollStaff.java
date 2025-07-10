@@ -36,7 +36,7 @@ public class PayrollStaff extends Employee implements Payroll{
     
 
     @Override
-    public void generatePayslip(){
+    public void generatePayslip(){ //returns arraylist of all employee ids
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT employee_id FROM employees ORDER BY employee_id";
@@ -50,7 +50,7 @@ public class PayrollStaff extends Employee implements Payroll{
 
 
     @Override
-    public ArrayList<ArrayList<String>> employeeNames(){  
+    public ArrayList<ArrayList<String>> employeeNames(){  //returns an arraylist of all employee full names
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT CONCAT(last_name, ', ',first_name) AS full_name FROM employees ORDER BY last_name";
@@ -66,7 +66,7 @@ public class PayrollStaff extends Employee implements Payroll{
     
     
     @Override
-     public ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){
+     public ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){ //returns all relevant dtr data of a specified employee as an arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, CONCAT(e.last_name, ' ', e.first_name) AS full_name, " +
@@ -87,7 +87,7 @@ public class PayrollStaff extends Employee implements Payroll{
      
 
     @Override
-    public ArrayList<ArrayList<String>> getEmployeeWithAttendance(java.util.Date AttendanceFrom, java.util.Date AttendanceTo){
+    public ArrayList<ArrayList<String>> getEmployeeWithAttendance(java.util.Date AttendanceFrom, java.util.Date AttendanceTo){ //returns all employees who have attendancve records between a specified date frame as an arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
         try{

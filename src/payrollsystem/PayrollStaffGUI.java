@@ -2165,13 +2165,12 @@ public class PayrollStaffGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAllEmployeeDTRActionPerformed
 
     private void btnReleasedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReleasedActionPerformed
-        // TODO add your handling code here:
         boolean isSuccess = false;
         PdfGenerator generator = new PdfGenerator();
         ArrayList<ArrayList<String>> employeeWithAttendance = payrollStaff.getEmployeeWithAttendance(jDateFrom.getDate(), jDateTo.getDate());
         
         for (int i = 0; i < employeeWithAttendance.size(); i++){
-            isSuccess = generator.generatePayslipPDF(employeeWithAttendance.get(i).get(0), jDateFrom.getDate(), jDateTo.getDate());
+            isSuccess = generator.generatePayslipPDF(employeeWithAttendance.get(i).get(0), jDateFrom.getDate(), jDateTo.getDate()); //generate payslip for all employees with attendance records in the specified date range, returns a boolean for completion dialog 
         }
         if(isSuccess){
             JOptionPane.showMessageDialog(null, "Successfully Generated Payslip!", "Success", JOptionPane.INFORMATION_MESSAGE);
