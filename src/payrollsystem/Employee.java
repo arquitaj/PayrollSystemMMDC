@@ -4,54 +4,27 @@
  */
 package payrollsystem;
 
-import java.io.BufferedWriter;
 import java.sql.*;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
+import java.time.*;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Employee extends AccountDetails {
-    
-    AccountDetails accountDetails = new AccountDetails();
-    AccountDetails attendance = new AccountDetails();
-    AccountDetails overtime = new AccountDetails();
-    AccountDetails balance = new AccountDetails();
-    AccountDetails payroll = new AccountDetails();
-    AccountDetails dbConnection = new AccountDetails();
-    
-    
-    private int employeeID;
+    AccountDetails accountDetails = new AccountDetails();                       //Calling the class AccountDetails
+    private int employeeID;                                                     //Creating a variable for employee id
     protected int indexAttendance;
-    private String filePath;
-    private String leaveDays;
     private int numberOfDaysLeave, daysWorked, overtimeDays = 0;
-    private String balanceVL, balanceSL;
     private String employee_id, firstName, lastName, birthday, phoneNumber, street, barangay, city, province, zipcode, sssNumber, philHealthNumber, tinNumber, 
-            pagibigNumber, status, position, supervisor, dateToday, timeNow;
+            pagibigNumber, status, position, supervisor;
     private double basicSalary, riceSubsidy, phoneAllowance, clothingAllowance, semiBasicSalary, hourlyRate;
   
-    java.sql.Connection conn = dbConnection.getDBConnection();
+    java.sql.Connection conn = dbConnection.getDBConnection();                  //Request Database Connection
     
     Employee(){
         
@@ -71,16 +44,14 @@ public class Employee extends AccountDetails {
     
     //Method to get the time now with the format of "00:00:00"
     Time getTime(){
-         // Get current time with seconds = 0, milliseconds = 0
-            Timestamp time = new Timestamp(System.currentTimeMillis());
-            LocalTime localTime = time.toLocalDateTime().toLocalTime().withSecond(0).withNano(0);
-            // Convert to java.sql.Time
-            Time timeNow = Time.valueOf(localTime);
-            
-            return timeNow;
+        Timestamp time = new Timestamp(System.currentTimeMillis());             //Get current time with seconds = 0, milliseconds = 0
+        LocalTime localTime = time.toLocalDateTime().toLocalTime().withSecond(0).withNano(0);
+        Time timeNow = Time.valueOf(localTime);                                 //Convert to java.sql.Time 
+        return timeNow;                                                         //Return the current time now
     }
     
-    public void viewPersonalDetails(){ //assigns queried employee data into relevant variables
+    //Method that set query to get the personal details
+    public void viewPersonalDetails(){ 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, e.first_name, e.last_name, e.birthdate, e.phone_number,ad.street, ad.barangay, ad.city, ad.province, "
@@ -92,37 +63,39 @@ public class Employee extends AccountDetails {
                     + "JOIN government_ids id ON e.employee_id = id.employee_id JOIN positions p ON e.position_id = p.position_id "
                     + "JOIN employee_statuses s ON e.status_id = s.status_id WHERE e.employee_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, this.employeeID);
-            data = accountDetails.retrivedDetails(statement);
-            this.employee_id = data.get(0).get(0);
-            this.firstName = data.get(0).get(1);
-            this.lastName = data.get(0).get(2);
-            this.birthday = data.get(0).get(3);
-            this.phoneNumber = data.get(0).get(4); 
-            this.street = data.get(0).get(5);
-            this.barangay = data.get(0).get(6);
-            this.city = data.get(0).get(7);
-            this.province = data.get(0).get(8);
-            this.zipcode = data.get(0).get(9);
-            this.basicSalary = Double.parseDouble(data.get(0).get(10));
-            this.semiBasicSalary = this.basicSalary / 2; 
-            this.hourlyRate = Math.round(((this.semiBasicSalary / 21.0) / 8.0) * 100.0) / 100.0;
-            this.riceSubsidy = Double.parseDouble(data.get(0).get(11));
-            this.phoneAllowance = Double.parseDouble(data.get(0).get(12));
-            this.clothingAllowance = Double.parseDouble(data.get(0).get(13));
-            this.philHealthNumber = data.get(0).get(14);
-            this.sssNumber = data.get(0).get(15);
-            this.tinNumber = data.get(0).get(16);
-            this.pagibigNumber = data.get(0).get(17);
-            this.position = data.get(0).get(18);
-            this.status = data.get(0).get(19);
-            this.supervisor = data.get(0).get(20);
+            statement.setInt(1, this.employeeID);                               //Set employee id for retrieving data from database
+            data = accountDetails.retrivedDetails(statement);                   //To call the method for retrieving all personal details
+            this.employee_id = data.get(0).get(0);                              //Set employee ID
+            this.firstName = data.get(0).get(1);                                //Set the first name
+            this.lastName = data.get(0).get(2);                                 //Set the last name
+            this.birthday = data.get(0).get(3);                                 //Set the birthday
+            this.phoneNumber = data.get(0).get(4);                              //Set the phone number
+            this.street = data.get(0).get(5);                                   //Set the stree name
+            this.barangay = data.get(0).get(6);                                 //Set the barangay name
+            this.city = data.get(0).get(7);                                     //Set the city name
+            this.province = data.get(0).get(8);                                 //Set the province name
+            this.zipcode = data.get(0).get(9);                                  //Set the zipcode
+            this.basicSalary = Double.parseDouble(data.get(0).get(10));         //Set basic salary
+            this.semiBasicSalary = this.basicSalary / 2;                        //Set semi basic salaryy
+            this.hourlyRate = Math.round(((this.semiBasicSalary / 21.0) / 8.0) * 100.0) / 100.0;    //Set hourly rate
+            this.riceSubsidy = Double.parseDouble(data.get(0).get(11));         //Set rice subsidy allowance
+            this.phoneAllowance = Double.parseDouble(data.get(0).get(12));      //Set phone allowance
+            this.clothingAllowance = Double.parseDouble(data.get(0).get(13));   //Set clothing allowance
+            this.philHealthNumber = data.get(0).get(14);                        //Set philhealth ID No.
+            this.sssNumber = data.get(0).get(15);                               //Set sss ID No.
+            this.tinNumber = data.get(0).get(16);                               //Set TIN ID No.
+            this.pagibigNumber = data.get(0).get(17);                           //Set Pagibig ID No.
+            this.position = data.get(0).get(18);                                //Set position
+            this.status = data.get(0).get(19);                                  //Set employee status
+            this.supervisor = data.get(0).get(20);                              //Set employee supervisor
+            accountDetails.closeDBRequest(statement);                           //Close the Database Request
         } catch (SQLException ex) {
-            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieved Employee Information!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
     }
     
-    public ArrayList<ArrayList<String>> getDataAllRequests(){ //returns all overtime requests as an arraylist
+    //Method that set query to get all employee request
+    public ArrayList<ArrayList<String>> getDataAllRequests(){ 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT o.date_filed, 'Overtime' AS request_type, " +
@@ -143,13 +116,14 @@ public class Employee extends AccountDetails {
             statement.setInt(2, this.employeeID);
             statement.setString(3, "Pending");
             data = accountDetails.retrivedDetails(statement);  
-         
+            
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieved All Employee Request!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
-           return data;
+           return data;   //returns all overtime requests as an arraylist
     }
     
+    //Method that set query to get DTR
     public ArrayList<ArrayList<String>> getDTR(Date dateFrom, Date dateTo){ //return all dtr of specified employee as an arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
@@ -165,12 +139,13 @@ public class Employee extends AccountDetails {
             statement.setDate(3, new java.sql.Date(dateTo.getTime()));
             data = accountDetails.retrivedDetails(statement); 
         } catch (SQLException ex) {
-           Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieved DTR!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
-        return data;
+        return data;    //return DTR
     }
     
-    public ArrayList<ArrayList<String>> viewPersonalLeaveLedger() { //returns leave ledgers of specified employee as an arraylist
+    //Method that set query to view personal ledger
+    public ArrayList<ArrayList<String>> viewPersonalLeaveLedger() { 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT l.date_filed, t.leave_type, l.leave_from, l.leave_to, " +
@@ -178,18 +153,19 @@ public class Employee extends AccountDetails {
                     "FROM leave_ledger l " +
                     "JOIN leave_type t ON t.leave_type_id = l.leave_type_id " +
                     "JOIN request_status s ON s.request_status_id = l.request_status_id " +
-                    "WHERE l.employee_id = ?";
+                    "WHERE l.employee_id = ? AND s.request_status_id IN (2, 3)";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, this.employeeID);
             data = accountDetails.retrivedDetails(statement);
             
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(null, "Error to Retrieved Personal Leave Ledger!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
-        return data;
+        return data;    //returns leave ledgers of specified employee as an arraylist
     }
     
-    public Boolean fileOvertimeRequest(Date overtime_from, Date overtime_to, int number_of_days, String reason){ //insert new overtime request to overtime_requests table; returns boolean
+    //Method for filing overtime and insert new overtime request to overtime_requests table
+    public Boolean fileOvertimeRequest(Date overtime_from, Date overtime_to, int number_of_days, String reason){
         try {
             String sql =  "INSERT INTO overtime_requests (" +
                     "employee_id, date_filed, overtime_from, overtime_to, " +
@@ -211,7 +187,8 @@ public class Employee extends AccountDetails {
                 return false;   
             }
         } catch (SQLException ex) {
-           Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieved Overtime Request!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
+
         }
         return false;
     }
@@ -240,7 +217,7 @@ public class Employee extends AccountDetails {
                 return false; 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieved Employee Leave Request!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
         return false;
     }
@@ -265,7 +242,7 @@ public class Employee extends AccountDetails {
                 JOptionPane.showMessageDialog(null, "Time in Failed! You already made your time-in.", "Error", JOptionPane.ERROR_MESSAGE);   
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error Employee Time-in!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
     }
     
@@ -285,23 +262,23 @@ public class Employee extends AccountDetails {
                 JOptionPane.showMessageDialog(null, "Time out Failed!", "Error", JOptionPane.ERROR_MESSAGE);  
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error Employee Time-out!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
     }
     
-
-
-    public void leaveBalancesInformation(){ //queries leave balance information from database and assigns values to accountdetails instance
+    //Method for queries leave balance information from database and assigns values to accountdetails instance
+    public void leaveBalancesInformation(){ 
         try {
             String sql = "SELECT balance FROM leave_balances WHERE employee_id = ? ";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, this.employeeID);
             accountDetails.getLeaveBalance(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieved Leave Balances!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
      }
      
+    //Method that will count number of days applied each employee request
     public boolean countNumberOfDays(Date dateFrom, Date dateTo){ // New method to count the days for leave
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
@@ -321,38 +298,34 @@ public class Employee extends AccountDetails {
         return true;
     }
     
-    public int getDaysWorked(){ //returns the number of days worked by a specified employee
+    //Method that retrieved days of work
+    public int getDaysWorked(){ 
         try{
             String query = "SELECT * FROM payroll_system_db.attendance_records WHERE employee_id = ?;";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, this.employeeID);
-            
             daysWorked = accountDetails.retrivedDetails(statement).size();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error to Retrieved Days Worked!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        
-        return daysWorked;
+        return daysWorked;      //returns the number of days worked by a specified employee
     }
     
-    public int getOvertime(){ //returns number of approved overtime days
+    //Method to get Overtime details
+    public int getOvertime(){ 
         try{
             String query = "SELECT * FROM payroll_system_db.overtime_requests WHERE employee_id = ? AND request_status_id = 2;";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, this.employeeID);
-            
             overtimeDays = accountDetails.retrivedDetails(statement).size();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error to Retrieved Overtime!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
         }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        
-        return overtimeDays;
+        return overtimeDays;    //returns number of approved overtime days
     }
     
-    
-    public boolean downloadPayslip(Date date_from, Date date_to) { //queries specified payslip pdf from database and saves to ./DownloadFiles
+    //Method for queries specified payslip pdf from database and saves to ./DownloadFiles
+    public boolean downloadPayslip(Date date_from, Date date_to) { 
         boolean isSuccess = false;
         if (date_from == null || date_to == null) {
             JOptionPane.showMessageDialog(null, "Error: date_from or date_to is null.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -384,7 +357,7 @@ public class Employee extends AccountDetails {
                         isSuccess = true;
                         fileFound = true;
                     } catch (IOException ex) {
-                        Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, "IO error during file copy", ex);
+                        JOptionPane.showMessageDialog(null, "Error to Download Payslip!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message
                 }
             }
             }
@@ -393,33 +366,19 @@ public class Employee extends AccountDetails {
                     return isSuccess;
                 }
             }catch (Exception e){
-                System.out.println(e); 
+                JOptionPane.showMessageDialog(null, "Error to Download Payslip!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
             }
+            accountDetails.closeDBRequest(result, statement); //To close request
         }catch (SQLException ex){
-            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null,ex); 
+            JOptionPane.showMessageDialog(null, "Error to Download Payslip!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
         return isSuccess; 
     }
-      
-    public void updateLeaveRequest() {
     
-    }
-    
-    public void updateOvertimeRequest() {
-    
-    }
     int getNumberOfDaysLeave(){
         return numberOfDaysLeave;
     }
 
-    String getBalanceVL() {
-        return balanceVL;
-    }
-
-    String getBalanceSL() {
-        return balanceSL;
-    }
-    
     void setNumberOfDaysLeave(){
         this.numberOfDaysLeave = 0;
     }

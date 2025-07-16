@@ -3,18 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package payrollsystem;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- *
- * @author Paul
- */
+//Method that create abstract method
 abstract class Credentials extends AccountDetails {
-    abstract public ArrayList<ArrayList<String>> checkCredentials() throws SQLException;
+    abstract public ArrayList<ArrayList<String>> checkCredentials() throws SQLException;        //Abstract method
 }

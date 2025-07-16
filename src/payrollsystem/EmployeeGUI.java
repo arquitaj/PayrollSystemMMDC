@@ -4,35 +4,21 @@
  */
 package payrollsystem;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.awt.event.*;
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
-import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Paul
- */
 public class EmployeeGUI extends javax.swing.JFrame {
     Employee employee;
     
     public EmployeeGUI(ArrayList<ArrayList<String>> userDetails) {             
         initComponents();
-        
         lblIDSidebar.setText(userDetails.get(0).get(0));
         lblNameSidebar.setText(userDetails.get(0).get(1));
-        
         employee = new Employee(userDetails.get(0).get(0));
         employee.viewPersonalDetails();
         setClockText();
@@ -450,35 +436,15 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         txtBasicSalary.setEditable(false);
         txtBasicSalary.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtBasicSalary.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBasicSalaryActionPerformed(evt);
-            }
-        });
 
         txtRiceSubsidy.setEditable(false);
         txtRiceSubsidy.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtRiceSubsidy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRiceSubsidyActionPerformed(evt);
-            }
-        });
 
         txtPhoneAllowance.setEditable(false);
         txtPhoneAllowance.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtPhoneAllowance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPhoneAllowanceActionPerformed(evt);
-            }
-        });
 
         txtClothingAllowance.setEditable(false);
         txtClothingAllowance.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtClothingAllowance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtClothingAllowanceActionPerformed(evt);
-            }
-        });
 
         lblBiMonthlyRate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblBiMonthlyRate.setText("BiMonthly Rate:");
@@ -851,22 +817,12 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         txtPosition.setEditable(false);
         txtPosition.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtPosition.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPositionActionPerformed(evt);
-            }
-        });
 
         txtStatus.setEditable(false);
         txtStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         txtSupervisor.setEditable(false);
         txtSupervisor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtSupervisor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSupervisorActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1068,11 +1024,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
         txtDaysNumber.setEditable(false);
         txtDaysNumber.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtDaysNumber.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Number of Working Days Applied For", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 102))); // NOI18N
-        txtDaysNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDaysNumberActionPerformed(evt);
-            }
-        });
 
         jSeparator2.setBackground(new java.awt.Color(255, 204, 153));
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
@@ -1285,11 +1236,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
         txtDaysNumber1.setEditable(false);
         txtDaysNumber1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtDaysNumber1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Number of Working Days Applied For", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 153, 102))); // NOI18N
-        txtDaysNumber1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDaysNumber1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelOvertimeRequestLayout = new javax.swing.GroupLayout(panelOvertimeRequest);
         panelOvertimeRequest.setLayout(panelOvertimeRequestLayout);
@@ -1809,30 +1755,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtBasicSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBasicSalaryActionPerformed
-       
-    }//GEN-LAST:event_txtBasicSalaryActionPerformed
-
-    private void txtRiceSubsidyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRiceSubsidyActionPerformed
-       
-    }//GEN-LAST:event_txtRiceSubsidyActionPerformed
-
-    private void txtPhoneAllowanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneAllowanceActionPerformed
-       
-    }//GEN-LAST:event_txtPhoneAllowanceActionPerformed
-
-    private void txtClothingAllowanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClothingAllowanceActionPerformed
-       
-    }//GEN-LAST:event_txtClothingAllowanceActionPerformed
-
-    private void txtPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPositionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPositionActionPerformed
-
-    private void txtSupervisorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupervisorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSupervisorActionPerformed
-
     private void btnPersonalDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalDetailsActionPerformed
         // sets personal detail panel label text
         mainTabbed.setSelectedIndex(1);
@@ -1882,7 +1804,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
         employee.setTableData(employee.getDataAllRequests());
         employee.setTableSize(7);
         employee.displayDataTable(jTableAllRequest);
-  
     }//GEN-LAST:event_btnRequestPortActionPerformed
 
     private void btnDTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTRActionPerformed
@@ -1929,17 +1850,12 @@ public class EmployeeGUI extends javax.swing.JFrame {
         employee.setTableData(employee.viewPersonalLeaveLedger());
         employee.setTableSize(7);
         employee.displayDataTable(jTableAllRequest3);
-        
     }//GEN-LAST:event_btnLeaveLedgerActionPerformed
 
     private void btnLeaveLedger1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveLedger1ActionPerformed
         // TODO add your handling code here:
         mainTabbed.setSelectedIndex(5);
     }//GEN-LAST:event_btnLeaveLedger1ActionPerformed
-
-    private void txtDaysNumber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDaysNumber1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDaysNumber1ActionPerformed
 
     private void btnSubmit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmit1ActionPerformed
         if(dateToOvertime.getDate() != null && dateFromOvertime.getDate() != null && !txtReasonOvertime.getText().trim().isEmpty()){
@@ -2008,11 +1924,6 @@ public class EmployeeGUI extends javax.swing.JFrame {
             txtReason.setText(null);
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
-
-    private void txtDaysNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDaysNumberActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtDaysNumberActionPerformed
 
     private void dateFromPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateFromPropertyChange
         // TODO add your handling code here:

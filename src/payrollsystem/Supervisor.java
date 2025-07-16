@@ -7,14 +7,10 @@ package payrollsystem;
 import java.sql.*;
 import java.time.*;
 import java.util.*;
-import java.util.logging.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-/**
- *
- * @author Paul
- */
+
 public class Supervisor extends Employee{
     private final String employeeID;
   
@@ -23,7 +19,8 @@ public class Supervisor extends Employee{
         super();  
     }
     
-   public ArrayList<ArrayList<String>> employeeRequest(String selectedItem){ //returns an arraylist from specified queries of possible employee requests
+   //Method for setting a query of retrieving all employee request
+   public ArrayList<ArrayList<String>> employeeRequest(String selectedItem){ 
        ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sqlForLeave = "SELECT e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, ll.date_filed, " +
@@ -80,13 +77,13 @@ public class Supervisor extends Employee{
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieve Employee Request!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
-        return data;
+        return data;        //returns an arraylist from specified queries of possible employee requests
    }  
     
-
-    public ArrayList<ArrayList<String>> employeeNames(){  //returns all employee full names as an arraylist
+    //Method to set query for retrieving of complete employee name
+    public ArrayList<ArrayList<String>> employeeNames(){  
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT CONCAT(last_name, ', ',first_name) AS full_name FROM employees WHERE immediate_supervisor = ? ORDER BY full_name";
@@ -95,13 +92,13 @@ public class Supervisor extends Employee{
             data = accountDetails.retrivedDetails(statement);
             return data;
         } catch (SQLException ex) {
-            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieve Employee Names!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
-        return data;
+        return data;    //returns all employee full names as an arraylist
     }
        
-    
-    public ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){ //returns all dtr data from specified employee where status = pending
+    //Method to set query for retrieving of all employee DTR
+    public ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){ 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, CONCAT(e.last_name, ' ', e.first_name) AS full_name, " +
@@ -116,13 +113,13 @@ public class Supervisor extends Employee{
             statement.setString(3, "Pending");
             data = accountDetails.retrivedDetails(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieve DTR!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
-        return data;
+        return data;        //returns all dtr data from specified employee where status = pending
     }
     
-     
-    public void approvedEmployeeRequest(ArrayList<String> rowData){ //updates specified employee request status to 'approved'
+    //Method to set query for updating of employee request to approved
+    public void approvedEmployeeRequest(ArrayList<String> rowData){ 
         if(rowData.get(3).equals("Overtime")){
             try {
                 String sql = "UPDATE overtime_requests orq JOIN request_status rs ON rs.status = ? "
@@ -137,8 +134,9 @@ public class Supervisor extends Employee{
                 if(update > 0){
                      JOptionPane.showMessageDialog(null, "Successfuly Approved Overtime Request!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
+                accountDetails.closeDBRequest(statement);
             } catch (SQLException ex) {
-                Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Error to Retrieve Approved Employee Request!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
             }
             
         }else{
@@ -167,19 +165,19 @@ public class Supervisor extends Employee{
 
                         statusStmt.executeUpdate();
                         JOptionPane.showMessageDialog(null, "Successfuly Approved Leave Request!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
+                        accountDetails.closeDBRequest(statusStmt);
                 } else {
                     JOptionPane.showMessageDialog(null, "Insufficient leave balance!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
+                 accountDetails.closeDBRequest(balanceStmt);
             } catch (SQLException ex) {
-                Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Error to Retrieve Approved Employee Request!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
             }
         }
      }
      
-
-    public void disapprovedEmployeeRequest(ArrayList<String> rowData){ //updates specified employee request status to 'disapproved'
+    //Method to set query for updating specified employee request status to 'disapproved'
+    public void disapprovedEmployeeRequest(ArrayList<String> rowData){ 
           String sql;
         try {
             
@@ -202,11 +200,13 @@ public class Supervisor extends Employee{
             if(update > 0){
                 JOptionPane.showMessageDialog(null, "Successfuly Disapproved Request!", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
+            accountDetails.closeDBRequest(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieve Disapproved Employee Request!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
       }
       
+    //Method to set query for forwarding DTR
     public void forwardDTR(ArrayList<ArrayList <String>> rowData){
         int update = 0;
         try {
@@ -223,8 +223,9 @@ public class Supervisor extends Employee{
             if(update>0){
                 JOptionPane.showMessageDialog(null, "Successfuly Forwarded DTR to Payroll Section!", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
+            accountDetails.closeDBRequest(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Forward DTR!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
     }
       

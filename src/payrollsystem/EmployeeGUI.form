@@ -624,9 +624,6 @@
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBasicSalaryActionPerformed"/>
-                              </Events>
                             </Component>
                             <Component class="javax.swing.JTextField" name="txtRiceSubsidy">
                               <Properties>
@@ -635,9 +632,6 @@
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRiceSubsidyActionPerformed"/>
-                              </Events>
                             </Component>
                             <Component class="javax.swing.JTextField" name="txtPhoneAllowance">
                               <Properties>
@@ -646,9 +640,6 @@
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPhoneAllowanceActionPerformed"/>
-                              </Events>
                             </Component>
                             <Component class="javax.swing.JTextField" name="txtClothingAllowance">
                               <Properties>
@@ -657,9 +648,6 @@
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtClothingAllowanceActionPerformed"/>
-                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="lblBiMonthlyRate">
                               <Properties>
@@ -1297,9 +1285,6 @@
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPositionActionPerformed"/>
-                              </Events>
                             </Component>
                             <Component class="javax.swing.JTextField" name="txtStatus">
                               <Properties>
@@ -1316,9 +1301,6 @@
                                   <Font name="Segoe UI" size="14" style="0"/>
                                 </Property>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSupervisorActionPerformed"/>
-                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -1830,9 +1812,6 @@
                                       </Border>
                                     </Property>
                                   </Properties>
-                                  <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDaysNumberActionPerformed"/>
-                                  </Events>
                                 </Component>
                                 <Component class="javax.swing.JSeparator" name="jSeparator2">
                                   <Properties>
@@ -2244,9 +2223,6 @@
                                       </Border>
                                     </Property>
                                   </Properties>
-                                  <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDaysNumber1ActionPerformed"/>
-                                  </Events>
                                 </Component>
                               </SubComponents>
                             </Container>

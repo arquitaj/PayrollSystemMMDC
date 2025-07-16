@@ -7,16 +7,10 @@ package payrollsystem;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
+import java.util.*;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 
 
@@ -44,20 +38,27 @@ public class HumanResource extends Employee{
             PreparedStatement statement = conn.prepareStatement(sql);
             data = accountDetails.retrivedDetails(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(HumanResource.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Display All Details!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
         return data;
     }
     
     private static int getIdFromLookup(Connection conn, String query) throws SQLException {
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        int lookUpID = 0;
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {
-                return rs.getInt(1);
+                lookUpID = rs.getInt(1);
             } else {
                 throw new SQLException("Lookup failed: " + query);
             }
+            stmt.close(); // to close the statement request
+            rs.close(); //to close the resultSet request
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Error to Generate Employee ID!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
+        return lookUpID;
     }
     
     public ArrayList<ArrayList<String>> nextEmployeeID(){ //returns last employee_id + 1; returns arraylist
@@ -67,7 +68,7 @@ public class HumanResource extends Employee{
             PreparedStatement statement = conn.prepareStatement(sql);
             data = accountDetails.retrivedDetails(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(HumanResource.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Get Last Employee Inserted!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
         return data;
     }
@@ -125,6 +126,7 @@ public class HumanResource extends Employee{
                                 psComp.setDouble(5, Double.parseDouble(data.get(13)));
                                 psComp.setDouble(6, Double.parseDouble(data.get(10))/2);
                                 psComp.executeUpdate();
+                                accountDetails.closeDBRequest(psComp);
                             }
 
                             // 5. Insert into government_ids
@@ -137,14 +139,18 @@ public class HumanResource extends Employee{
                                 psGov.setString(4, data.get(17));
                                 psGov.setString(5, data.get(18));
                                 psGov.executeUpdate();
+                                accountDetails.closeDBRequest(psAddress);
                             }
                         }
+                        accountDetails.closeDBRequest(rsEmp, psEmployee);   //to close request for adding employee request
+
                     }
                 }
                 isSuccess = true;
                 JOptionPane.showMessageDialog(null, "Successfuly Added New Employee!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                accountDetails.closeDBRequest(rsAddress, psAddress);   //to close request for adding employee request
         } catch (SQLException ex) {
-            Logger.getLogger(HumanResource.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Insert New Employee Details!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
         return isSuccess;
     }
@@ -163,7 +169,7 @@ public class HumanResource extends Employee{
             data = accountDetails.retrivedDetails(statement);
 
         } catch (SQLException ex) {
-            Logger.getLogger(HumanResource.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieved Employee Status!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
         return data;
      }
@@ -177,7 +183,7 @@ public class HumanResource extends Employee{
             PreparedStatement statement = conn.prepareStatement(sql);
             data = accountDetails.retrivedDetails(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(HumanResource.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Retrieved All Credentials!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
         return data;
      }
@@ -206,11 +212,12 @@ public class HumanResource extends Employee{
                     isSuccess = true;
                     JOptionPane.showMessageDialog(null, "Successfuly Added New Credentials!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
+                accountDetails.closeDBRequest(statement);
             }else{
                  JOptionPane.showMessageDialog(null, "Cannot be Add New Credentials to Employee already exist with the same role!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(HumanResource.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Add New Credentials!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
         return isSuccess;
     }
@@ -308,16 +315,21 @@ public class HumanResource extends Employee{
             statement.setString(18, data.get(18));  //id pagibig
             statement.setString(19, data.get(19));  //position
             statement.setString(20, data.get(20));  //status
-            statement.setInt(21, Integer.parseInt(data.get(21)));  //supervisor id
+            String value = data.get(21).trim();
+            if (value.isEmpty()) {  //if statement to catch null value for supervisor id
+                statement.setNull(21, java.sql.Types.INTEGER); //supervisor id
+            } else {
+                statement.setInt(21, Integer.parseInt(value));  //supervisor id
+            } 
             statement.setInt(22, Integer.parseInt(data.get(0)));  //employee ID
             int update = statement.executeUpdate();
             if(update > 0){
                 isSuccess = true;
                 JOptionPane.showMessageDialog(null, "Successfuly Updated Employee Details!", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
-
+            accountDetails.closeDBRequest(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(HumanResource.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Update Employee!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
         return isSuccess;
     }
@@ -326,7 +338,4 @@ public class HumanResource extends Employee{
        this.selectedName = selectedName;
    }
       
-   String getSelectedName(){
-       return this.selectedName;
-   } 
 }

@@ -165,33 +165,38 @@ public class LoginGUI extends javax.swing.JFrame {
         String id = txtID.getText().toString();
         String password = jPassword.getText().toString();
         if(!id.isEmpty() && !password.isEmpty()){
-            Login login = new Login(Integer.parseInt(id), password);
-            ArrayList<ArrayList<String>> userDetails = login.checkCredentials();
-            if(userDetails.isEmpty()){
-                JOptionPane.showMessageDialog(null, "Credentials Not Found! ");
-            }else{
-                switch(userDetails.get(0).get(2)){
-                    case "Human Resource" -> {
-                        dispose();
-                        HumanResourceGUI hr = new HumanResourceGUI(userDetails);
-                        hr.setVisible(true);
-                    }
-                    case "Employee" -> {
-                        dispose();
-                        EmployeeGUI employee = new EmployeeGUI(userDetails);
-                        employee.setVisible(true);
-                    }
-                    case "Payroll Staff" -> {
-                        dispose();
-                        PayrollStaffGUI payroll = new PayrollStaffGUI(userDetails);
-                        payroll.setVisible(true);
-                    }
-                    default -> {
-                        dispose();
-                        SupervisorGUI supervisor = new SupervisorGUI(userDetails);
-                        supervisor.setVisible(true);
+            try{
+                int checkID = Integer.parseInt(id);
+                Login login = new Login(checkID, password);
+                ArrayList<ArrayList<String>> userDetails = login.checkCredentials();
+                if(userDetails.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Credentials Not Found! ");
+                }else{
+                    switch(userDetails.get(0).get(2)){
+                        case "Human Resource" -> {
+                            dispose();
+                            HumanResourceGUI hr = new HumanResourceGUI(userDetails);
+                            hr.setVisible(true);
+                        }
+                        case "Employee" -> {
+                            dispose();
+                            EmployeeGUI employee = new EmployeeGUI(userDetails);
+                            employee.setVisible(true);
+                        }
+                        case "Payroll Staff" -> {
+                            dispose();
+                            PayrollStaffGUI payroll = new PayrollStaffGUI(userDetails);
+                            payroll.setVisible(true);
+                        }
+                        default -> {
+                            dispose();
+                            SupervisorGUI supervisor = new SupervisorGUI(userDetails);
+                            supervisor.setVisible(true);
+                        }
                     }
                 }
+             }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Invalid Employee ID! ");
             }
         }else{
             JOptionPane.showMessageDialog(null, "Please provide your email and password! ");

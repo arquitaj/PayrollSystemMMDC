@@ -8,15 +8,10 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.time.*;
 import java.util.*;
-import java.util.logging.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import payrollsystem.Supervisor;
 
-/**
- *
- * @author Paul
- */
 public class PayrollStaff extends Employee implements Payroll{
     private String employeeID = "";
     
@@ -34,23 +29,23 @@ public class PayrollStaff extends Employee implements Payroll{
        
     }
     
-
+    //Method to set query for generating of payslip
     @Override
-    public void generatePayslip(){ //returns arraylist of all employee ids
+    public void generatePayslip(){
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT employee_id FROM employees ORDER BY employee_id";
             PreparedStatement statement = conn.prepareStatement(sql);
             data = accountDetails.retrivedDetails(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(PayrollStaff.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Generate Payslip!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
       
     }
 
-
+    //Method to set query for retrieving of Employee Full Name
     @Override
-    public ArrayList<ArrayList<String>> employeeNames(){  //returns an arraylist of all employee full names
+    public ArrayList<ArrayList<String>> employeeNames(){  
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT CONCAT(last_name, ', ',first_name) AS full_name FROM employees ORDER BY last_name";
@@ -58,15 +53,14 @@ public class PayrollStaff extends Employee implements Payroll{
             data = accountDetails.retrivedDetails(statement);
             return data;
         } catch (SQLException ex) {
-            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Get All Employee Names!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
-        return data;
+        return data;    //returns an arraylist of all employee full names
     }
     
-    
-    
+    //Method to set query for retrieving of DTR
     @Override
-     public ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){ //returns all relevant dtr data of a specified employee as an arraylist
+     public ArrayList<ArrayList<String>> getDataForDTRTable(String employeeName){ 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         try {
             String sql = "SELECT e.employee_id, CONCAT(e.last_name, ' ', e.first_name) AS full_name, " +
@@ -80,12 +74,12 @@ public class PayrollStaff extends Employee implements Payroll{
             statement.setString(2, "Approved");
             data = accountDetails.retrivedDetails(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error to Get Data For Table!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
-        return data;
+        return data;        //returns all relevant dtr data of a specified employee as an arraylist
     }
      
-
+    //Methods to set query for retrieving of employee with attendance
     @Override
     public ArrayList<ArrayList<String>> getEmployeeWithAttendance(java.util.Date AttendanceFrom, java.util.Date AttendanceTo){ //returns all employees who have attendancve records between a specified date frame as an arraylist
         ArrayList<ArrayList<String>> data = new ArrayList<>();
@@ -98,7 +92,7 @@ public class PayrollStaff extends Employee implements Payroll{
             data = accountDetails.retrivedDetails(statement);   
         }
         catch(Exception e){
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Error to Get Employee With Attendance!", "Error", JOptionPane.ERROR_MESSAGE);  //Error Message 
         }
         return data;
     }

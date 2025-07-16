@@ -101,6 +101,8 @@ public class PdfGenerator extends DatabaseConnection{
                 data[18] = result.getDouble("Withholding Tax");
                 data[19] = result.getDouble("Take-home Pay");
             }
+            statement.close();
+            result.close();
         }
         catch(Exception e){
             System.out.println(e);
@@ -122,6 +124,7 @@ public class PdfGenerator extends DatabaseConnection{
             if(update > 0){
                 isSuccess = true; //return true if number of rows affected by INSERT statement is greater than 0
             }
+            statement.close();
         }catch(Exception e){
             System.out.println(e);
         }

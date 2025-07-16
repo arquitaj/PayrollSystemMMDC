@@ -3,39 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package payrollsystem;
-import com.sun.jdi.connect.spi.Connection;
-import java.text.*;
-import java.time.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.*;
-import java.time.format.DateTimeFormatter;
 import java.sql.*;
 
-/**
- *
- * @author Paul
- */
 public class AccountDetails extends DatabaseConnection{
-    private ArrayList<ArrayList<String>> tableData = new ArrayList<>();
-    private ArrayList<ArrayList<String>> dataList = new ArrayList<>();
+    private ArrayList<ArrayList<String>> tableData = new ArrayList<>();         //Variable that hold all data to be display in the Table
+    private int employeeID;                                                     //Variable that will hold employee id
+    private String vlBalance, slBalance;                                        //Variable that hold VL and SL balance
+    int tableSize;                                                              //Variable that holds table size for displaying data in table
     
-    private String filePath;
-    private int employeeID;
-  
-    private String vlBalance, slBalance;
-    
-    int tableSize;
-    
-    DatabaseConnection dbConnection = new DatabaseConnection();
-    java.sql.Connection conn = dbConnection.getDBConnection();
-    DatabaseManager databaseManager = new DatabaseManager();
+    DatabaseConnection dbConnection = new DatabaseConnection();                 //Call the Database Connection Class 
+    java.sql.Connection conn = dbConnection.getDBConnection();                  //Call specific method to create connection
 
-    public AccountDetails(){}
+    public AccountDetails(){}                                                   
   
-    //To get data from Database
+    //Method to get data from Database
     public ArrayList<ArrayList<String>> getData(PreparedStatement statement) throws SQLException{
         ArrayList<ArrayList<String>> tableData = new ArrayList<>();
         ResultSet result = statement.executeQuery();
@@ -50,31 +34,30 @@ public class AccountDetails extends DatabaseConnection{
                 }
                 tableData.add(row);
               }
-              
+            closeDBRequest(result, statement);  
             return tableData;
     }
-    
-
-    
+   
     //Method that handle of retrieving data from Database
     public ArrayList<ArrayList<String>> retrivedDetails(PreparedStatement statement) throws SQLException{
          ArrayList<ArrayList<String>> data = new ArrayList<>();
           data = getData(statement);
+          closeDBRequest(statement);
           return data;
     }
     
-    //Methods that handle for inserting data to Database
+    //Method that handle for inserting data to Database
     public Boolean addDetailsToDatabase(PreparedStatement statement) throws SQLException{
         Boolean isSuccessfulyAdded = false;
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
             isSuccessfulyAdded = true;
         }      
+        closeDBRequest(statement);
         return isSuccessfulyAdded; 
     }
         
-     
-    //To display Data in the Table
+    //Method to display Data in the Table
     DefaultTableModel displayDataTable(JTable jTable){
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
@@ -88,49 +71,57 @@ public class AccountDetails extends DatabaseConnection{
         return model;
     }
     
-    void getLeaveBalance(PreparedStatement statement){
+    //Method to get Leave Balances
+    public void getLeaveBalance(PreparedStatement statement) throws SQLException{
         ArrayList<ArrayList<String>> data = new ArrayList<>();
-        try {
-            data = getData(statement);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountDetails.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        data = getData(statement);
         this.vlBalance = data.get(0).get(0); //To get VL Balance
         this.slBalance = data.get(1).get(0); //To get SL Balance
+        closeDBRequest(statement);
     }
     
-    public ArrayList<ArrayList<String>> getDataList() {
-        return dataList;
+    //Method to close database request
+    public void closeDBRequest(ResultSet resultSet, PreparedStatement statement) throws SQLException{
+        resultSet.close();
+        statement.close();
     }
     
-
-    public String getFilePath() {
-        return filePath;
+    //Method to close database request
+    public void closeDBRequest(PreparedStatement statement) throws SQLException{
+        statement.close();
     }
 
+    //Method to get employee id
     public int getEmployeeID() {
         return this.employeeID;
     }
 
-   
+    //Method to get table data
     ArrayList<ArrayList<String>> getTableData(){
         return this.tableData;
     }
 
+    //Method to get Vacation Leave Balance
     String getVLBalance(){
         return this.vlBalance;
     }
+    
+    //Method to get Sick Leave Balance
     String getSLBalance(){
         return this.slBalance;
     }
 
+    //Method to set the table to empty
    void setTableData(){
        getTableData().clear();
    }
+   
+   //Method to set the data into the table
    void setTableData(ArrayList<ArrayList<String>> newData){
        this.tableData = newData;
    }
+   
+   //Method that set size of the table
    void setTableSize(int tableSize){
        this.tableSize = tableSize;
    }

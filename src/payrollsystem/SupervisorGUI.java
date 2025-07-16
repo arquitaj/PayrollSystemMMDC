@@ -1255,10 +1255,13 @@ public class SupervisorGUI extends javax.swing.JFrame {
                             .addComponent(lblSL))))
                 .addGap(15, 15, 15)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(panelLeaveRequestDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboLeaveType, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDaysNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
+                .addGroup(panelLeaveRequestDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLeaveRequestDetailsLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(txtDaysNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLeaveRequestDetailsLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(comboLeaveType, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblMyName1)
                 .addGap(9, 9, 9)
@@ -2199,7 +2202,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Please Select A Request First!");
         }
-        supervisor.getDataList().clear();
+
     }//GEN-LAST:event_btnUpdate1ActionPerformed
 
     private void btnCancel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel3ActionPerformed
@@ -2218,7 +2221,7 @@ public class SupervisorGUI extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Please Select A Request First!");
         }
-        supervisor.getDataList().clear();
+
     }//GEN-LAST:event_btnCancel3ActionPerformed
 
     private void comboEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmployeeNameActionPerformed
