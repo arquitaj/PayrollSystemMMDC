@@ -2939,7 +2939,7 @@ public class HumanResourceGUI extends javax.swing.JFrame {
         txtPhoneAllowance.setText(String.valueOf(employee.getRiceSubsidy()));
         txtClothingAllowance.setText(String.valueOf(employee.getClothingAllowance()));
         txtPhilNum.setText(employee.getPhilHealthNumber());
-        txtSSSNum.setText(employee.getPhilHealthNumber());
+        txtSSSNum.setText(employee.getSssNumber());
         txtTINNum.setText(employee.getTinNumber());
         txtPagIbigNum.setText(employee.getPagibigNumber());
         txtPosition.setText(employee.getPosition());
